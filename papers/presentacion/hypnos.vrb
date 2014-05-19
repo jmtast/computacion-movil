@@ -1,0 +1,10 @@
+\frametitle{Pseudocódigo (1)}
+    \begin{alltt}
+     \textbf{for} all devices \textbf{not in} base state \textbf{do}
+            ...
+            \textbf{if} next transition \textbf{is} user input \textbf{then}
+                return \textbf{false}
+            \textbf{end} \textbf{if}
+        \textbf{end for}
+        return \textbf{true}
+    \end{alltt}
