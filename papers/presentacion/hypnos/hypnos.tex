@@ -265,4 +265,13 @@
     Cuando un driver realiza la transición de su dispositivo a un estado de consumo de energía activo, entonces o se ha invocado un mecanismo de prevención de sleep conflict o no. Si no, tenemos un potencial sleep conflict, pues el sistema podría suspenderse en cualquier momento. Esta condición puede ser verificada forzando al sistema a tratar de ejecutar el proceso de suspención inmediátamente después de que el dispositivo haya entrado en estado de consumo activo de energía. Se logra liberando el wakelock de inactividad
 }
 
+\frame{
+    \frametitle{Algunos resultados}
+    \begin{itemize}
+    \item Hypnos fue probado en un Google Nexus One y un HTC Magic con Android 2.3.
+    \item Se probee una api para que desarrolladores de drivers puedan registrar FSMs con los modelos de energía de sus dispositivos y probar sus drivers.
+    \item Evaluación de overhead: se testeó una transferencia de una gran cantidad de datos via WIFI, proceso con muchas interacciones con el driver, y se obtuvo, en promedio, entre un 1\% y 2\% de overhead al utilizar HYPNOS
+    \end{itemize}
+}
+
 \end{document}
