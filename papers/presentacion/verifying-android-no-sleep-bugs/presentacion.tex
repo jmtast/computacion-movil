@@ -141,7 +141,7 @@
 %      }
 %}
 %
-\subsection{Planteo del paper}
+\section{Planteo del paper}
 
 \frame {
 	\frametitle{Planteo del paper}
@@ -244,10 +244,12 @@
 	\end{itemize}		
 }
 
-\subsection{Políticas de energía propuestas en el paper}
+\section{Políticas de energía propuestas en el paper}
 \frame{
 	\frametitle{Políticas de energía propuestas en el paper}
-	El objetivo del mismo es \textbf{mostrar la ausencia de casos} en los que se adquiere un Wakelock pero el mismo no se libera en el punto apropiado del ciclo de vida de la aplicación. Para eso se definen ciertas políticas de manejo de energía, sobre las cuales se analizan las aplicaciones probadas.
+	\begin{itemize}
+		\item[]<1-> El objetivo del mismo es \textbf{mostrar la ausencia de casos} en los que se adquiere un Wakelock pero el mismo no se libera en el punto apropiado del ciclo de vida de la aplicación. Para eso se definen ciertas políticas de manejo de energía, sobre las cuales se analizan las aplicaciones probadas.
+	\end{itemize}
 }
 
 \frame{
@@ -266,10 +268,74 @@
 	\end{itemize}
 }
 
+\section{Verificación}
+\frame {
+	\frametitle{Dataflow Facts}
+	\begin{itemize}
+		\item[]<1-> Se utilizan los \textbf{Dataflow Facts} para monitorear el \textit{energy state} en cada punto del programa. Lo representan con un \textbf{conjunto de Wakelocks adquiridos}, y catalogan al programa como en \textit{low energy state} cuando dicho conjunto está \textbf{vacío}.
+	\end{itemize}
+}
 
+\frame {
+	\frametitle{Asynchronous Calls}
+	\begin{itemize}
+		\item[]<1-> Las \textbf{llamadas asincrónicas} son lanzadas por los \textit{intents}. Para identificar el objetivo de la llamada se usa un procedimiento \textit{def-use} en el que se registran las definiciones de los parámetros para inferir el componente que está siendo llamado. Sólamente se manejan los intents explícitos con un único objetivo especificado.
+		\item[]<2-> Cada componente llama a sus callbacks según el \textit{lifecycle protocol}, que especifica en que órden se hace. El protocolo se representa con una \textbf{máquina de estado} cuyos \textit{vértices} son los \textit{callbacks} y los \textit{ejes} denotan al \textit{sucesor del callback}.
+	\end{itemize}
+}
 
+\frame {
+	\frametitle{Dataflow Analysis}
+	\begin{itemize}
+		\item[]<1-> El \textbf{análisis del Dataflow} se hace computando el \textit{conjunto de Wakelocks} en cada paso del programa. Los lock facts son \textit{generados} en los pasos \textbf{Wakelock.acquire}, \textit{propagados sin cambios} en los ejes normales y \textit{eliminados} al llamarse \textbf{Wakelock.release}. En caso de haber un \textit{punto de encuentro entre caminos}, el conjunto de Wakelocks es representado por la \textbf{unión de los conjuntos en los puntos anteriores}.
+		\item[]<2-> Una vez computado dicho análisis, se determina la \textit{categoría} del componente. Luego se chequea si para dicha categoría, el mismo respeta que \textit{en su exit point}, está en \textit{low energy state} como corresponde, o no. Si lo está, \textbf{se lo verifica como energy safe}, si no, se levanta un \textbf{warning flag}.
+	\end{itemize}
+}
 
+\section{Experimentación}
+\frame {
+	\frametitle{Experimentación}
+	\begin{itemize}
+		\item[]<1-> ¿Con cuántas aplicaciones se experimentó?
+			\begin{itemize}
+				\item<2-> Se descargaron \textbf{2718 aplicaciones}.
+				\item<3-> De esas, se concentraron en las \textbf{740 (27.2\%)} que usaban la \textbf{Wakelock API}.
+				\item<4-> Se extrajo el contenido de los archivos \textbf{.apk (Android Package)} y se convirtió a \textit{bytecode de Java}.
+				\item<5-> Por las \textit{limitaciones} de las herramientas usadas, solo \textbf{328 aplicaciones (44.3\%)} se pudieron convertir efectivamente.
+			\end{itemize}
+		\item[]<6-> ¿Y qué pasó con esas 328 aplicaciones?
+			\begin{itemize}
+				\item<7-> Se encontró que \textbf{145 (44.2\%)} cumplían totalmente con las políticas antes descriptas.
+				\item<8-> En las \textbf{183 (55.8\%)} restantes no se pudo mostrar que las políticas se cumplieran (lo que \textbf{no quiere decir que no se hayan cumplido}).
+				\item<9-> Se \textbf{inspeccionaron manualmente 50 de esas aplicaciones}, elegidas aleatoriamente, y \textit{se encontraron bugs} e \textit{imprecisiones en el análisis planteado}.
+			\end{itemize}
+	\end{itemize}
+}
 
+\frame {
+	\frametitle{Bugs comunes}
+	\begin{itemize}
+		\item[]<1-> Los errores más comunes ocurren en la implementación de \textbf{activities} con Wakelocks.
+		\item[]<2-> Los desarrolladores \textbf{suelen olvidar} liberar los recursos cuando implementan los callbacks \textbf{onPause} y \textbf{onStop}, haciendo que \textbf{el recurso pedido se mantenga encendido} incluso cuando el usuario navegó \textbf{fuera de dicha activity}, ya sea \textbf{activando otra activity} o \textbf{presionando el botón Home}.
+		\item[]<3-> Varias aplicaciones, además, violaron la política de \textbf{BroadcastReceivers}: este objeto es únicamente válido durante la ejecución de un \textbf{onReceive}.
+		\item[]<4-> La herramienta \textbf{levantó un flag} al mantenerse un Wakelock luego de dicho callback.
+	\end{itemize}
+}
 
+\frame {
+	\frametitle{Motivos de imprecisión en el análisis}
+	\begin{itemize}
+		\item[]<1-> Como mencionamos antes, que la herramienta diga que una app no verifica las políticas definidas \textbf{no implica que la misma tenga bugs de energía}. Esto es \textit{inherente al análisis estático} y lleva a \textbf{falsos positivos} (es decir, la aplicación es correcta pero la herramienta no puede decirlo).
+		\item[]<2-> Ejemplos de esto es son los casos en los que \textit{el lock se adquiere y se libera con la misma condición}, o cuando \textit{el lock es adquirido/liberado bajo alguna condición muy compleja}.
+	\end{itemize}
+}
+
+\section{Conclusiones}
+\frame {
+	\frametitle{Conclusiones}
+	\begin{itemize}
+		\item[]<1-> La contribución principal de este paper es \textbf{la herramienta} para verificar si cierta aplicación de Android cumple o no con el conjunto de políticas respecto al uso de la \textbf{Wakelock API}. Este análisis \textbf{permitió definir varios bugs comunes} y ayuda a \textbf{entender el uso de recursos} en aplicaciones del mundo real, para intentar evitar los bugs relacionados a su uso en futuros desarrollos.
+	\end{itemize}
+}
 
 \end{document}
