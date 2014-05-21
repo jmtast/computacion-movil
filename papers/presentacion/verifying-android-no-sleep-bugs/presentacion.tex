@@ -24,9 +24,9 @@
 	\frametitle{Ventajas de los smartphones actuales}
 	Muchas características al alcance de la mano:
 	\begin{itemize}
-		\item<1-> Procesadores rápidos
-		\item<2-> Pantallas grandes
-		\item<3-> Cámara, GPS, 3G, Wifi...
+		\item<2-> Procesadores rápidos
+		\item<3-> Pantallas grandes
+		\item<4-> Cámara, GPS, 3G, Wifi...
 	\end{itemize}
 }
 
@@ -48,17 +48,17 @@
 \frame {
 	\frametitle{¿Cuánto les duraba la batería del Nokia 1100 y similares?}
 	\begin{itemize}
-		\item<1-> ¿15 hs?
-		\item<2-> ¿2 días?
-		\item<3-> Como 4 o 5, tranqui!
+		\item<2-> ¿15 hs?
+		\item<3-> ¿2 días?
+		\item<4-> Como 4 o 5, tranqui!
 	\end{itemize}
 }
 
 \frame{
 	\frametitle{Eso ya no pasa con los Smartphones}
 	\begin{itemize}
-		\item[] <1-> Lamentablemente, todas las ventajas mencionadas antes necesitan mucha energía para funcionar.
-		\item[] <2-> Y por eso, la batería de nuestros celulares de hoy dura entre 12 y 16 horas, promedio, siendo unas 18 o 20 horas una excelente duración de batería (ni hablar de más tiempo).
+		\item[] <2-> Lamentablemente, todas las ventajas mencionadas antes necesitan mucha energía para funcionar.
+		\item[] <3-> Y por eso, la batería de nuestros celulares de hoy dura entre 12 y 16 horas, promedio, siendo unas 18 o 20 horas una excelente duración de batería (ni hablar de más tiempo).
 	\end{itemize}
 }
 
@@ -71,11 +71,11 @@
 	\begin{itemize}
 		\item[] <1-> ¿Cómo maneja la energía Android?
 		\begin{itemize}
-			\item<2-> De manera agresiva
+			\item<2-> De manera \textbf{agresiva}.
 		\end{itemize}
 		\item[] <3-> ¿Le pega para que se porte bien?
 		\begin{itemize}
-			\item<4-> No tan agresiva, pero le corta el chorro a todo en el momento inmediato en el que se deja de usar.
+			\item<4-> No \textbf{tan} agresiva, pero le corta el chorro a todo en el momento \textbf{inmediato} en el que se deja de usar.
 		\end{itemize}
 	\end{itemize}
 }
@@ -83,7 +83,7 @@
 \frame {
 	\frametitle{Manejo de energía en Android}
 	\begin{itemize}
-		\item[] <1-> Pero, ¿y si quiero tener el procesador corriendo para recibir algún update o notificación?
+		\item[] <1-> Pero, ¿y si, como desarrollador, quiero tener el procesador corriendo para recibir algún update o notificación?
 		\begin{itemize}
 			\item<2-> Ahí es donde entra en juego la \textbf{Wakelock API}.		
 		\end{itemize}
@@ -91,18 +91,37 @@
 }
 
 \frame {
-	\frametitle {Wakelock API}
+	\frametitle {Manejo de energía en Android}
 	\begin{itemize}
-		\item[] <1-> Lamentablemente, la complejidad del sistema operativo y los errores que pueden cometer los desarrolladores hacen que el uso inapropiado de Wakelocks se manifiesten como no-sleep-bugs.
+		\item[] <1-> Lamentablemente, la complejidad del sistema operativo y los errores que pueden cometer los desarrolladores hacen que el uso inapropiado de Wakelocks se manifiesten como \textit{no-sleep-bugs}.
 		\item[] <2-> Los autores del paper decidieron intentar mitigar el problema implementando una herramienta que verifica la ausencia de estos bugs con respecto a una serie de políticas específicas sobre los Wakelocks, utilizando un framework de flujo de datos para analizar las aplicaciones.
+		\item[] <3-> Pero...
+		\item[] <4-> ¿qué es la Wakelock API?
 	\end{itemize}
 }
 
 \frame {
 	\frametitle {Wakelock API}
 	\begin{itemize}
-		\item[] <1-> Permite a los desarrolladores dar directivas específicas sobre los recursos al sistema operativo.
-		\item[] <2-> Android pone todo en sleep mode ni bien se ponen en estado idle (reposo).
+		\item <2-> Permite a los desarrolladores dar directivas específicas sobre los recursos al sistema operativo, ya que Android pone todo en sleep mode ni bien se ponen en estado idle (reposo).
+		\item <3-> Es una forma de decir ``esto no me lo apagues" (GPS, pantalla, CPU, etc.).
+		\item <4-> Entonces si necesito que algo en particular esté encendido en un momento crítico, pido un Wakelock sobre el mismo para que no se apague, lo uso, y cuando termino, lo libero.
+		\item <5-> Genial! Pero ¿qué pasa si me olvido de liberarlo?
+		\item <6-> Buena pregunta... ¿cuánto se acuerdan de Orga 2?
+	\end{itemize}
+}
+
+\frame {
+	\frametitle {Repaso de Orga 2}
+	\begin{itemize}
+		\item <2-> En Orga 2 me enseñaron que debo hacer un free por cada malloc...
+			\begin{itemize}
+				\item <3-> ...sino \tiny me pegaban.
+			\end{itemize}
+		\item <4-> Hablando en serio: si no liberan el Wakelock, pasa lo que esperan.
+		\item <5-> El recurso no se libera, queda activo, y se \textbf{gasta batería} innecesariamente.
+		\item <6-> Esto es a lo que en el paper se lo llama \textit{no-sleep bug}.
+		\item <7-> Vendría a ser la versión de ``power management" de los ``memory leaks".
 	\end{itemize}
 }
 
@@ -122,11 +141,130 @@
 %      }
 %}
 %
-%\subsection{Second Sub Section}
-%
-%\frame {
-%	\frametitle{Last Frame}
-%	This is the last frame
-%}
+\subsection{Planteo del paper}
+
+\frame {
+	\frametitle{Planteo del paper}
+	\begin{itemize}
+		\item[] <2-> Los autores del paper desarrollaron una herramienta que permite verificar la ausencia de estos bugs con respecto a una serie de \textbf{políticas específicas sobre los Wakelocks}, utilizando un framework de flujo de datos para analizar las aplicaciones.
+		\item[] <3-> Lo peor de todo esto, es que estos bugs son \text{muy difíciles de detectar}, ya que no hace que la app funcione mal o crashee, sino que te reduce la duración de batería del equipo, pasando casi desapercibida como causante de dicho problema.
+		\item[] <4-> Pero para entender todo esto, primero hay que entender un poco como funciona el sistema operativo Android por detrás.
+	\end{itemize}
+}
+
+\frame{
+	\frametitle{Un poco de contexto}	
+	\begin{itemize}
+		\item[] <1-> \textbf{Manejo de energía}
+			\begin{itemize}
+				\item <2-> Creación, adquisición y liberación de objetos \textbf{Wakelock}.
+				\item <3-> Asociados a un recurso particular (CPU, pantalla, GPS, etc.).
+				\item <4-> En manos del desarrolador.
+			\end{itemize}
+	\end{itemize}
+	\begin{itemize}
+		\item[] <5-> \textbf{Componentes de aplicación}
+			\begin{itemize}
+				\item <6-> Una aplicación de Android se construye con diversos componentes. Hay 4 tipos principales.
+				\begin{itemize}
+					\item <7-> Activities
+					\item <8-> Services
+					\item <9-> BroadcastReceivers
+					\item <10-> ContentProviders
+				\end{itemize}
+				\item <11-> Están ligados entre sí mediante un \textit{lifecycle} o ciclo de vida (visto en clase).
+				\item <12-> El desarrollador especifica las acciones a tomar en cada paso del ciclo, implementando un conjunto de \textbf{callbacks}.
+				\item <13-> Veamos que hace cada componente.
+			\end{itemize}
+	\end{itemize}
+}
+
+\frame{
+	\frametitle{Activities}
+	\begin{itemize}
+		\item <1-> Proveen la UI de la app.
+		\item <2-> Forman un stack, formado de la siguiente manera:
+			\begin{itemize}
+				\item <3-> \textbf{Running:} La aplicación en \textit{foreground} (visible, activa).
+				\item <4-> \textbf{Paused:} La aplicación no está en \textit{foreground}, pero está visible (inactiva).
+				\item <5-> \textbf{Stopped:} La aplicación está en \textit{background} (no visible e inactiva).
+			\end{itemize}
+	\end{itemize}
+	\begin{itemize}
+		\item[]<6-> \textbf{Callbacks}
+			\begin{itemize}
+				\item<7-> \textbf{onPause} y \textbf{onResume}: entra y sale del estado \textit{running}.
+				\item<8-> \textbf{onStart} y \textbf{onStop}: entra y sale del estado \textit{paused}.
+				\item<9-> \textbf{onCreate} y \textbf{onDestroy}: arranca y termina el \textit{lifecycle}.
+				\item<10-> \textbf{onRestart}: reinicia una actividad previamente detenida.
+			\end{itemize}
+	\end{itemize}
+}
+
+\frame{
+	\frametitle{Services}
+	\begin{itemize}
+		\item<1-> Realizan operaciones de duración prolongada sin interacción del usuario.
+		\item<2-> Se inician con \textbf{startService} y permiten ligarse a ellos con \textbf{bindService}.
+		\item<3-> Se configuran durante el \textbf{onCreate}.
+		\item<4-> Se ejecuta \textbf{onStartCommand} cuando un servicio es iniciado por otro componente
+		\item<5-> Se ejecuta \textbf{onBind} cuando el primer cliente del servicio se liga
+		\item<6-> Se ejecuta \textbf{onUnbind} cuando el último cliente del servicio se desliga.
+		\item<7-> Se utiliza \textbf{IntentService} para manejar pedidos asincrónicos bajo demanda.
+		\item<8-> Al finalizar los callbacks \textbf{onStartCommand}, \textbf{onUnbind} y \textbf{onHandleIntent}, la tarea asociada debería haber terminado, por lo que no debería mantenerse ningún Wakelock.
+	\end{itemize}
+}
+
+\frame{
+	\frametitle{BroadcastReceivers}
+	\begin{itemize}
+		\item<1-> Responden a anuncios que tienen como alcance a todo el sistema.
+			\begin{itemize}
+				\item<2-> Producidos por el mismo sistema (por ejemplo, batería baja)
+				\item<3-> Desde otras aplicaciones (alertar que ocurrió un evento, por ejemplo)
+			\end{itemize}
+		\item<4-> Empiezan y terminan su trabajo dentro del llamado del callback \textbf{onReceive}, por lo que tampoco debería mantenerse ningún Wakelock al terminar.
+	\end{itemize}		
+}
+
+\frame{
+	\frametitle{ContentProviders}
+	\begin{itemize}
+		\item<1-> Dan una forma de encapsular un set de datos estructurado.
+		\item<2-> Cada callback es típicamente una unidad de trabajo, por lo que todos los locks deben ser liberados al finalizar el llamado.
+	\end{itemize}
+}
+
+\frame{
+	\frametitle{Bonus: Intent-based Component Comunication}
+	\begin{itemize}
+		\item<1-> Los componentes se pueden comunicar via mensajes asincrónicos llamdos \textbf{Intents}, que ofrecen una conexión entre componentes de la misma o de distintas aplicaciones.
+		\item<2-> Pueden ser explícitos (apuntando a un componente por su nombre) o implícitos (apuntando a una acción a realizar).
+		\item<3-> Es útil contabilizar de manera precisa la comunicación entre componentes, ya que es común que se adquieran Wakelocks en un componente y se liberen con otro invocado de forma asincrónica con un intent.
+	\end{itemize}		
+}
+
+\subsection{Políticas de energía propuestas en el paper}
+\frame{
+	\frametitle{Políticas de energía propuestas en el paper}
+	El objetivo del mismo es \textbf{mostrar la ausencia de casos} en los que se adquiere un Wakelock pero el mismo no se libera en el punto apropiado del ciclo de vida de la aplicación. Para eso se definen ciertas políticas de manejo de energía, sobre las cuales se analizan las aplicaciones probadas.
+}
+
+\frame{
+	\frametitle{Definiciones}
+	\begin{itemize}
+		\item[]<1-> \textbf{Energy States:} Se definen los estados \textbf{high} y \textbf{low energy state}, cuando el dispositivo está y no está sosteniendo un Wakelock, respectivamente. Las políticas definidas verifican si en ciertos puntos de salida claves, el componente de software está en un low energy state (es decir, \textit{habiendo liberado todos los Wakelocks}) como debería, por haber terminado su trabajo.
+		\item[]<2-> \textbf{Exit Points:} Se necesita identificar el \textbf{punto de salida} de cada componente, en el cual debe estar en un low energy state al llamar el respectivo callback.
+	\end{itemize}
+}
+
+
+
+
+
+
+
+
+
 
 \end{document}

@@ -1,4 +1,4 @@
-\frametitle{Pseudocódigo (1)}
+\frametitle{Pseudocódigo (4)}
     \begin{alltt}
      \textbf{for} all devices \textbf{not in} base state \textbf{do}
             ...
