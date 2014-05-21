@@ -244,9 +244,19 @@
 	\end{itemize}		
 }
 
+\subsection{Políticas de energía propuestas en el paper}
+\frame{
+	\frametitle{Políticas de energía propuestas en el paper}
+	El objetivo del mismo es \textbf{mostrar la ausencia de casos} en los que se adquiere un Wakelock pero el mismo no se libera en el punto apropiado del ciclo de vida de la aplicación. Para eso se definen ciertas políticas de manejo de energía, sobre las cuales se analizan las aplicaciones probadas.
+}
 
-
-
+\frame{
+	\frametitle{Definiciones}
+	\begin{itemize}
+		\item[]<1-> \textbf{Energy States:} Se definen los estados \textbf{high} y \textbf{low energy state}, cuando el dispositivo está y no está sosteniendo un Wakelock, respectivamente. Las políticas definidas verifican si en ciertos puntos de salida claves, el componente de software está en un low energy state (es decir, \textit{habiendo liberado todos los Wakelocks}) como debería, por haber terminado su trabajo.
+		\item[]<2-> \textbf{Exit Points:} Se necesita identificar el \textbf{punto de salida} de cada componente, en el cual debe estar en un low energy state al llamar el respectivo callback.
+	\end{itemize}
+}
 
 
 
