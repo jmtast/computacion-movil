@@ -254,12 +254,17 @@
 	\frametitle{Definiciones}
 	\begin{itemize}
 		\item[]<1-> \textbf{Energy States:} Se definen los estados \textbf{high} y \textbf{low energy state}, cuando el dispositivo está y no está sosteniendo un Wakelock, respectivamente. Las políticas definidas verifican si en ciertos puntos de salida claves, el componente de software está en un low energy state (es decir, \textit{habiendo liberado todos los Wakelocks}) como debería, por haber terminado su trabajo.
-		\item[]<2-> \textbf{Exit Points:} Se necesita identificar el \textbf{punto de salida} de cada componente, en el cual debe estar en un low energy state al llamar el respectivo callback.
+		\item[]<2-> \textbf{Exit Points:} Se necesita identificar el \textbf{punto de salida} de cada componente, en el cual debe estar en un \textit{low energy state} al llamar el respectivo callback.
 	\end{itemize}
 }
 
-
-
+\frame{
+	\frametitle{Definiciones}
+	\begin{itemize}
+		\item[]<1-> \textbf{Component Policies:} Para identificar los \textit{exit points} se particionaron los componentes en categorías, para las cuales se identificaron los callbacks en los que dichos \textit{exit points} deben estar en un \textit{low energy state}. Los componentes que no tienen un ciclo de vida bien definido o que no están comprendidos en el análisis, son tratados de forma conservativa, requiriendo que \textit{todos} sus callbacks estén en un \textit{low energy state}.
+		\item[]<2-> \textbf{Asynchrony:} Empíricamente una de las situaciones que más se repitió es la de un componente pidiendo un Wakelock y llamando a otro, mediante un \textit{intent}, que luego lo libera. El primero está en un \textit{high energy state}, pero el programa es \textit{energy-safe} siempre y cuando el componente llamado se encargue de la liberación del lock.
+	\end{itemize}
+}
 
 
 
