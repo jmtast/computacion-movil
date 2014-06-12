@@ -1,0 +1,6 @@
+INDEX VERSION 1.126+C:\Users\prago\ws\example\.metadata\.plugins\org.eclipse.jdt.core
+2549362530.index
+3988986713.index
+609847118.index
+1284074322.index
+1536574621.index
