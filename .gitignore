@@ -7,4 +7,5 @@
 *.synctex.gz
 *.toc
 .metadata/
-.metadata/.plugins
+.metadata/.plugins/
+.metadata/.plugins/org.eclipse.jdt.core/
