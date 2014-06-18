@@ -1,11 +1,14 @@
 package com.hw.example;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -17,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -35,6 +39,8 @@ public class MainActivity extends ActionBarActivity implements
     public final static String PASSENGER = "com.example.myfirstapp.PASSENGER";
     
     private LocationClient mLocationClient;
+    private PendingIntent pendingIntent;
+    private AlarmManager manager;
     
     /*
      * Called when the Activity becomes visible .
@@ -68,6 +74,9 @@ public class MainActivity extends ActionBarActivity implements
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+        // Retrieve a PendingIntent that will perform a broadcast
+        Intent alarmIntent = new Intent(this, AlarmReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
         
         /*
          * Create a new location client, using the enclosing class to
@@ -127,6 +136,13 @@ public class MainActivity extends ActionBarActivity implements
         String message = editText.getText().toString();
         intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);  
+    }
+    
+    /** Called when the user clicks the Button button */
+    public void updateLocation(View view) {
+    	TextView textView= (TextView) findViewById(R.id.textView1);
+        Location location = mLocationClient.getLastLocation();
+        textView.setText(location.toString());
     }
 
     /**
@@ -259,7 +275,9 @@ public class MainActivity extends ActionBarActivity implements
     public void onConnected(Bundle dataBundle) {
         // Display the connection status
         Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
-
+        TextView textView= (TextView) findViewById(R.id.textView1);
+        Location location = mLocationClient.getLastLocation();
+        textView.setText(location.toString());
     }
     
     /*
@@ -305,6 +323,21 @@ public class MainActivity extends ActionBarActivity implements
              * user with the error.
              */
             showErrorDialog(connectionResult.getErrorCode());
+        }
+    }
+    
+    public void startAlarm(View view) {
+        manager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        int interval = 10000;
+
+        manager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
+        Toast.makeText(this, "Alarm Set", Toast.LENGTH_SHORT).show();
+    }
+    
+    public void cancelAlarm(View view) {
+        if (manager != null) {
+            manager.cancel(pendingIntent);
+            Toast.makeText(this, "Alarm Canceled", Toast.LENGTH_SHORT).show();
         }
     }
     

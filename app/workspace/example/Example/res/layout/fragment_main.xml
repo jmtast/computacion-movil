@@ -2,18 +2,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal" >
-    
-    <EditText android:id="@+id/edit_message"
-        android:layout_weight="1"
-        android:layout_width="0dp"
+    android:background="#CCCC00"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/edit_message"
+        android:layout_width="246dp"
         android:layout_height="wrap_content"
         android:hint="@string/edit_message" />
-    
-     <Button android:id="@+id/button_1"
+
+    <Button
+        android:id="@+id/button_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_send" 
-        android:onClick="sendMessage" />
+        android:onClick="sendMessage"
+        android:text="@string/button_send" />
+
+     <Button
+        android:id="@+id/button_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="updateLocation"
+        android:text="Update Location" />
     
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="73dp"
+        android:layout_weight="0.04"
+        android:text="TextView" />
+    
+    <Button
+        android:id="@+id/button_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="startAlarm"
+        android:text="Alarm Set" />
+    
+    <Button
+        android:id="@+id/button_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="cancelAlarm"
+        android:text="Alarm Cancel" />
+
 </LinearLayout>
