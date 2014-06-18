@@ -11,7 +11,7 @@
 .metadata/.plugins/org.eclipse.jdt.core/
 google-play-services_lib/
 app/workspace/.metadata/
-.metadata
+*.metadata
 app/workspace/.metadata/,plugins/
 bin/
 gen/
