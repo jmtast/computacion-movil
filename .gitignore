@@ -20,3 +20,5 @@ classes/
 *.ap_
 *.class
 *.dex
+*gen/
+*project.properties
