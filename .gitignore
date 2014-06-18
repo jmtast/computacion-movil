@@ -13,3 +13,10 @@ google-play-services_lib/
 app/workspace/.metadata/
 .metadata
 app/workspace/.metadata/,plugins/
+bin/
+gen/
+classes/
+*.apk
+*.ap_
+*.class
+*.dex
