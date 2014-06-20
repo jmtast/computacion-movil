@@ -95,5 +95,12 @@
 	        android:text="stop loc-srvc" 
 	        android:background="#CCCC00"/>
     </LinearLayout>
+    
+    <Button
+	        android:id="@+id/button_7_notif"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:onClick="launchNotification"
+	        android:text="notificate!" />
 
 </LinearLayout>

@@ -1,22 +1,11 @@
 package com.hw.example;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -25,6 +14,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -360,6 +350,41 @@ public class MainActivity extends ActionBarActivity implements
     
     public void stopLocationService(View view){
     	stopService(new Intent(this, LocationService.class));
+    }
+    
+    public void launchNotification(View view){    	
+    	
+    	// Instantiate a Builder object.
+    	NotificationCompat.Builder builder =
+    	        new NotificationCompat.Builder(this)
+    	        .setSmallIcon(R.drawable.taxinowicon)
+    	        .setContentTitle("My notification")
+    	        .setContentText("Hello World!")
+    	        .setAutoCancel(true);
+    	// Creates an Intent for the Activity
+//    	Intent notifyIntent =  new Intent(new ComponentName(this, ShutdownActivity.class));
+    	Intent notifyIntent = new Intent(this, ShutdownActivity.class);
+    	
+    	// Sets the Activity to start in a new, empty task
+    	notifyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    	// Creates the PendingIntent
+    	PendingIntent pendingIntent =
+    	        PendingIntent.getActivity(
+    	        this,
+    	        0,
+    	        notifyIntent,
+    	        PendingIntent.FLAG_UPDATE_CURRENT
+    	);
+
+    	// Puts the PendingIntent into the notification builder
+    	builder.setContentIntent(pendingIntent);
+    	// Notifications are issued by sending them to the
+    	// NotificationManager system service.
+    	NotificationManager mNotificationManager =
+    	    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+    	// Builds an anonymous Notification object from the builder, and
+    	// passes it to the NotificationManager
+    	mNotificationManager.notify(123456, builder.build());
     }
     
 }
