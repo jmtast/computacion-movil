@@ -70,23 +70,30 @@
 	        android:background="#CCCC00" />
     </LinearLayout>
     
+	<View android:layout_width="3dip" android:layout_height="1dip"/>
+    
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-    	android:layout_height="wrap_content" >
+    	android:layout_height="wrap_content"
+    	android:gravity="center_horizontal" >
 	    <Button
 		        android:id="@+id/button_5_location"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:onClick="startLocationService"
-		        android:text="start loc-srvc" />
+		        android:text="start loc-srvc" 
+		        android:background="#CCCC00"/>
+	    	   
+		<View android:layout_width="3dip" android:layout_height="1dip"/>
 	    
 	    <Button
 	        android:id="@+id/button_6_location"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:onClick="stopLocationService"
-	        android:text="stop loc-srvc" />
+	        android:text="stop loc-srvc" 
+	        android:background="#CCCC00"/>
     </LinearLayout>
 
 </LinearLayout>
