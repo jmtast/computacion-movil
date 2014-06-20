@@ -2,8 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#CCCC00"
-    android:orientation="vertical" >
+    android:background="#000000"
+    android:orientation="vertical">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -20,7 +20,8 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:onClick="sendMessage"
-	        android:text="@string/button_send" />
+	        android:text="@string/button_send"
+	        android:background="#CCCC00" />
     </LinearLayout>
 
     <LinearLayout
@@ -33,33 +34,40 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:onClick="updateLocation"
-	        android:text="Update Location" />
+	        android:text="Update Location"
+	        android:background="#CCCC00" />
     
 	    <TextView
 	        android:id="@+id/textView1"
 	        android:layout_width="match_parent"
 	        android:layout_height="73dp"
 	        android:layout_weight="0.04"
-	        android:text="TextView" />
+	        android:text="TextView"
+	        android:textColor="#CCCC00" />
     </LinearLayout>
     
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-    	android:layout_height="wrap_content" >
+    	android:layout_height="wrap_content"
+    	android:gravity="center_horizontal" >
 	    <Button
 	        android:id="@+id/button_3"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:onClick="startAlarm"
-	        android:text="Alarm Set" />
+	        android:text="Alarm Set"
+	        android:background="#CCCC00" />
+	    
+	    <View android:layout_width="3dip" android:layout_height="1dip"/>
 	    
 	    <Button
 	        android:id="@+id/button_4"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:onClick="cancelAlarm"
-	        android:text="Alarm Cancel" />
+	        android:text="Alarm Cancel"
+	        android:background="#CCCC00" />
     </LinearLayout>
     
     <LinearLayout
