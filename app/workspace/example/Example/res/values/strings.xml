@@ -14,5 +14,6 @@
     <string name="button_take_pic">Tomar foto</string>
     <string name="user_type">uba.dc.tjp.USER_TYPE</string>
     <string name="title_activity_taxi_config">TaxiConfigActivity</string>
+    <string name="location_service_name">LocationService</string>
 
 </resources>

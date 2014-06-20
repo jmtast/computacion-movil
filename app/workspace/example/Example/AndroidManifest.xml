@@ -48,6 +48,8 @@
             android:label="@string/title_activity_taxi_config" >
         </activity>
         <receiver android:name=".AlarmReceiver"></receiver>
+        
+        <service android:name="com.hw.example.LocationService"></service>
     </application>
 
 </manifest>

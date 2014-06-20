@@ -354,4 +354,12 @@ public class MainActivity extends ActionBarActivity implements
         }
     }
     
+    public void startLocationService(View view){
+    	startService(new Intent(this, LocationService.class));
+    }
+    
+    public void stopLocationService(View view){
+    	stopService(new Intent(this, LocationService.class));
+    }
+    
 }
