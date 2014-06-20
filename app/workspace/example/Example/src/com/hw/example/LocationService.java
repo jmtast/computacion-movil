@@ -3,13 +3,12 @@ package com.hw.example;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.IBinder;
-import android.widget.Toast;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.location.LocationProvider;
+import android.os.Bundle;
+import android.os.IBinder;
+import android.widget.Toast;
 
 public class LocationService extends Service{
 
@@ -42,12 +41,27 @@ public class LocationService extends Service{
 	
 	public class CurrentLocationListener implements LocationListener{
 
+		private Location lastLocation= null;
+		private float minDistanceDelta = 0;// (set to 0 for debug purposes) 20; // meters
+		private float minElapsedTime = 5000; // milliseconds
+		
 		@Override
 		public void onLocationChanged(Location location) {
+			boolean sendToServer = true;
 			
-			String message = location.toString();
+			if(lastLocation != null){
+				sendToServer = false;
+				float distance = location.distanceTo(lastLocation);
+				long elapsedTime = location.getTime() - lastLocation.getTime();
+				if(distance > minDistanceDelta && elapsedTime > minElapsedTime){
+					sendToServer = true;
+				}
+			}
 			
-			Toast.makeText( getApplicationContext(), message, Toast.LENGTH_SHORT ).show();			
+			if(sendToServer){
+				lastLocation = location;
+				Toast.makeText( getApplicationContext(), location.toString(), Toast.LENGTH_SHORT ).show();			
+			}
 		}
 
 		@Override
