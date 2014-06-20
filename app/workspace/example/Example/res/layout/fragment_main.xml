@@ -61,5 +61,24 @@
 	        android:onClick="cancelAlarm"
 	        android:text="Alarm Cancel" />
     </LinearLayout>
+    
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+    	android:layout_height="wrap_content" >
+	    <Button
+		        android:id="@+id/button_5_location"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:onClick="startLocationService"
+		        android:text="start loc-srvc" />
+	    
+	    <Button
+	        android:id="@+id/button_6_location"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:onClick="stopLocationService"
+	        android:text="stop loc-srvc" />
+    </LinearLayout>
 
 </LinearLayout>
