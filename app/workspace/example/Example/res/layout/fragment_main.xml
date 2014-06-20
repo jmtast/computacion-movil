@@ -5,45 +5,61 @@
     android:background="#CCCC00"
     android:orientation="vertical" >
 
-    <EditText
-        android:id="@+id/edit_message"
-        android:layout_width="246dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/edit_message" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+    	android:layout_height="wrap_content" >
+        <EditText
+	        android:id="@+id/edit_message"
+	        android:layout_width="246dp"
+	        android:layout_height="wrap_content"
+	        android:hint="@string/edit_message" />
 
-    <Button
-        android:id="@+id/button_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="sendMessage"
-        android:text="@string/button_send" />
+	    <Button
+	        android:id="@+id/button_1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:onClick="sendMessage"
+	        android:text="@string/button_send" />
+    </LinearLayout>
 
-     <Button
-        android:id="@+id/button_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="updateLocation"
-        android:text="Update Location" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:gravity="center_horizontal" >
+        <Button
+	        android:id="@+id/button_2"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:onClick="updateLocation"
+	        android:text="Update Location" />
     
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="match_parent"
-        android:layout_height="73dp"
-        android:layout_weight="0.04"
-        android:text="TextView" />
+	    <TextView
+	        android:id="@+id/textView1"
+	        android:layout_width="match_parent"
+	        android:layout_height="73dp"
+	        android:layout_weight="0.04"
+	        android:text="TextView" />
+    </LinearLayout>
     
-    <Button
-        android:id="@+id/button_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="startAlarm"
-        android:text="Alarm Set" />
-    
-    <Button
-        android:id="@+id/button_4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="cancelAlarm"
-        android:text="Alarm Cancel" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+    	android:layout_height="wrap_content" >
+	    <Button
+	        android:id="@+id/button_3"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:onClick="startAlarm"
+	        android:text="Alarm Set" />
+	    
+	    <Button
+	        android:id="@+id/button_4"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:onClick="cancelAlarm"
+	        android:text="Alarm Cancel" />
+    </LinearLayout>
 
 </LinearLayout>
