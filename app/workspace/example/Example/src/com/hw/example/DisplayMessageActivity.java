@@ -3,6 +3,7 @@ package com.hw.example;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -27,6 +28,9 @@ public class DisplayMessageActivity extends ActionBarActivity {
 
 	    // Set the text view as the activity layout
 	    setContentView(textView);
+	    
+	    ActionBar actionbar = getSupportActionBar();
+        actionbar.hide();
 	}
 
 	@Override

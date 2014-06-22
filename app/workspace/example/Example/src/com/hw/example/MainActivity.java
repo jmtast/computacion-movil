@@ -5,7 +5,6 @@ import android.app.AlarmManager;
 import android.app.Dialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -15,6 +14,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -53,6 +53,8 @@ public class MainActivity extends ActionBarActivity implements
         super.onStart();
         // Connect the client.
         mLocationClient.connect();
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.hide();
     }
     
     /*
