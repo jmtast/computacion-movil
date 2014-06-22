@@ -31,7 +31,7 @@
 	        style="@style/TaxiNowButton" />
 	    
 	    <TextView 
-	        style="@style/AppText"
+	        style="@style/TextNormal"
 	        android:text="Pedí un taxi y el más cercano llegará en breve" />
 	    
 	    <View
@@ -46,7 +46,7 @@
 	        style="@style/TaxiNowButton" />
 	    
 	    <TextView 
-	        style="@style/AppText"
+	        style="@style/TextNormal"
 	        android:text="Anotate como taxista y respondé a los pedidos de los pasajeros" />
 	    
 	    <View
