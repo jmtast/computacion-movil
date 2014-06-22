@@ -2,28 +2,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.hw.example.UserTypeChoosingActivity$PlaceholderFragment" >
 
-    <Button android:id="@+id/button_taxi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_taxi" 
-        android:onClick="chooseTaxi" />
+    <TextView
+        android:id="@+id/appTitle"
+        style="@style/AppTitle" />
     
-    <Button android:id="@+id/button_passenger"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_passenger" 
-        android:onClick="choosePassenger" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
     
-    <Button android:id="@+id/button_passenger2"
-        android:layout_width="wrap_content"
+    <LinearLayout 
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Send Data" 
-        android:onClick="sendData" />
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+	    
+	    <Button android:id="@+id/button_taxi"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:text="@string/button_taxi" 
+	        android:onClick="chooseTaxi"
+	        style="@style/TaxiNowButton" />
+	    
+	    <TextView 
+	        style="@style/AppText"
+	        android:text="Pedí un taxi y el más cercano llegará en breve" />
+	    
+	    <View
+	        android:layout_width="match_parent"
+	        android:layout_height="40dp" />
+	    
+	    <Button android:id="@+id/button_passenger"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:text="@string/button_passenger" 
+	        android:onClick="choosePassenger"
+	        style="@style/TaxiNowButton" />
+	    
+	    <TextView 
+	        style="@style/AppText"
+	        android:text="Anotate como taxista y respondé a los pedidos de los pasajeros" />
+	    
+	    <View
+	        android:layout_width="match_parent"
+	        android:layout_height="40dp" />
+	    
+	    <Button android:id="@+id/button_passenger2"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:text="Send Data" 
+	        android:onClick="sendData"
+	        style="@style/TaxiNowButton" />
+	   
+	   </LinearLayout>
 
 </LinearLayout>
