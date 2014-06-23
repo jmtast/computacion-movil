@@ -23,11 +23,11 @@
         android:orientation="vertical"
         android:gravity="center_horizontal">
 	    
-	    <Button android:id="@+id/button_taxi"
+       <Button android:id="@+id/button_passenger"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:text="@string/button_taxi" 
-	        android:onClick="chooseTaxi"
+	        android:text="@string/button_passenger" 
+	        android:onClick="choosePassenger"
 	        style="@style/TaxiNowButton" />
 	    
 	    <TextView 
@@ -38,16 +38,18 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="40dp" />
 	    
-	    <Button android:id="@+id/button_passenger"
+	    
+	    <Button android:id="@+id/button_taxi"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:text="@string/button_passenger" 
-	        android:onClick="choosePassenger"
+	        android:text="@string/button_taxi" 
+	        android:onClick="chooseTaxi"
 	        style="@style/TaxiNowButton" />
 	    
 	    <TextView 
 	        style="@style/TextNormal"
 	        android:text="Anotate como taxista y respondé a los pedidos de los pasajeros" />
+
 	    
 	    <View
 	        android:layout_width="match_parent"

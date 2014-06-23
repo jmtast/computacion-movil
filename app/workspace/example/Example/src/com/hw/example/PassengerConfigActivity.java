@@ -1,36 +1,39 @@
 package com.hw.example;
 
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.os.Build;
 
-public class DisplayMessageActivity extends ActionBarActivity {
+public class PassengerConfigActivity extends ActionBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_passenger_config);
 
-	    // Get the message from the intent
-	    Intent intent = getIntent();
-	    String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
-
-	    // Create the text view
-	    TextView textView = new TextView(this);
-	    textView.setTextSize(40);
-	    textView.setText(message);
-
-	    // Set the text view as the activity layout
-	    setContentView(textView);
-	    
-	    ActionBar actionbar = getSupportActionBar();
+		if (savedInstanceState == null) {
+			getSupportFragmentManager().beginTransaction()
+					.add(R.id.container, new PlaceholderFragment()).commit();
+		}
+		
+		ActionBar actionbar = getSupportActionBar();
         actionbar.hide();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.passenger_config, menu);
+		return true;
 	}
 
 	@Override
@@ -56,10 +59,15 @@ public class DisplayMessageActivity extends ActionBarActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_display_message,
-					container, false);
+			View rootView = inflater.inflate(
+					R.layout.fragment_passenger_config, container, false);
 			return rootView;
 		}
+	}
+	
+	public void launchSearchingTaxis(View view) {
+		Intent intent = new Intent(this, SearchingTaxis.class);
+		startActivity(intent);
 	}
 
 }

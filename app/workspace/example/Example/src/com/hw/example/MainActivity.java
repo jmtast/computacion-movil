@@ -107,7 +107,7 @@ public class MainActivity extends ActionBarActivity implements
             intent.putExtra(EXTRA_MESSAGE, "taxi");
             startActivity(intent);
         }else if(PASSENGER.equals(userType)){
-            Intent intent = new Intent(this, DisplayMessageActivity.class);
+            Intent intent = new Intent(this, PassengerConfigActivity.class);
             intent.putExtra(EXTRA_MESSAGE, "passenger");
             startActivity(intent);
         }
@@ -136,7 +136,7 @@ public class MainActivity extends ActionBarActivity implements
     
     /** Called when the user clicks the Send button */
     public void sendMessage(View view) {
-        Intent intent = new Intent(this, DisplayMessageActivity.class);
+        Intent intent = new Intent(this, PassengerConfigActivity.class);
         EditText editText = (EditText) findViewById(R.id.edit_message);
         String message = editText.getText().toString();
         intent.putExtra(EXTRA_MESSAGE, message);

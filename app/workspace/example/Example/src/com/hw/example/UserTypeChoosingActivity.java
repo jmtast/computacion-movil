@@ -62,8 +62,7 @@ public class UserTypeChoosingActivity extends ActionBarActivity {
 	public void choosePassenger(View view){
 		saveUserType(MainActivity.PASSENGER);
 		
-		Intent intent = new Intent(this, DisplayMessageActivity.class);
-    	intent.putExtra(MainActivity.EXTRA_MESSAGE, "passenger");
+		Intent intent = new Intent(this, PassengerConfigActivity.class);
     	startActivity(intent);
 	}
 	

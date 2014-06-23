@@ -36,14 +36,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.hw.example.DisplayMessageActivity"
-            android:label="@string/title_activity_display_message"
-            android:parentActivityName="com.hw.example.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.hw.example.MainActivity" />
-        </activity>
-        <activity
             android:name="com.hw.example.UserTypeChoosingActivity"
             android:label="@string/title_activity_user_type_choosing" >
         </activity>
@@ -68,6 +60,10 @@
         <activity
             android:name="com.hw.example.SearchingTaxis"
             android:label="@string/title_activity_searching_taxis" >
+        </activity>
+        <activity
+            android:name="com.hw.example.PassengerConfigActivity"
+            android:label="@string/title_activity_passenger_config" >
         </activity>
     </application>
 
