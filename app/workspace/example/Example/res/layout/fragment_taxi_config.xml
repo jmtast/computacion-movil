@@ -32,5 +32,12 @@
 	        android:contentDescription="the description"/>
 	
 	</LinearLayout>
+	
+    <Button 
+        style="@style/TaxiNowButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Ir a la activity de 'Buscando Taxis'"
+        android:onClick="launchSearchingTaxis"/>
 
 </LinearLayout>

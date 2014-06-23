@@ -80,6 +80,11 @@ public class TaxiConfigActivity extends ActionBarActivity {
 //		setPic(mCurrentPhotoPath);
 	}
 	
+	public void launchSearchingTaxis(View view) {
+		Intent intent = new Intent(this, SearchingTaxis.class);
+		startActivity(intent);
+	}
+	
 	private void dispatchTakePictureIntent_simple() {
 	    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 	    if (takePictureIntent.resolveActivity(getPackageManager()) != null) {

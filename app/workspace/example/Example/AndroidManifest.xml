@@ -14,7 +14,8 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="19" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -59,10 +60,14 @@
 
         <activity
             android:name="com.hw.example.ShutdownActivity"
-            android:label="@string/title_activity_shutdown" 
+            android:excludeFromRecents="true"
+            android:label="@string/title_activity_shutdown"
             android:launchMode="singleTask"
-    		android:taskAffinity=""
-    		android:excludeFromRecents="true">
+            android:taskAffinity="" >
+        </activity>
+        <activity
+            android:name="com.hw.example.SearchingTaxis"
+            android:label="@string/title_activity_searching_taxis" >
         </activity>
     </application>
 

@@ -16,5 +16,6 @@
     <string name="title_activity_taxi_config">TaxiConfigActivity</string>
     <string name="location_service_name">LocationService</string>
     <string name="title_activity_shutdown">ShutdownActivity</string>
+    <string name="title_activity_searching_taxis">SearchingTaxis</string>
 
 </resources>
