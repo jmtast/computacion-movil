@@ -24,6 +24,21 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp" />
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:background="#FFFFFF" 
+        android:hint=" Voy hasta...">
+
+        <requestFocus />
+    </EditText>
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
     
 	<Button 
         style="@style/TaxiNowButton"
