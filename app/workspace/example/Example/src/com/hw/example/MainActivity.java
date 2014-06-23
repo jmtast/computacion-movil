@@ -91,12 +91,6 @@ public class MainActivity extends ActionBarActivity implements
         
         SharedPreferences sharedPref = getSharedPreferences(getString(R.string.user_type_preference_key), Context.MODE_PRIVATE);
         
-        //--------This part takes care that all previous configuration is deleted. For development purposes. Comment to keep data saved permanently as it should for real. 
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.clear();
-        editor.commit();
-        //----------------------------------------------------------------------------------------------------------------------------------------------------------------
-        
         String userType = sharedPref.getString(getString(R.string.user_type), NONE);
         
         if(NONE.equals(userType)){
