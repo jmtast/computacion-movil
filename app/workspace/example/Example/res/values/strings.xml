@@ -8,8 +8,17 @@
     <string name="button_send">Send</string>
     <string name="title_activity_display_message">Display Message Activity</string>
     <string name="user_type_preference_key">uba.dc.tjp.USER_TYPE_PREF_KEY</string>
+    
+    <string name="taxi_config_key">uba.dc.tjp.TAXI_CONFIG_KEY</string>
+    <string name="taxi_config_photo_file">uba.dc.tjp.TAXI_CONFIG_PHOTO_FILE</string>
+	<string name="taxi_config_marca">uba.dc.tjp.TAXI_CONFIG_MARCA</string>
+   	<string name="taxi_config_modelo">uba.dc.tjp.TAXI_CONFIG_MODELO</string>
+	<string name="taxi_config_patente">uba.dc.tjp.TAXI_CONFIG_PATENTE</string>
+    
+    <string name="none">uba.dc.tjp.NONE</string>
     <string name="title_activity_user_type_choosing">UserTypeChoosingActivity</string>
     <string name="button_taxi">Soy taxista</string>
+    <string name="save">Guardar</string>
     <string name="button_passenger">Soy pasajero</string>
     <string name="button_take_pic">Tomar foto</string>
     <string name="user_type">uba.dc.tjp.USER_TYPE</string>

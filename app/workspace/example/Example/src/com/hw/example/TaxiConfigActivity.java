@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -20,13 +22,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class TaxiConfigActivity extends ActionBarActivity {
 
 	private static final int REQUEST_TAKE_PHOTO = 1;
 	
-	private String mCurrentPhotoPath;
+	private String none;
+	private SharedPreferences sharedPref;
+	private String mCurrentPhotoPath = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,25 @@ public class TaxiConfigActivity extends ActionBarActivity {
 		}
 		ActionBar actionbar = getSupportActionBar();
         actionbar.hide();
+        
+        none = getString(R.string.none);
+        sharedPref = getSharedPreferences(getString(R.string.taxi_config_key), Context.MODE_PRIVATE);
+	}
+	
+	@Override
+	public void onPostCreate(Bundle savedInstanceState){
+		super.onPostCreate(savedInstanceState);
+		
+		loadTaxiConfig();
+        
+        if(mCurrentPhotoPath == null){
+        	mCurrentPhotoPath = sharedPref.getString(getString(R.string.taxi_config_photo_file), none);
+            
+            if(!none.equals(mCurrentPhotoPath)){
+//            	Toast.makeText(this, "Stored filepath " + mCurrentPhotoPath, Toast.LENGTH_SHORT).show();
+//            	setPic(mCurrentPhotoPath);
+            }
+        }
 	}
 
 	@Override
@@ -63,21 +88,66 @@ public class TaxiConfigActivity extends ActionBarActivity {
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		ImageView mImageView = (ImageView) findViewById(R.id.imageView_taxi_driver);
-		
 	    if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-	        Bundle extras = data.getExtras();
-	        Bitmap imageBitmap = (Bitmap) extras.get("data");
-	        mImageView.setImageBitmap(imageBitmap);
+	    	ImageView mImageView = (ImageView) findViewById(R.id.imageView_taxi_driver);
+	    	
+//	        Bundle extras = data.getExtras();
+//	        Bitmap imageBitmap = (Bitmap) extras.get("data");
+//	        mImageView.setImageBitmap(imageBitmap);
+	    	setPic(mCurrentPhotoPath);
+	    	savePhotoFileName(mCurrentPhotoPath);
 	    }
 	}
 	
+	public void saveTaxiConfig(View view){
+		SharedPreferences.Editor editor = sharedPref.edit();
+		
+		EditText editText = (EditText) findViewById(R.id.edit_marca);
+        String message = editText.getText().toString();
+		editor.putString(getString(R.string.taxi_config_marca), message);
+		
+		editText = (EditText) findViewById(R.id.edit_modelo);
+        message = editText.getText().toString();
+		editor.putString(getString(R.string.taxi_config_modelo), message);
+		
+		editText = (EditText) findViewById(R.id.edit_patente);
+        message = editText.getText().toString();
+		editor.putString(getString(R.string.taxi_config_patente), message);
+		
+		editor.commit();
+		
+		Toast.makeText(this, "Datos guardados correctamente", Toast.LENGTH_SHORT).show();
+	}
+	
+	private void loadTaxiConfig(){
+		none = getString(R.string.none);
+        
+		EditText editText;
+		
+		String message = sharedPref.getString(getString(R.string.taxi_config_marca), none);
+		if(!none.equals(message)){
+			editText = (EditText) findViewById(R.id.edit_marca);
+			editText.setText(message);
+		}
+		
+		message = sharedPref.getString(getString(R.string.taxi_config_modelo), none);
+		if(!none.equals(message)){
+			editText = (EditText) findViewById(R.id.edit_modelo);
+			editText.setText(message);
+		}
+		
+		message = sharedPref.getString(getString(R.string.taxi_config_patente), none);
+		if(!none.equals(message)){
+			editText = (EditText) findViewById(R.id.edit_patente);
+			editText.setText(message);
+		}
+	}
+	
 	public void takePic(View view){
-		dispatchTakePictureIntent_simple();
+//		dispatchTakePictureIntent_simple();
 		
 		// Some other way
-//		dispatchTakePictureIntent();
-//		setPic(mCurrentPhotoPath);
+		dispatchTakePictureIntent();
 	}
 	
 	private void dispatchTakePictureIntent_simple() {
@@ -88,19 +158,13 @@ public class TaxiConfigActivity extends ActionBarActivity {
 	}
 	
 	private File createImageFile() throws IOException {
-	    // Create an image file name
 	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-	    String imageFileName = "JPEG_" + timeStamp + "_";
-	    File storageDir = Environment.getExternalStoragePublicDirectory(
-	            Environment.DIRECTORY_PICTURES);
-	    File image = File.createTempFile(
-	        imageFileName,  /* prefix */
-	        ".jpg",         /* suffix */
-	        storageDir      /* directory */
-	    );
+	    String imageFileName = "taxi_driver_" + timeStamp;
+	    File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+//	    File image = File.createTempFile(imageFileName, ".jpg", storageDir);
+	    File image = new File(storageDir, imageFileName+".jpg");
 
-	    // Save a file: path for use with ACTION_VIEW intents
-	    mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+	    mCurrentPhotoPath = image.getAbsolutePath();
 	    return image;
 	}
 	
@@ -121,6 +185,12 @@ public class TaxiConfigActivity extends ActionBarActivity {
 	            startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
 	        }
 	    }
+	}
+	
+	private void savePhotoFileName(String filename){
+		SharedPreferences.Editor editor = sharedPref.edit();
+		editor.putString(getString(R.string.taxi_config_photo_file), filename);
+		editor.commit();
 	}
 	
 	private void setPic(String mCurrentPhotoPath) {
