@@ -229,7 +229,7 @@ public class TaxiConfigActivity extends ActionBarActivity {
 	public void postData(TaxiData taxiData) {
 	    // Create a new HttpClient and Post Header
 	    HttpClient httpclient = new DefaultHttpClient();
-	    HttpPost httppost = new HttpPost(getString(R.string.save_taxi_config_url));
+	    HttpPost httpPost = new HttpPost(getString(R.string.save_taxi_config_url));
 
 	    try {
 	        // Add your data
@@ -237,10 +237,10 @@ public class TaxiConfigActivity extends ActionBarActivity {
 	        nameValuePairs.add(new BasicNameValuePair("marca", taxiData.getMarca()));
 	        nameValuePairs.add(new BasicNameValuePair("modelo", taxiData.getModelo()));
 	        nameValuePairs.add(new BasicNameValuePair("patente", taxiData.getPatente()));
-	        httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+	        httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
 	        // Execute HTTP Post Request
-	        HttpResponse response = httpclient.execute(httppost);
+	        HttpResponse response = httpclient.execute(httpPost);
 	        
 	    } catch (ClientProtocolException e) {
 	        // TODO Auto-generated catch block

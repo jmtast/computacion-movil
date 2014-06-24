@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.os.Build;
 
 public class PassengerConfigActivity extends ActionBarActivity {
@@ -67,6 +68,11 @@ public class PassengerConfigActivity extends ActionBarActivity {
 	
 	public void launchSearchingTaxis(View view) {
 		Intent intent = new Intent(this, SearchingTaxis.class);
+		
+        EditText editText = (EditText) findViewById(R.id.editTextDestination);
+        String message = editText.getText().toString();
+        intent.putExtra(getString(R.string.extra_destination), message);
+        
 		startActivity(intent);
 	}
 

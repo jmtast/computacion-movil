@@ -30,5 +30,9 @@
     <string name="title_activity_shutdown">ShutdownActivity</string>
     <string name="title_activity_searching_taxis">SearchingTaxis</string>
     <string name="title_activity_passenger_config">PassengerConfigActivity</string>
+    
+    <string name="extra_destination">uba.dc.tjp.DESTINATION</string>
+    
+    <string name="search_destination_uri">http://follower-endpoint.herokuapp.com/application/puta/search-destination</string>
 
 </resources>
