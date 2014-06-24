@@ -69,5 +69,10 @@ public class PassengerConfigActivity extends ActionBarActivity {
 		Intent intent = new Intent(this, SearchingTaxis.class);
 		startActivity(intent);
 	}
+	
+	public void launchDebugActivity(View view) {
+		Intent intent = new Intent(this, DebugActivity.class);
+		startActivity(intent);
+	}
 
 }
