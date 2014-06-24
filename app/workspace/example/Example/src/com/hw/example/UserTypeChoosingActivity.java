@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 public class UserTypeChoosingActivity extends ActionBarActivity {
 	
+	public static SharedPreferences sharedPref;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -77,7 +79,7 @@ public class UserTypeChoosingActivity extends ActionBarActivity {
     }
 	
 	private void saveUserType(String userType){
-		SharedPreferences sharedPref = getSharedPreferences(getString(R.string.user_type_preference_key), Context.MODE_PRIVATE);
+		sharedPref = getSharedPreferences(getString(R.string.user_type_preference_key), Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = sharedPref.edit();
 		editor.putString(getString(R.string.user_type), userType);
 		editor.commit();
