@@ -53,22 +53,23 @@ public class TaxiConfigActivity extends ActionBarActivity {
 	@Override
 	public void onPostCreate(Bundle savedInstanceState){
 		super.onPostCreate(savedInstanceState);
-		
 		loadTaxiConfig();
-        
-        if(mCurrentPhotoPath == null){
+	}
+	
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus){
+		super.onWindowFocusChanged(hasFocus);
+		if(mCurrentPhotoPath == null){
         	mCurrentPhotoPath = sharedPref.getString(getString(R.string.taxi_config_photo_file), none);
             
             if(!none.equals(mCurrentPhotoPath)){
-//            	Toast.makeText(this, "Stored filepath " + mCurrentPhotoPath, Toast.LENGTH_SHORT).show();
-//            	setPic(mCurrentPhotoPath);
+            	setPic(mCurrentPhotoPath);
             }
         }
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.taxi_config, menu);
 		return true;
@@ -91,9 +92,6 @@ public class TaxiConfigActivity extends ActionBarActivity {
 	    if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
 	    	ImageView mImageView = (ImageView) findViewById(R.id.imageView_taxi_driver);
 	    	
-//	        Bundle extras = data.getExtras();
-//	        Bitmap imageBitmap = (Bitmap) extras.get("data");
-//	        mImageView.setImageBitmap(imageBitmap);
 	    	setPic(mCurrentPhotoPath);
 	    	savePhotoFileName(mCurrentPhotoPath);
 	    }
@@ -144,9 +142,6 @@ public class TaxiConfigActivity extends ActionBarActivity {
 	}
 	
 	public void takePic(View view){
-//		dispatchTakePictureIntent_simple();
-		
-		// Some other way
 		dispatchTakePictureIntent();
 	}
 	
@@ -161,7 +156,6 @@ public class TaxiConfigActivity extends ActionBarActivity {
 	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 	    String imageFileName = "taxi_driver_" + timeStamp;
 	    File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-//	    File image = File.createTempFile(imageFileName, ".jpg", storageDir);
 	    File image = new File(storageDir, imageFileName+".jpg");
 
 	    mCurrentPhotoPath = image.getAbsolutePath();
