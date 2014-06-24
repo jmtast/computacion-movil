@@ -1,18 +1,20 @@
 package com.hw.example;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
+import java.util.concurrent.ExecutionException;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
+import android.widget.Toast;
 
 public class UserTypeChoosingActivity extends ActionBarActivity {
 	
@@ -25,6 +27,8 @@ public class UserTypeChoosingActivity extends ActionBarActivity {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
+		ActionBar actionbar = getSupportActionBar();
+        actionbar.hide();
 	}
 
 	@Override
@@ -58,10 +62,19 @@ public class UserTypeChoosingActivity extends ActionBarActivity {
 	public void choosePassenger(View view){
 		saveUserType(MainActivity.PASSENGER);
 		
-		Intent intent = new Intent(this, DisplayMessageActivity.class);
-    	intent.putExtra(MainActivity.EXTRA_MESSAGE, "passenger");
+		Intent intent = new Intent(this, PassengerConfigActivity.class);
     	startActivity(intent);
 	}
+	
+    public void sendData(View view) throws InterruptedException, ExecutionException {
+    	// Create a new HttpClient and Post Header
+		Retrievedata retrieveData = new Retrievedata(this);
+		retrieveData.execute();
+    }
+    
+    public void setData(String result){
+    	Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+    }
 	
 	private void saveUserType(String userType){
 		SharedPreferences sharedPref = getSharedPreferences(getString(R.string.user_type_preference_key), Context.MODE_PRIVATE);

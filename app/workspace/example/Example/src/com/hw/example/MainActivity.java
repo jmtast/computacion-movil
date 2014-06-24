@@ -3,6 +3,7 @@ package com.hw.example;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +13,8 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -50,6 +53,8 @@ public class MainActivity extends ActionBarActivity implements
         super.onStart();
         // Connect the client.
         mLocationClient.connect();
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.hide();
     }
     
     /*
@@ -86,12 +91,6 @@ public class MainActivity extends ActionBarActivity implements
         
         SharedPreferences sharedPref = getSharedPreferences(getString(R.string.user_type_preference_key), Context.MODE_PRIVATE);
         
-        //--------This part takes care that all previous configuration is deleted. For development purposes. Comment to keep data saved permanently as it should for real. 
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.clear();
-        editor.commit();
-        //----------------------------------------------------------------------------------------------------------------------------------------------------------------
-        
         String userType = sharedPref.getString(getString(R.string.user_type), NONE);
         
         if(NONE.equals(userType)){
@@ -102,7 +101,7 @@ public class MainActivity extends ActionBarActivity implements
             intent.putExtra(EXTRA_MESSAGE, "taxi");
             startActivity(intent);
         }else if(PASSENGER.equals(userType)){
-            Intent intent = new Intent(this, DisplayMessageActivity.class);
+            Intent intent = new Intent(this, PassengerConfigActivity.class);
             intent.putExtra(EXTRA_MESSAGE, "passenger");
             startActivity(intent);
         }
@@ -131,7 +130,7 @@ public class MainActivity extends ActionBarActivity implements
     
     /** Called when the user clicks the Send button */
     public void sendMessage(View view) {
-        Intent intent = new Intent(this, DisplayMessageActivity.class);
+        Intent intent = new Intent(this, PassengerConfigActivity.class);
         EditText editText = (EditText) findViewById(R.id.edit_message);
         String message = editText.getText().toString();
         intent.putExtra(EXTRA_MESSAGE, message);
@@ -339,6 +338,49 @@ public class MainActivity extends ActionBarActivity implements
             manager.cancel(pendingIntent);
             Toast.makeText(this, "Alarm Canceled", Toast.LENGTH_SHORT).show();
         }
+    }
+    
+    public void startLocationService(View view){
+    	startService(new Intent(this, LocationService.class));
+    }
+    
+    public void stopLocationService(View view){
+    	stopService(new Intent(this, LocationService.class));
+    }
+    
+    public void launchNotification(View view){    	
+    	
+    	// Instantiate a Builder object.
+    	NotificationCompat.Builder builder =
+    	        new NotificationCompat.Builder(this)
+    	        .setSmallIcon(R.drawable.taxinowicon)
+    	        .setContentTitle("My notification")
+    	        .setContentText("Hello World!")
+    	        .setAutoCancel(true);
+    	// Creates an Intent for the Activity
+//    	Intent notifyIntent =  new Intent(new ComponentName(this, ShutdownActivity.class));
+    	Intent notifyIntent = new Intent(this, ShutdownActivity.class);
+    	
+    	// Sets the Activity to start in a new, empty task
+    	notifyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    	// Creates the PendingIntent
+    	PendingIntent pendingIntent =
+    	        PendingIntent.getActivity(
+    	        this,
+    	        0,
+    	        notifyIntent,
+    	        PendingIntent.FLAG_UPDATE_CURRENT
+    	);
+
+    	// Puts the PendingIntent into the notification builder
+    	builder.setContentIntent(pendingIntent);
+    	// Notifications are issued by sending them to the
+    	// NotificationManager system service.
+    	NotificationManager mNotificationManager =
+    	    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+    	// Builds an anonymous Notification object from the builder, and
+    	// passes it to the NotificationManager
+    	mNotificationManager.notify(123456, builder.build());
     }
     
 }
