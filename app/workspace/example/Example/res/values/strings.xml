@@ -18,5 +18,6 @@
     <string name="title_activity_shutdown">ShutdownActivity</string>
     <string name="title_activity_searching_taxis">SearchingTaxis</string>
     <string name="title_activity_passenger_config">PassengerConfigActivity</string>
+    <string name="title_activity_debug">DebugActivity</string>
 
 </resources>
