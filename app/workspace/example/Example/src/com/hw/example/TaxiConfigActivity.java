@@ -3,7 +3,18 @@ package com.hw.example;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 
 import android.content.Context;
 import android.content.Intent;
@@ -101,18 +112,20 @@ public class TaxiConfigActivity extends ActionBarActivity {
 		SharedPreferences.Editor editor = sharedPref.edit();
 		
 		EditText editText = (EditText) findViewById(R.id.edit_marca);
-        String message = editText.getText().toString();
-		editor.putString(getString(R.string.taxi_config_marca), message);
+        String marca = editText.getText().toString();
+		editor.putString(getString(R.string.taxi_config_marca), marca);
 		
 		editText = (EditText) findViewById(R.id.edit_modelo);
-        message = editText.getText().toString();
-		editor.putString(getString(R.string.taxi_config_modelo), message);
+        String modelo = editText.getText().toString();
+		editor.putString(getString(R.string.taxi_config_modelo), modelo);
 		
 		editText = (EditText) findViewById(R.id.edit_patente);
-        message = editText.getText().toString();
-		editor.putString(getString(R.string.taxi_config_patente), message);
+        String patente = editText.getText().toString();
+		editor.putString(getString(R.string.taxi_config_patente), patente);
 		
 		editor.commit();
+		
+//		postData(new TaxiData(marca, modelo, patente));
 		
 		Toast.makeText(this, "Datos guardados correctamente", Toast.LENGTH_SHORT).show();
 	}
@@ -211,6 +224,29 @@ public class TaxiConfigActivity extends ActionBarActivity {
 
 	    Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
 	    mImageView.setImageBitmap(bitmap);
+	}
+	
+	public void postData(TaxiData taxiData) {
+	    // Create a new HttpClient and Post Header
+	    HttpClient httpclient = new DefaultHttpClient();
+	    HttpPost httppost = new HttpPost(getString(R.string.save_taxi_config_url));
+
+	    try {
+	        // Add your data
+	        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
+	        nameValuePairs.add(new BasicNameValuePair("marca", taxiData.getMarca()));
+	        nameValuePairs.add(new BasicNameValuePair("modelo", taxiData.getModelo()));
+	        nameValuePairs.add(new BasicNameValuePair("patente", taxiData.getPatente()));
+	        httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+	        // Execute HTTP Post Request
+	        HttpResponse response = httpclient.execute(httppost);
+	        
+	    } catch (ClientProtocolException e) {
+	        // TODO Auto-generated catch block
+	    } catch (IOException e) {
+	        // TODO Auto-generated catch block
+	    }
 	}
 
 	/**

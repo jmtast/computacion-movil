@@ -14,6 +14,7 @@
 	<string name="taxi_config_marca">uba.dc.tjp.TAXI_CONFIG_MARCA</string>
    	<string name="taxi_config_modelo">uba.dc.tjp.TAXI_CONFIG_MODELO</string>
 	<string name="taxi_config_patente">uba.dc.tjp.TAXI_CONFIG_PATENTE</string>
+	<string name="save_taxi_config_url">http://follower-endpoint.herokuapp.com/application/puta/taxi-config</string>
     
     <string name="none">uba.dc.tjp.NONE</string>
     <string name="title_activity_user_type_choosing">UserTypeChoosingActivity</string>
