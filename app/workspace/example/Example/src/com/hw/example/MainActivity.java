@@ -41,6 +41,9 @@ public class MainActivity extends ActionBarActivity implements
     public final static String TAXI = "com.example.myfirstapp.TAXI";
     public final static String PASSENGER = "com.example.myfirstapp.PASSENGER";
     
+    public final static String TAXI_TEXT = "Taxi";
+    public final static String PASS_TEXT = "Passenger";
+    
     private LocationClient mLocationClient;
     private PendingIntent pendingIntent;
     private AlarmManager manager;

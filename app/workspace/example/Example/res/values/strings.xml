@@ -17,12 +17,14 @@
 	<string name="save_taxi_config_url">http://follower-endpoint.herokuapp.com/application/puta/taxi-config</string>
     
     <string name="none">uba.dc.tjp.NONE</string>
+    <string name="user_id_preference_key">uba.dc.tjp.USER_ID_PREF_KEY</string>
     <string name="title_activity_user_type_choosing">UserTypeChoosingActivity</string>
     <string name="button_taxi">Soy taxista</string>
     <string name="save">Guardar</string>
     <string name="button_passenger">Soy pasajero</string>
     <string name="button_take_pic">Tomar foto</string>
     <string name="user_type">uba.dc.tjp.USER_TYPE</string>
+    <string name="user_id">uba.dc.tjp.USER_ID</string>
     <string name="title_activity_taxi_config">TaxiConfigActivity</string>
     <string name="location_service_name">LocationService</string>
     <string name="title_activity_shutdown">ShutdownActivity</string>
