@@ -89,19 +89,6 @@ public class DebugActivity extends ActionBarActivity implements
         SharedPreferences sharedPref = getSharedPreferences(getString(R.string.user_type_preference_key), Context.MODE_PRIVATE);
         
         String userType = sharedPref.getString(getString(R.string.user_type), NONE);
-        
-        if(NONE.equals(userType)){
-            Intent intent = new Intent(this, UserTypeChoosingActivity.class);
-            startActivity(intent);
-        }else if(TAXI.equals(userType)){
-            Intent intent = new Intent(this, TaxiConfigActivity.class);
-            intent.putExtra(EXTRA_MESSAGE, "taxi");
-            startActivity(intent);
-        }else if(PASSENGER.equals(userType)){
-            Intent intent = new Intent(this, PassengerConfigActivity.class);
-            intent.putExtra(EXTRA_MESSAGE, "passenger");
-            startActivity(intent);
-        }
     }
 
 	@Override
