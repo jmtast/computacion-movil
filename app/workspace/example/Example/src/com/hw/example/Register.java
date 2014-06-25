@@ -1,0 +1,43 @@
+package com.hw.example;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+import org.json.JSONException;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
+
+public class Register extends AsyncTask<String, Void, String> {
+	
+	private UserTypeChoosingActivity activity;
+	private Class nextActivity;
+	private String nextType;
+
+	public Register(UserTypeChoosingActivity context, Class nextActivity, String nextType){
+	    this.activity = context;
+	    this.nextActivity = nextActivity;
+	    this.nextType = nextType;
+	}
+
+	@Override
+	protected String doInBackground(String... type) {
+		Api api = new Api();
+		try {
+			return api.register(type.toString());
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	protected void onPostExecute(String result) {
+		activity.finishRegistration(nextActivity,nextType,result);
+	}
+	
+
+}

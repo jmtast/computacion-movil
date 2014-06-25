@@ -1,14 +1,19 @@
 package com.hw.example;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.android.gms.location.LocationClient;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -17,6 +22,9 @@ public class MainActivity extends ActionBarActivity {
     public final static String NONE = "com.example.myfirstapp.NONNE";
     public final static String TAXI = "com.example.myfirstapp.TAXI";
     public final static String PASSENGER = "com.example.myfirstapp.PASSENGER";
+    public final static String TAXI_TEXT = "Taxi";
+    public final static String PASS_TEXT = "Passenger";
+    
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {

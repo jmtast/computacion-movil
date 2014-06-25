@@ -2,6 +2,7 @@ package com.hw.example;
 
 import java.util.concurrent.ExecutionException;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -56,16 +57,24 @@ public class UserTypeChoosingActivity extends ActionBarActivity {
 	public void chooseTaxi(View view){
 		saveUserType(MainActivity.TAXI);
 		
-		Intent intent = new Intent(this, TaxiConfigActivity.class);
-    	intent.putExtra(MainActivity.EXTRA_MESSAGE, "taxi");
+		Register register = new Register(this, TaxiConfigActivity.class,"taxi");
+		register.execute(MainActivity.TAXI_TEXT);
+	}
+	
+	public void finishRegistration(Class nextActivityClass, String type, String newId){
+		saveUserId(newId);
+		
+		Intent intent = new Intent(this, nextActivityClass);
+    	intent.putExtra(MainActivity.EXTRA_MESSAGE, type);
     	startActivity(intent);
 	}
 	
+
 	public void choosePassenger(View view){
 		saveUserType(MainActivity.PASSENGER);
 		
-		Intent intent = new Intent(this, PassengerConfigActivity.class);
-    	startActivity(intent);
+		Register register = new Register(this, PassengerConfigActivity.class, "passenger");
+		register.execute(MainActivity.PASS_TEXT);
 	}
 	
     public void sendData(View view) throws InterruptedException, ExecutionException {
@@ -77,6 +86,13 @@ public class UserTypeChoosingActivity extends ActionBarActivity {
     public void setData(String result){
     	Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
     }
+    
+    private void saveUserId(String newId) {
+		SharedPreferences sharedPref = getSharedPreferences(getString(R.string.user_id_preference_key), Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPref.edit();
+		editor.putString(getString(R.string.user_id), newId);
+		editor.commit();
+	}
 	
 	private void saveUserType(String userType){
 		sharedPref = getSharedPreferences(getString(R.string.user_type_preference_key), Context.MODE_PRIVATE);

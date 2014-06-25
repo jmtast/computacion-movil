@@ -1,6 +1,8 @@
 package com.hw.example;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -10,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 public class PassengerConfigActivity extends ActionBarActivity {
 
@@ -72,6 +75,15 @@ public class PassengerConfigActivity extends ActionBarActivity {
 	public void launchDebugActivity(View view) {
 		Intent intent = new Intent(this, DebugActivity.class);
 		startActivity(intent);
+	}
+
+	public void chooseUserType(View view) {
+		SharedPreferences sharedPref = getSharedPreferences(getString(R.string.user_type_preference_key), Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPref.edit();
+		editor.remove(getString(R.string.user_type));
+		editor.commit();
+		
+		Toast.makeText(this, "Preferencias borradas", Toast.LENGTH_SHORT).show();
 	}
 
 }
