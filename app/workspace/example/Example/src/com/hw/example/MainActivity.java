@@ -1,19 +1,16 @@
 package com.hw.example;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.google.android.gms.location.LocationClient;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -36,9 +33,23 @@ public class MainActivity extends ActionBarActivity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
-                
-        Intent intent = new Intent(this, UserTypeChoosingActivity.class);
-        startActivity(intent);
+        
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.user_type_preference_key), Context.MODE_PRIVATE);
+        
+        String userType = sharedPref.getString(getString(R.string.user_type), NONE);
+        
+        if(NONE.equals(userType)){
+            Intent intent = new Intent(this, UserTypeChoosingActivity.class);
+            startActivity(intent);
+        }else if(TAXI.equals(userType)){
+            Intent intent = new Intent(this, TaxiConfigActivity.class);
+            intent.putExtra(EXTRA_MESSAGE, "taxi");
+            startActivity(intent);
+        }else if(PASSENGER.equals(userType)){
+            Intent intent = new Intent(this, PassengerConfigActivity.class);
+            intent.putExtra(EXTRA_MESSAGE, "passenger");
+            startActivity(intent);
+        }
     }
 
 
