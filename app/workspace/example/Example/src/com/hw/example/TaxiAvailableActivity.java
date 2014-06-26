@@ -43,13 +43,13 @@ public class TaxiAvailableActivity extends ActionBarActivity {
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
 		
-		ListView lv = (ListView) findViewById(R.id.taxiRequestsList);
-		
-		lv.setOnItemClickListener(new OnItemClickListener() {
-	       	 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-	       		Toast.makeText( getApplicationContext(), "service bound?", Toast.LENGTH_SHORT ).show();
-	       	 }
-        });
+//		ListView lv = (ListView) findViewById(R.id.taxiRequestsList);
+//		
+//		lv.setOnItemClickListener(new OnItemClickListener() {
+//	       	 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//	       		Toast.makeText( getApplicationContext(), "service bound?", Toast.LENGTH_SHORT ).show();
+//	       	 }
+//        });
 		
 //		SharedPreferences sharedPref = getSharedPreferences(getString(R.string.service_running_key), Context.MODE_PRIVATE);
 //        boolean serviceRunning = sharedPref.getBoolean(getString(R.string.service_running), false);
