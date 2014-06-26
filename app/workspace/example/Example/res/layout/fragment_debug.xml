@@ -35,6 +35,10 @@
 	        android:textColor="#CCCC00" />
     </LinearLayout>
     
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+    
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
@@ -48,7 +52,9 @@
 	        android:text="Alarm Set"
 	        style="@style/TaxiNowButton" />
 	    
-	    <View android:layout_width="3dip" android:layout_height="1dip"/>
+	    <View
+	        android:layout_width="match_parent"
+	        android:layout_height="10dp" />
 	    
 	    <Button
 	        android:id="@+id/button_4"
@@ -59,7 +65,9 @@
 	        style="@style/TaxiNowButton" />
     </LinearLayout>
     
-	<View android:layout_width="3dip" android:layout_height="3dip"/>
+	<View
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
     
     <LinearLayout
         android:orientation="vertical"
@@ -74,7 +82,9 @@
 		        android:text="start loc-srvc" 
 		        style="@style/TaxiNowButton" />
 	    	   
-		<View android:layout_width="3dip" android:layout_height="1dip"/>
+		<View
+	        android:layout_width="match_parent"
+	        android:layout_height="10dp" />
 	    
 	    <Button
 	        android:id="@+id/button_6_location"
@@ -85,7 +95,9 @@
 	        style="@style/TaxiNowButton" />
     </LinearLayout>
     
-    <View android:layout_width="3dip" android:layout_height="3dip"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
     
     <Button
 	        android:id="@+id/button_7_notif"
