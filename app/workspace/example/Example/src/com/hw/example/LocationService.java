@@ -1,11 +1,15 @@
 package com.hw.example;
 
+import org.json.JSONObject;
+
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.widget.Toast;
@@ -15,6 +19,8 @@ public class LocationService extends Service{
 	public LocationManager locationManager;
 	public CurrentLocationListener listener;
 	public Location previousBestLocation = null;
+	public TaxiAvailableActivity activity = null;
+	final static String MY_ACTION = "MY_ACTION";
 	
 	@Override
 	public void onCreate(){
@@ -34,16 +40,14 @@ public class LocationService extends Service{
 	
 	@Override
 	public IBinder onBind(Intent intent) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-	
 	public class CurrentLocationListener implements LocationListener{
 
 		private Location lastLocation= null;
 		private float minDistanceDelta = 0;// (set to 0 for debug purposes) 20; // meters
-		private float minElapsedTime = 5000; // milliseconds
+		private float minElapsedTime = 5000; // milliseconds		
 		
 		@Override
 		public void onLocationChanged(Location location) {
@@ -60,8 +64,22 @@ public class LocationService extends Service{
 			
 			if(sendToServer){
 				lastLocation = location;
-				Toast.makeText( getApplicationContext(), location.toString(), Toast.LENGTH_SHORT ).show();			
+				
+				//Update location on server and get my current requests
+				SharedPreferences sharedPref = getSharedPreferences(getString(R.string.user_id_preference_key), Context.MODE_PRIVATE);
+				String userId = sharedPref.getString(getString(R.string.user_id), "");
+				
+				GetTaxiRequestsAsyncTask getTaxiRequestsAsyncTask = new GetTaxiRequestsAsyncTask(this, userId, location);
+				getTaxiRequestsAsyncTask.execute();
 			}
+		}
+		
+		public void sendData(JSONObject requests){
+			Intent intent = new Intent();
+			intent.setAction(MY_ACTION);
+			intent.putExtra("DATAPASSED", requests.toString());
+		      
+			sendBroadcast(intent);
 		}
 
 		@Override

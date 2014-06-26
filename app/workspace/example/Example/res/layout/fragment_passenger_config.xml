@@ -26,7 +26,7 @@
         android:layout_height="10dp" />
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/editTextDestination"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:ems="10"
@@ -57,5 +57,16 @@
         android:layout_height="wrap_content"
         android:text="Elegir rol"
         android:onClick="chooseUserType"/>
+
+	<View
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+	
+	<Button 
+        style="@style/TaxiNowButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Debug Activity"
+        android:onClick="launchDebugActivity"/>
 
 </LinearLayout>
