@@ -17,10 +17,16 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.location.Location;
 
 public class Api {
 	
@@ -34,6 +40,22 @@ public class Api {
 	public JSONObject doGet(String uri, Map params) {
 	    HttpGet httpGet = new HttpGet(uri);
 	    return executeHttpRequest(httpGet, uri, params);
+	}
+	
+	public JSONObject doPostJSON(String uri, JSONObject jsonObject) {
+		HttpPost httpPost = new HttpPost(uri);
+		
+        try {
+        	String jsonString = jsonObject.toString();
+        	StringEntity stringEntity = new StringEntity(jsonString);
+			httpPost.setEntity(stringEntity);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
+	    Map params = new HashMap();
+		return executeHttpRequest(httpPost, uri, params);
 	}
 	
 	public JSONObject doPost(String uri, Map<String, String> params) {
@@ -91,5 +113,24 @@ public class Api {
         }
         return out.toString();
     }
+	
+	public JSONObject updatePosition(String myId, Location location) {
+		
+		JSONObject jsonObject = new JSONObject();
+		try {
+			jsonObject.accumulate("id", myId);
+			jsonObject.accumulate("newPosition", location.toString());
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		JSONObject requests = doPostJSON("http://follower-endpoint.herokuapp.com/application/updatePositionTaxi",jsonObject);
+		
+		return requests;
+		
+		// TODO Auto-generated method stub
+		
+	}
 
 }

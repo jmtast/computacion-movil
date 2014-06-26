@@ -26,7 +26,7 @@ public class Register extends AsyncTask<String, Void, String> {
 	protected String doInBackground(String... type) {
 		Api api = new Api();
 		try {
-			return api.register(type.toString());
+			return api.register(type[0]);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

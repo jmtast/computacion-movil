@@ -128,6 +128,16 @@ public class TaxiConfigActivity extends ActionBarActivity {
 //		postData(new TaxiData(marca, modelo, patente));
 		
 		Toast.makeText(this, "Datos guardados correctamente", Toast.LENGTH_SHORT).show();
+		
+		launchNextActivity();
+	}
+	
+	private void launchNextActivity(){
+		// Start location service
+//		startService(new Intent(this, LocationService.class));
+		
+		Intent intent = new Intent(this, TaxiAvailableActivity.class);
+		startActivity(intent);
 	}
 	
 	private void loadTaxiConfig(){
