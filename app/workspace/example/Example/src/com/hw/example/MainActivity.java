@@ -16,7 +16,7 @@ public class MainActivity extends ActionBarActivity {
 
     public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
     
-    public final static String NONE = "com.example.myfirstapp.NONNE";
+    public final static String NONE = "com.example.myfirstapp.NONE";
     public final static String TAXI = "com.example.myfirstapp.TAXI";
     public final static String PASSENGER = "com.example.myfirstapp.PASSENGER";
     public final static String TAXI_TEXT = "Taxi";

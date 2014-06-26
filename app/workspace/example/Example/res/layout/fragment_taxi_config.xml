@@ -12,28 +12,93 @@
     <TextView
        android:id="@+id/appTitle"
        style="@style/AppTitle" />
-
-    <LinearLayout 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-   	    <Button android:id="@+id/button_take_pic"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/button_take_pic" 
-	        android:onClick="takePic"
-	        style="@style/TaxiNowButton" />
-	    
-	    <ImageView
+    
+    <ImageView
 	        android:id="@+id/imageView_taxi_driver"
 	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content" 
-	        android:contentDescription="the description"/>
+	        android:layout_height="wrap_content"
+	        android:contentDescription="the description"
+	        android:src="@drawable/taxinow"
+	        android:layout_gravity="center"
+	        android:onClick="takePic" />
+
+	<LinearLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        android:gravity="left">
+	        
+            <TextView 
+		        style="@style/TextNormal"
+		        android:layout_width="wrap_content"
+		        android:text="Marca:" 
+		        android:gravity="left"/>
+            
+            <EditText
+                style="@style/TextNormal"
+		        android:id="@+id/edit_marca"
+		        android:layout_width="246dp"
+		        android:layout_height="wrap_content"
+		        android:hint="Editar marca" 
+		       	android:textColor="#CCCC00"
+		       	android:textCursorDrawable="@null"/>
+		        
+    </LinearLayout>
+    
+	<LinearLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        android:gravity="left">
+	        
+            <TextView 
+		        style="@style/TextNormal"
+		        android:layout_width="wrap_content"
+		        android:text="Modelo:" 
+		        android:gravity="left"/>
+            
+            <EditText
+                style="@style/TextNormal"
+		        android:id="@+id/edit_modelo"
+		        android:layout_width="246dp"
+		        android:layout_height="wrap_content"
+		        android:hint="Editar modelo" 
+		       	android:textColor="#CCCC00"
+		       	android:textCursorDrawable="@null"/>
+		        
+    </LinearLayout>
+    
+	<LinearLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        android:gravity="left">
+	        
+            <TextView 
+		        style="@style/TextNormal"
+		        android:layout_width="wrap_content"
+		        android:text="Patente:" 
+		        android:gravity="left"/>
+            
+            <EditText
+                style="@style/TextNormal"
+		        android:id="@+id/edit_patente"
+		        android:layout_width="246dp"
+		        android:layout_height="wrap_content"
+		        android:hint="Editar patente" 
+		       	android:textColor="#CCCC00"
+		       	android:textCursorDrawable="@null"/>
+		        
+    </LinearLayout>
 	
-	</LinearLayout>
-	
-   	<View
+    <Button android:id="@+id/button_tguardar_taxi_config"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:text="@string/save" 
+	        android:onClick="saveTaxiConfig"
+	        style="@style/TaxiNowButton" />
+    
+	<View
         android:layout_width="match_parent"
         android:layout_height="10dp" />
     
@@ -43,5 +108,6 @@
         android:layout_height="wrap_content"
         android:text="Elegir rol"
         android:onClick="chooseUserType"/>
+    
 
 </LinearLayout>
