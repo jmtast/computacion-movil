@@ -20,12 +20,9 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.location.Location;
 
 public class Api {
@@ -131,6 +128,27 @@ public class Api {
 		
 		// TODO Auto-generated method stub
 		
+	}
+
+	public JSONObject getRequests(String userId) {
+		JSONObject params = new JSONObject();
+		try {
+			params.accumulate("id", userId);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return doPostJSON("http://follower-endpoint.herokuapp.com/application/requestsForTaxi", params);
+	}
+
+	public JSONObject requestTaxi(TravelRequest travelRequest) {
+		JSONObject params = new JSONObject();
+		try {
+			params.accumulate("passengerId", travelRequest.getPassengerId());
+			params.accumulate("passengerPosition", travelRequest.getOrigin());
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return doPostJSON("http://follower-endpoint.herokuapp.com/application/requestTaxi", params);
 	}
 
 }

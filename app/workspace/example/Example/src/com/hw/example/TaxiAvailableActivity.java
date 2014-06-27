@@ -43,21 +43,25 @@ public class TaxiAvailableActivity extends ActionBarActivity {
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
 		
-//		ListView lv = (ListView) findViewById(R.id.taxiRequestsList);
-//		
-//		lv.setOnItemClickListener(new OnItemClickListener() {
-//	       	 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//	       		Toast.makeText( getApplicationContext(), "service bound?", Toast.LENGTH_SHORT ).show();
-//	       	 }
-//        });
+	}
+	
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus){
+		super.onWindowFocusChanged(hasFocus);
+		ListView lv = (ListView) findViewById(R.id.taxiRequestsList);
 		
-//		SharedPreferences sharedPref = getSharedPreferences(getString(R.string.service_running_key), Context.MODE_PRIVATE);
-//        boolean serviceRunning = sharedPref.getBoolean(getString(R.string.service_running), false);
-//        
-//        if(!serviceRunning){
-////        	startService(new Intent(this, LocationService.class));
-//        	Toast.makeText( getApplicationContext(), "service bound?", Toast.LENGTH_SHORT ).show();
-//        }
+		lv.setOnItemClickListener(new OnItemClickListener() {
+	       	 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+	       		Toast.makeText( getApplicationContext(), "service bound?", Toast.LENGTH_SHORT ).show();
+	       	 }
+        });
+		
+		SharedPreferences sharedPref = getSharedPreferences(getString(R.string.user_id_preference_key), Context.MODE_PRIVATE);
+		String userId = sharedPref.getString(getString(R.string.user_id), "");
+		
+		TaxiRequests taxiRequests = new TaxiRequests(this,userId);
+		taxiRequests.execute();
+		
 	}
 	
 	MyReceiver myReceiver;
