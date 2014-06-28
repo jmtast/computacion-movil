@@ -27,6 +27,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class TaxiAvailableActivity extends ActionBarActivity {
@@ -54,7 +55,10 @@ public class TaxiAvailableActivity extends ActionBarActivity {
 		
 		lv.setOnItemClickListener(new OnItemClickListener() {
 	       	 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-	       		Toast.makeText( getApplicationContext(), "service bound?", Toast.LENGTH_SHORT ).show();
+	       		TextView textView = (TextView) view;
+	       		String travelRequest = textView.getText().toString(); 
+	       		Toast.makeText( getApplicationContext(), "clicked: " + travelRequest, Toast.LENGTH_SHORT ).show();
+//	       		acceptTravel(travelRequest);
 	       	 }
         });
 		
@@ -64,6 +68,21 @@ public class TaxiAvailableActivity extends ActionBarActivity {
 		TaxiRequests taxiRequests = new TaxiRequests(this,userId);
 		taxiRequests.execute();
 		
+	}
+	
+	private void acceptTravel(String travelRequest){
+		JSONObject jsonTravelRequest = null;
+		String requestId = null;
+		try {
+			jsonTravelRequest = new JSONObject(travelRequest);
+			requestId = jsonTravelRequest.getString("requestId");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// send to server
+		// launch "not_available" activity ?
 	}
 	
 	MyReceiver myReceiver;
