@@ -139,9 +139,6 @@ public class TaxiConfigActivity extends ActionBarActivity {
 	}
 	
 	private void launchNextActivity(){
-		// Start location service
-//		startService(new Intent(this, LocationService.class));
-		
 		Intent intent = new Intent(this, TaxiAvailableActivity.class);
 		startActivity(intent);
 	}
@@ -172,13 +169,6 @@ public class TaxiConfigActivity extends ActionBarActivity {
 	
 	public void takePic(View view){
 		dispatchTakePictureIntent();
-	}
-	
-	private void dispatchTakePictureIntent_simple() {
-	    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-	    if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-	        startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
-	    }
 	}
 	
 	private File createImageFile() throws IOException {

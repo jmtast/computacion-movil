@@ -84,7 +84,6 @@ public class TaxiAvailableActivity extends ActionBarActivity {
 			jsonTravelRequest = new JSONObject(travelRequest);
 			requestId = jsonTravelRequest.getString("requestId");
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -146,14 +145,26 @@ public class TaxiAvailableActivity extends ActionBarActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
+		switch (item.getItemId()) {
+	        case R.id.action_config:
+	            openConfig();
+	            return true;
+	        case R.id.action_shutdown:
+	            shutDown();
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
 		}
-		return super.onOptionsItemSelected(item);
+	}
+
+	private void openConfig() {
+		Intent intent = new Intent(this, TaxiConfigActivity.class);
+		startActivity(intent);		
+	}
+
+	private void shutDown() {
+		stopService(new Intent(this, LocationService.class));
+		this.finish();
 	}
 
 	/**

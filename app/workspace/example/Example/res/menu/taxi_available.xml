@@ -4,9 +4,15 @@
     tools:context="dc.uba.taxinow.activity.TaxiAvailableActivity" >
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_config"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/action_config"
+        app:showAsAction="never"/>
+    
+    <item
+        android:id="@+id/action_shutdown"
+        android:orderInCategory="200"
+        android:title="@string/action_shutdown"
         app:showAsAction="never"/>
 
 </menu>
