@@ -89,12 +89,12 @@ public class SearchingTaxis extends ActionBarActivity implements
 	        Toast.makeText(this, "Alarm Set", Toast.LENGTH_SHORT).show();
 	    }
 	    
-	    public void stopAlarm() {
-	        if (manager != null) {
-	            manager.cancel(pendingIntent);
-	            Toast.makeText(this, "Alarm Canceled", Toast.LENGTH_SHORT).show();
-	        }
-	    }
+    public void stopAlarm() {
+        if (manager != null) {
+            manager.cancel(pendingIntent);
+            Toast.makeText(this, "Alarm Canceled", Toast.LENGTH_SHORT).show();
+        }
+    }
 	
 	public void processAvailableTaxis(AvailableTaxis availableTaxis){
 		// call next activity
