@@ -28,13 +28,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import dc.uba.taxinow.LocationService;
 import dc.uba.taxinow.R;
 import dc.uba.taxinow.R.id;
 import dc.uba.taxinow.R.layout;
 import dc.uba.taxinow.R.menu;
 import dc.uba.taxinow.R.string;
 import dc.uba.taxinow.asynctasks.TaxiRequests;
+import dc.uba.taxinow.services.LocationService;
 import dc.uba.taxinow.utils.JsonHelper;
 
 public class TaxiAvailableActivity extends ActionBarActivity {

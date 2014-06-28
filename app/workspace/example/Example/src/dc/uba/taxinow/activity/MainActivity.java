@@ -32,13 +32,13 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.LocationClient;
 
 import dc.uba.taxinow.AlarmReceiver;
-import dc.uba.taxinow.LocationService;
 import dc.uba.taxinow.R;
 import dc.uba.taxinow.R.drawable;
 import dc.uba.taxinow.R.id;
 import dc.uba.taxinow.R.layout;
 import dc.uba.taxinow.R.menu;
 import dc.uba.taxinow.R.string;
+import dc.uba.taxinow.services.LocationService;
 
 public class MainActivity extends ActionBarActivity implements
     GooglePlayServicesClient.ConnectionCallbacks,

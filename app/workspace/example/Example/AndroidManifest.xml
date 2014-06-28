@@ -28,7 +28,7 @@
         <receiver android:name="dc.uba.taxinow.AlarmReceiver" >
         </receiver>
 
-        <service android:name="dc.uba.taxinow.LocationService" >
+        <service android:name="dc.uba.taxinow.services.LocationService" >
         </service>
 
         <activity
