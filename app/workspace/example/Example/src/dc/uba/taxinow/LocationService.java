@@ -3,7 +3,9 @@ package dc.uba.taxinow;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.json.JSONObject;
+
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +18,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.widget.Toast;
 import dc.uba.taxinow.R;
+import dc.uba.taxinow.activity.TaxiAvailableActivity;
 
 public class LocationService extends Service{
 
@@ -23,7 +26,7 @@ public class LocationService extends Service{
 	public CurrentLocationListener listener;
 	public Location previousBestLocation = null;
 	public TaxiAvailableActivity activity = null;
-	final static String MY_ACTION = "MY_ACTION";
+	public final static String MY_ACTION = "MY_ACTION";
 	
 	private Map<String, Map<String, String>> currentRequests = new HashMap<String, Map<String, String>>();
 	

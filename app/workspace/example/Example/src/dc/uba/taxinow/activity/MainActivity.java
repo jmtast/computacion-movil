@@ -1,4 +1,4 @@
-package dc.uba.taxinow;
+package dc.uba.taxinow.activity;
 
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -25,11 +25,20 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.LocationClient;
+
+import dc.uba.taxinow.AlarmReceiver;
+import dc.uba.taxinow.LocationService;
 import dc.uba.taxinow.R;
+import dc.uba.taxinow.R.drawable;
+import dc.uba.taxinow.R.id;
+import dc.uba.taxinow.R.layout;
+import dc.uba.taxinow.R.menu;
+import dc.uba.taxinow.R.string;
 
 public class MainActivity extends ActionBarActivity implements
     GooglePlayServicesClient.ConnectionCallbacks,

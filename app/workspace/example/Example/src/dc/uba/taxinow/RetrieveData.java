@@ -11,13 +11,14 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
 
+import dc.uba.taxinow.activity.UserTypeChoosingActivity;
 import android.os.AsyncTask;
 
-class Retrievedata extends AsyncTask<String, Void, String> {
+class RetrieveData extends AsyncTask<String, Void, String> {
 	
 	private UserTypeChoosingActivity activity;
 
-	public Retrievedata(UserTypeChoosingActivity context){
+	public RetrieveData(UserTypeChoosingActivity context){
 	    this.activity = context;
 	}
 	

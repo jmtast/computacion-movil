@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import android.location.Location;
 import android.os.AsyncTask;
 import dc.uba.taxinow.LocationService.CurrentLocationListener;
+import dc.uba.taxinow.activity.TaxiAvailableActivity;
 
 public class TaxiRequests extends AsyncTask<String, Void, JSONObject> {
 

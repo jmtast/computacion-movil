@@ -5,14 +5,15 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
+import dc.uba.taxinow.activity.SearchingTaxisActivity;
 import android.location.Location;
 import android.os.AsyncTask;
 
 public class TaxiRequestAsyncTask extends AsyncTask<TravelRequest, Void, AvailableTaxis> {
 
-	private SearchingTaxis context;
+	private SearchingTaxisActivity context;
 
-	public TaxiRequestAsyncTask(SearchingTaxis context) {
+	public TaxiRequestAsyncTask(SearchingTaxisActivity context) {
 		super();
 		this.context = context;
 	}
