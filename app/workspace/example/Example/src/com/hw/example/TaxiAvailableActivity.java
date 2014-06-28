@@ -121,7 +121,9 @@ public class TaxiAvailableActivity extends ActionBarActivity {
                  android.R.layout.simple_list_item_1,
                  your_array_list );
 
-         lv.setAdapter(arrayAdapter); 
+         if (lv != null) {
+        	 lv.setAdapter(arrayAdapter);
+         }
 	}
 
 	@Override
