@@ -1,11 +1,9 @@
-package com.hw.example;
+package dc.uba.taxinow;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.json.JSONObject;
-
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +15,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.widget.Toast;
+import dc.uba.taxinow.R;
 
 public class LocationService extends Service{
 

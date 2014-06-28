@@ -1,4 +1,4 @@
-package com.hw.example;
+package dc.uba.taxinow;
 
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.os.Build;
+import dc.uba.taxinow.R;
 
 public class PassengerConfigActivity extends ActionBarActivity {
 

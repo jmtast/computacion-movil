@@ -1,4 +1,4 @@
-package com.hw.example;
+package dc.uba.taxinow;
 
 import org.json.JSONObject;
 
@@ -6,8 +6,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.util.Log;
-
-import com.hw.example.LocationService.CurrentLocationListener;
+import dc.uba.taxinow.LocationService.CurrentLocationListener;
 
 public class GetTaxiRequestsAsyncTask extends AsyncTask<String, Void, JSONObject> {
 

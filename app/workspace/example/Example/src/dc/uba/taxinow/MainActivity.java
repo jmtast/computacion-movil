@@ -1,4 +1,4 @@
-package com.hw.example;
+package dc.uba.taxinow;
 
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -25,21 +25,21 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.LocationClient;
+import dc.uba.taxinow.R;
 
 public class MainActivity extends ActionBarActivity implements
     GooglePlayServicesClient.ConnectionCallbacks,
     GooglePlayServicesClient.OnConnectionFailedListener{
 
-    public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
+    public final static String EXTRA_MESSAGE = "dc.uba.taxinow.MESSAGE";
     
-    public final static String NONE = "com.example.myfirstapp.NONE";
-    public final static String TAXI = "com.example.myfirstapp.TAXI";
-    public final static String PASSENGER = "com.example.myfirstapp.PASSENGER";
+    public final static String NONE = "dc.uba.taxinow.NONE";
+    public final static String TAXI = "dc.uba.taxinow.TAXI";
+    public final static String PASSENGER = "dc.uba.taxinow.PASSENGER";
     
     public final static String TAXI_TEXT = "Taxi";
     public final static String PASS_TEXT = "Passenger";

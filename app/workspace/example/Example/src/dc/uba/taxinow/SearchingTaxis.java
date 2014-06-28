@@ -1,8 +1,7 @@
-package com.hw.example;
+package dc.uba.taxinow;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -20,10 +19,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.location.LocationClient;
+import dc.uba.taxinow.R;
 
 public class SearchingTaxis extends ActionBarActivity implements
 	GooglePlayServicesClient.ConnectionCallbacks,

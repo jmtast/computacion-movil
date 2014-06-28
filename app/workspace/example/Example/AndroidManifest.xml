@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.hw.example"
+    package="dc.uba.taxinow"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -8,14 +8,12 @@
         android:name="android.hardware.camera"
         android:required="true" />
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="19" />
-
+    
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -28,7 +26,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name="com.hw.example.MainActivity"
+            android:name="dc.uba.taxinow.MainActivity"
             android:label="@string/app_name"
             android:noHistory="true" >
             <intent-filter>
@@ -38,38 +36,38 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.hw.example.UserTypeChoosingActivity"
+            android:name="dc.uba.taxinow.UserTypeChoosingActivity"
             android:label="@string/title_activity_user_type_choosing"
             android:noHistory="true" >
         </activity>
         <activity
-            android:name="com.hw.example.TaxiConfigActivity"
+            android:name="dc.uba.taxinow.TaxiConfigActivity"
             android:label="@string/title_activity_taxi_config" >
         </activity>
 
-        <receiver android:name="com.hw.example.AlarmReceiver" >
+        <receiver android:name="dc.uba.taxinow.AlarmReceiver" >
         </receiver>
 
-        <service android:name="com.hw.example.LocationService" >
+        <service android:name="dc.uba.taxinow.LocationService" >
         </service>
 
         <activity
-            android:name="com.hw.example.ShutdownActivity"
+            android:name="dc.uba.taxinow.ShutdownActivity"
             android:excludeFromRecents="true"
             android:label="@string/title_activity_shutdown"
             android:launchMode="singleTask"
             android:taskAffinity="" >
         </activity>
         <activity
-            android:name="com.hw.example.SearchingTaxis"
+            android:name="dc.uba.taxinow.SearchingTaxis"
             android:label="@string/title_activity_searching_taxis" >
         </activity>
         <activity
-            android:name="com.hw.example.PassengerConfigActivity"
+            android:name="dc.uba.taxinow.PassengerConfigActivity"
             android:label="@string/title_activity_passenger_config" >
         </activity>
         <activity
-            android:name="com.hw.example.TaxiAvailableActivity"
+            android:name="dc.uba.taxinow.TaxiAvailableActivity"
             android:label="@string/title_activity_taxi_available" >
         </activity>
     </application>

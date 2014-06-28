@@ -1,7 +1,6 @@
-package com.hw.example;
+package dc.uba.taxinow;
 
 import java.util.concurrent.ExecutionException;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+import dc.uba.taxinow.R;
 
 public class UserTypeChoosingActivity extends ActionBarActivity {
 	

@@ -1,4 +1,4 @@
-package com.hw.example;
+package dc.uba.taxinow;
 
 public class TaxiData {
 
