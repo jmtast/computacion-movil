@@ -43,32 +43,36 @@ public class TaxiAvailableActivity extends ActionBarActivity {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
-		
+
 	}
-	
+
 	@Override
-	public void onWindowFocusChanged(boolean hasFocus){
+	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
 		ListView lv = (ListView) findViewById(R.id.taxiRequestsList);
-		
+
 		lv.setOnItemClickListener(new OnItemClickListener() {
-	       	 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-	       		TextView textView = (TextView) view;
-	       		String travelRequest = textView.getText().toString(); 
-	       		Toast.makeText( getApplicationContext(), "clicked: " + travelRequest, Toast.LENGTH_SHORT ).show();
-//	       		acceptTravel(travelRequest);
-	       	 }
-        });
-		
-		SharedPreferences sharedPref = getSharedPreferences(getString(R.string.user_id_preference_key), Context.MODE_PRIVATE);
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				TextView textView = (TextView) view;
+				String travelRequest = textView.getText().toString();
+				Toast.makeText(getApplicationContext(),
+						"clicked: " + travelRequest, Toast.LENGTH_SHORT).show();
+				// acceptTravel(travelRequest);
+			}
+		});
+
+		SharedPreferences sharedPref = getSharedPreferences(
+				getString(R.string.user_id_preference_key),
+				Context.MODE_PRIVATE);
 		String userId = sharedPref.getString(getString(R.string.user_id), "");
-		
-		TaxiRequests taxiRequests = new TaxiRequests(this,userId);
+
+		TaxiRequests taxiRequests = new TaxiRequests(this, userId);
 		taxiRequests.execute();
-		
+
 	}
-	
-	private void acceptTravel(String travelRequest){
+
+	private void acceptTravel(String travelRequest) {
 		JSONObject jsonTravelRequest = null;
 		String requestId = null;
 		try {
@@ -78,34 +82,36 @@ public class TaxiAvailableActivity extends ActionBarActivity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		// send to server
 		// launch "not_available" activity ?
 	}
-	
+
 	MyReceiver myReceiver;
-	
+
 	@Override
-	protected void onStart(){
+	protected void onStart() {
 		myReceiver = new MyReceiver();
-	      IntentFilter intentFilter = new IntentFilter();
-	      intentFilter.addAction(LocationService.MY_ACTION);
-	      registerReceiver(myReceiver, intentFilter);
-	      
-			SharedPreferences sharedPref = getSharedPreferences(getString(R.string.service_running_key), Context.MODE_PRIVATE);
-	        boolean serviceRunning = sharedPref.getBoolean(getString(R.string.service_running), false);
-	        
-	        if(!serviceRunning){
-	        	startService(new Intent(this, LocationService.class));
-	        }
-	        
-	      super.onStart();
+		IntentFilter intentFilter = new IntentFilter();
+		intentFilter.addAction(LocationService.MY_ACTION);
+		registerReceiver(myReceiver, intentFilter);
+
+		SharedPreferences sharedPref = getSharedPreferences(
+				getString(R.string.service_running_key), Context.MODE_PRIVATE);
+		boolean serviceRunning = sharedPref.getBoolean(
+				getString(R.string.service_running), false);
+
+		if (!serviceRunning) {
+			startService(new Intent(this, LocationService.class));
+		}
+
+		super.onStart();
 	}
-	
+
 	@Override
 	protected void onStop() {
-		 unregisterReceiver(myReceiver);
-		 super.onStop();
+		unregisterReceiver(myReceiver);
+		super.onStop();
 	}
 
 	@Override
@@ -115,34 +121,40 @@ public class TaxiAvailableActivity extends ActionBarActivity {
 		getMenuInflater().inflate(R.menu.taxi_available, menu);
 		return true;
 	}
-	
-	public void updateRequests(JSONArray requests){
+
+	public void updateRequests(String requests) {
 		ListView lv = (ListView) findViewById(R.id.taxiRequestsList);
 
-         List<Map> your_array_list = new ArrayList<Map>();
-    	 for (int i = 0; i < requests.length(); i++) {
-        	 Map map = new HashMap();
-        	 try {
-				map.put("requestId",requests.getJSONObject(i).getString("requestId"));
-				map.put("positionPassenger",requests.getJSONObject(i).getString("positionPassenger"));
-				map.put("passengerId",requests.getJSONObject(i).getString("passengerId"));
-				your_array_list.add(map);
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-         }
+		List<Map<String, String>> travelRequests = JsonHelper.parseTaxiRequestsList(requests);
+		
+//		List<Map<String, String>> travelRequests = new ArrayList<Map<String, String>>();
+//		for (int i = 0; i < requests.length(); i++) {
+//			Map<String, String> map = new HashMap<String, String>();
+//			try {
+//				map.put("requestId",
+//						requests.getJSONObject(i).getString("requestId"));
+//				
+//				map.put("positionPassenger", requests.getJSONObject(i)
+//						.getString("positionPassenger"));
+//				
+//				map.put("passengerId",
+//						requests.getJSONObject(i).getString("passengerId"));
+//				
+//				travelRequests.add(map);
+//			} catch (JSONException e) {
+//				e.printStackTrace();
+//			}
+//		}
 
-         // This is the array adapter, it takes the context of the activity as a 
-         // first parameter, the type of list view as a second parameter and your 
-         // array as a third parameter.
-         ArrayAdapter<Map> arrayAdapter = new ArrayAdapter<Map>(
-                 this, 
-                 android.R.layout.simple_list_item_1,
-                 your_array_list );
+		// This is the array adapter, it takes the context of the activity as a
+		// first parameter, the type of list view as a second parameter and your
+		// array as a third parameter.
+		ArrayAdapter<Map<String, String>> arrayAdapter = new ArrayAdapter<Map<String, String>>(this,
+				android.R.layout.simple_list_item_1, travelRequests);
 
-         if (lv != null) {
-        	 lv.setAdapter(arrayAdapter);
-         }
+		if (lv != null) {
+			lv.setAdapter(arrayAdapter);
+		}
 	}
 
 	@Override
@@ -173,26 +185,27 @@ public class TaxiAvailableActivity extends ActionBarActivity {
 			return rootView;
 		}
 	}
-	
-	private class MyReceiver extends BroadcastReceiver{
-		 
-		 @Override
-		 public void onReceive(Context arg0, Intent arg1) {
-		  // TODO Auto-generated method stub
-		  
-//		  int datapassed = arg1.getIntExtra("DATAPASSED", 0);
 
-			 String stringExtra = arg1.getStringExtra("DATAPASSED");
-			 JSONArray requests = null;
-			try {
-				requests = (new JSONObject(stringExtra)).getJSONArray("requests");
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			TaxiAvailableActivity.this.updateRequests(requests);
-		 }
-		 
+	private class MyReceiver extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context arg0, Intent arg1) {
+			// TODO Auto-generated method stub
+
+			// int datapassed = arg1.getIntExtra("DATAPASSED", 0);
+
+			String stringExtra = arg1.getStringExtra("DATAPASSED");
+//			JSONArray requests = null;
+//			try {
+//				requests = (new JSONObject(stringExtra))
+//						.getJSONArray("requests");
+//			} catch (JSONException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+
+			updateRequests(stringExtra);
 		}
+
+	}
 }

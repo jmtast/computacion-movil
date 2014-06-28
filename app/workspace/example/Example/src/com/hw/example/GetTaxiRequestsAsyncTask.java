@@ -2,8 +2,10 @@ package com.hw.example;
 
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.location.Location;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.hw.example.LocationService.CurrentLocationListener;
 

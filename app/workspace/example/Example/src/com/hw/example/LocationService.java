@@ -1,5 +1,9 @@
 package com.hw.example;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.json.JSONObject;
 
 import android.app.Service;
@@ -9,7 +13,7 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Binder;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.widget.Toast;
@@ -21,6 +25,8 @@ public class LocationService extends Service{
 	public Location previousBestLocation = null;
 	public TaxiAvailableActivity activity = null;
 	final static String MY_ACTION = "MY_ACTION";
+	
+	private Map<String, Map<String, String>> currentRequests = new HashMap<String, Map<String, String>>();
 	
 	@Override
 	public void onCreate(){
@@ -49,6 +55,8 @@ public class LocationService extends Service{
 		private float minDistanceDelta = 0;// (set to 0 for debug purposes) 20; // meters
 		private float minElapsedTime = 5000; // milliseconds		
 		
+		private Api api = new Api();
+		
 		@Override
 		public void onLocationChanged(Location location) {
 			boolean sendToServer = true;
@@ -67,13 +75,54 @@ public class LocationService extends Service{
 				
 				//Update location on server and get my current requests
 				SharedPreferences sharedPref = getSharedPreferences(getString(R.string.user_id_preference_key), Context.MODE_PRIVATE);
-				String userId = sharedPref.getString(getString(R.string.user_id), "");
+				final String userId = sharedPref.getString(getString(R.string.user_id), "");
 				
-				GetTaxiRequestsAsyncTask getTaxiRequestsAsyncTask = new GetTaxiRequestsAsyncTask(this, userId, location);
-				getTaxiRequestsAsyncTask.execute();
+//				GetTaxiRequestsAsyncTask getTaxiRequestsAsyncTask = new GetTaxiRequestsAsyncTask(this, userId, location);
+//				getTaxiRequestsAsyncTask.execute();				
+				sendToServer(userId, location);
 			}
 		}
 		
+		private void sendToServer(final String userId, final Location location){
+			(new AsyncTask<String, Void, JSONObject>() {
+				@Override
+				protected JSONObject doInBackground(String... params) {
+					JSONObject requests = api.updatePosition(userId, location);
+					
+					updateRequests(requests);
+					broadcastRequests(requests);
+					
+					return requests;
+				}
+			}).execute();
+		}
+		
+		private void broadcastRequests(JSONObject requests){
+			Intent intent = new Intent();
+			intent.setAction(MY_ACTION);
+			intent.putExtra("DATAPASSED", requests.toString());				      
+			sendBroadcast(intent);
+		}
+		
+		private void updateRequests(JSONObject requests){
+			List<Map<String,String>> taxiRequestsList = JsonHelper.parseTaxiRequestsList(requests);
+			Map<String, Map<String, String>> newRequests = new HashMap<String, Map<String, String>>();
+			boolean hasChanged = false;
+			for (Map<String, String> req : taxiRequestsList) {
+				newRequests.put(req.get("requestId"), req);
+				if(!currentRequests.containsKey(req.get("requestId"))){
+					hasChanged = true;
+				}
+			}
+			
+			// the hasChanged part covers the case where size is the same but taxi requests are different, 
+			// the size part covers the case were all previous requests are still there but there are more
+			if(hasChanged || taxiRequestsList.size() != currentRequests.size()){
+				// notification
+			}
+		}
+		
+		// not used in this version
 		public void sendData(JSONObject requests){
 			Intent intent = new Intent();
 			intent.setAction(MY_ACTION);
