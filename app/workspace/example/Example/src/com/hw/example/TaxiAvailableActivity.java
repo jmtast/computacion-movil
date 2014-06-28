@@ -128,19 +128,35 @@ public class TaxiAvailableActivity extends ActionBarActivity {
 				map.put("requestId",requests.getJSONObject(i).getString("requestId"));
 				map.put("positionPassenger",requests.getJSONObject(i).getString("positionPassenger"));
 				map.put("passengerId",requests.getJSONObject(i).getString("passengerId"));
+				map.put("passengerDestination",requests.getJSONObject(i).getString("passengerDestination"));
 				your_array_list.add(map);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
          }
 
+    	 ArrayList<String> requestList = new ArrayList<String>();
+    	 for (int j = 0; j < requests.length(); j++) {
+    		 try{
+    			 if (j > 0) {
+    				 requestList.add("________________________________");
+    			 }
+	    		 requestList.add("Pedido: " + requests.getJSONObject(j).getString("requestId"));
+	    		 requestList.add("Pasajero: " + requests.getJSONObject(j).getString("passengerId"));
+	    		 requestList.add("Ubicaci—n: " + requests.getJSONObject(j).getString("positionPassenger"));
+	    		 requestList.add("Va hasta: " + requests.getJSONObject(j).getString("passengerDestination"));
+    		 } catch (JSONException e) {
+    			 e.printStackTrace();
+    		 }
+    	 }
+    	 
          // This is the array adapter, it takes the context of the activity as a 
          // first parameter, the type of list view as a second parameter and your 
          // array as a third parameter.
-         ArrayAdapter<Map> arrayAdapter = new ArrayAdapter<Map>(
+         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
                  this, 
                  android.R.layout.simple_list_item_1,
-                 your_array_list );
+                 requestList );
 
          if (lv != null) {
         	 lv.setAdapter(arrayAdapter);
