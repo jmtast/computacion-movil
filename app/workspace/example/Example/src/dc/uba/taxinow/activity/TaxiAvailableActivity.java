@@ -39,9 +39,6 @@ import dc.uba.taxinow.utils.JsonHelper;
 
 public class TaxiAvailableActivity extends ActionBarActivity {
 
-	private boolean mIsBound;
-	private LocationService mBoundService;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -95,13 +92,13 @@ public class TaxiAvailableActivity extends ActionBarActivity {
 		// launch "not_available" activity ?
 	}
 
-	MyReceiver myReceiver;
+	NewRequestsReceiver myReceiver;
 
 	@Override
 	protected void onStart() {
-		myReceiver = new MyReceiver();
+		myReceiver = new NewRequestsReceiver();
 		IntentFilter intentFilter = new IntentFilter();
-		intentFilter.addAction(LocationService.MY_ACTION);
+		intentFilter.addAction(LocationService.NEW_REQUESTS_ACTION);
 		registerReceiver(myReceiver, intentFilter);
 
 		SharedPreferences sharedPref = getSharedPreferences(
@@ -133,32 +130,14 @@ public class TaxiAvailableActivity extends ActionBarActivity {
 	public void updateRequests(String requests) {
 		ListView lv = (ListView) findViewById(R.id.taxiRequestsList);
 
-		List<Map<String, String>> travelRequests = JsonHelper.parseTaxiRequestsList(requests);
-		
-//		List<Map<String, String>> travelRequests = new ArrayList<Map<String, String>>();
-//		for (int i = 0; i < requests.length(); i++) {
-//			Map<String, String> map = new HashMap<String, String>();
-//			try {
-//				map.put("requestId",
-//						requests.getJSONObject(i).getString("requestId"));
-//				
-//				map.put("positionPassenger", requests.getJSONObject(i)
-//						.getString("positionPassenger"));
-//				
-//				map.put("passengerId",
-//						requests.getJSONObject(i).getString("passengerId"));
-//				
-//				travelRequests.add(map);
-//			} catch (JSONException e) {
-//				e.printStackTrace();
-//			}
-//		}
+		List<Map<String, String>> travelRequests = JsonHelper
+				.parseTaxiRequestsList(requests);
 
 		// This is the array adapter, it takes the context of the activity as a
 		// first parameter, the type of list view as a second parameter and your
 		// array as a third parameter.
-		ArrayAdapter<Map<String, String>> arrayAdapter = new ArrayAdapter<Map<String, String>>(this,
-				android.R.layout.simple_list_item_1, travelRequests);
+		ArrayAdapter<Map<String, String>> arrayAdapter = new ArrayAdapter<Map<String, String>>(
+				this, android.R.layout.simple_list_item_1, travelRequests);
 
 		if (lv != null) {
 			lv.setAdapter(arrayAdapter);
@@ -194,23 +173,11 @@ public class TaxiAvailableActivity extends ActionBarActivity {
 		}
 	}
 
-	private class MyReceiver extends BroadcastReceiver {
+	private class NewRequestsReceiver extends BroadcastReceiver {
 
 		@Override
 		public void onReceive(Context arg0, Intent arg1) {
-			// TODO Auto-generated method stub
-
-			// int datapassed = arg1.getIntExtra("DATAPASSED", 0);
-
-			String stringExtra = arg1.getStringExtra("DATAPASSED");
-//			JSONArray requests = null;
-//			try {
-//				requests = (new JSONObject(stringExtra))
-//						.getJSONArray("requests");
-//			} catch (JSONException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+			String stringExtra = arg1.getStringExtra(LocationService.NEW_REQUESTS_DATA);
 
 			updateRequests(stringExtra);
 		}

@@ -29,7 +29,8 @@ public class LocationService extends Service{
 	public CurrentLocationListener listener;
 	public Location previousBestLocation = null;
 	public TaxiAvailableActivity activity = null;
-	public final static String MY_ACTION = "MY_ACTION";
+	public final static String NEW_REQUESTS_ACTION = "dc.uba.taxinow.NEW_REQUESTS_ACTION";
+	public final static String NEW_REQUESTS_DATA = "dc.uba.taxinow.NEW_REQUESTS_DATA";
 	
 	private Map<String, Map<String, String>> currentRequests = new HashMap<String, Map<String, String>>();
 	
@@ -82,8 +83,6 @@ public class LocationService extends Service{
 				SharedPreferences sharedPref = getSharedPreferences(getString(R.string.user_id_preference_key), Context.MODE_PRIVATE);
 				final String userId = sharedPref.getString(getString(R.string.user_id), "");
 				
-//				GetTaxiRequestsAsyncTask getTaxiRequestsAsyncTask = new GetTaxiRequestsAsyncTask(this, userId, location);
-//				getTaxiRequestsAsyncTask.execute();				
 				sendToServer(userId, location);
 			}
 		}
@@ -104,8 +103,8 @@ public class LocationService extends Service{
 		
 		private void broadcastRequests(JSONObject requests){
 			Intent intent = new Intent();
-			intent.setAction(MY_ACTION);
-			intent.putExtra("DATAPASSED", requests.toString());				      
+			intent.setAction(NEW_REQUESTS_ACTION);
+			intent.putExtra(NEW_REQUESTS_DATA, requests.toString());				      
 			sendBroadcast(intent);
 		}
 		
@@ -127,15 +126,6 @@ public class LocationService extends Service{
 			}
 		}
 		
-		// not used in this version
-		public void sendData(JSONObject requests){
-			Intent intent = new Intent();
-			intent.setAction(MY_ACTION);
-			intent.putExtra("DATAPASSED", requests.toString());
-		      
-			sendBroadcast(intent);
-		}
-
 		@Override
 		public void onProviderDisabled(String arg0) {
 			Toast.makeText( getApplicationContext(), "Provider Disabled", Toast.LENGTH_SHORT ).show();
