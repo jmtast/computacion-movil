@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 
 import org.json.JSONException;
 
+import dc.uba.taxinow.activity.UserTypeChoosingActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;

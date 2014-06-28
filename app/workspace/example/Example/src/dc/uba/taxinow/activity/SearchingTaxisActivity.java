@@ -1,7 +1,8 @@
-package dc.uba.taxinow;
+package dc.uba.taxinow.activity;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -19,12 +20,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.location.LocationClient;
-import dc.uba.taxinow.R;
 
-public class SearchingTaxis extends ActionBarActivity implements
+import dc.uba.taxinow.AlarmReceiver;
+import dc.uba.taxinow.AvailableTaxis;
+import dc.uba.taxinow.R;
+import dc.uba.taxinow.TaxiRequestAsyncTask;
+import dc.uba.taxinow.TravelRequest;
+import dc.uba.taxinow.R.id;
+import dc.uba.taxinow.R.layout;
+import dc.uba.taxinow.R.menu;
+import dc.uba.taxinow.R.string;
+
+public class SearchingTaxisActivity extends ActionBarActivity implements
 	GooglePlayServicesClient.ConnectionCallbacks,
 	GooglePlayServicesClient.OnConnectionFailedListener{
 

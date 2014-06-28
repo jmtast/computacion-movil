@@ -1,4 +1,4 @@
-package dc.uba.taxinow;
+package dc.uba.taxinow.activity;
 
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -13,6 +13,10 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.os.Build;
 import dc.uba.taxinow.R;
+import dc.uba.taxinow.R.id;
+import dc.uba.taxinow.R.layout;
+import dc.uba.taxinow.R.menu;
+import dc.uba.taxinow.R.string;
 
 public class PassengerConfigActivity extends ActionBarActivity {
 
@@ -68,7 +72,7 @@ public class PassengerConfigActivity extends ActionBarActivity {
 	}
 	
 	public void launchSearchingTaxis(View view) {
-		Intent intent = new Intent(this, SearchingTaxis.class);
+		Intent intent = new Intent(this, SearchingTaxisActivity.class);
 		
         EditText editText = (EditText) findViewById(R.id.editTextDestination);
         String message = editText.getText().toString();

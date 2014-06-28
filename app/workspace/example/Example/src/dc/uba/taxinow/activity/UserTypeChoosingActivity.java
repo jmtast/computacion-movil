@@ -1,7 +1,7 @@
-package dc.uba.taxinow;
+package dc.uba.taxinow.activity;
 
 import java.util.concurrent.ExecutionException;
-import android.app.Activity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import dc.uba.taxinow.R;
+import dc.uba.taxinow.Register;
 
 public class UserTypeChoosingActivity extends ActionBarActivity {
 	
@@ -80,8 +81,8 @@ public class UserTypeChoosingActivity extends ActionBarActivity {
 	
     public void sendData(View view) throws InterruptedException, ExecutionException {
     	// Create a new HttpClient and Post Header
-		Retrievedata retrieveData = new Retrievedata(this);
-		retrieveData.execute();
+//		RetrieveData retrieveData = new RetrieveData(this);
+//		retrieveData.execute();
     }
     
     public void setData(String result){

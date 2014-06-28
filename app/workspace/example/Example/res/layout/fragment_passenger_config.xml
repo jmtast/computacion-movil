@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="dc.uba.taxinow.PassengerConfigActivity$PlaceholderFragment" >
+    tools:context="dc.uba.taxinow.activity.PassengerConfigActivity$PlaceholderFragment" >
     
     <TextView
         android:id="@+id/appTitle"

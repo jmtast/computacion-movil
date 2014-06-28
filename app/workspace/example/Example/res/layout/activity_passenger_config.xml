@@ -3,5 +3,5 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="dc.uba.taxinow.PassengerConfigActivity"
+    tools:context="dc.uba.taxinow.activity.PassengerConfigActivity"
     tools:ignore="MergeRootFrame" />

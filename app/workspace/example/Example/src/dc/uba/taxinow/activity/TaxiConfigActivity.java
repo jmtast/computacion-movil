@@ -1,4 +1,4 @@
-package dc.uba.taxinow;
+package dc.uba.taxinow.activity;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -14,6 +15,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -35,6 +37,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 import dc.uba.taxinow.R;
+import dc.uba.taxinow.TaxiData;
+import dc.uba.taxinow.R.id;
+import dc.uba.taxinow.R.layout;
+import dc.uba.taxinow.R.menu;
+import dc.uba.taxinow.R.string;
 
 public class TaxiConfigActivity extends ActionBarActivity {
 
