@@ -3,8 +3,12 @@ package com.hw.example;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -38,6 +42,7 @@ public class SearchingTaxis extends ActionBarActivity implements
 	protected void onStop() {
 	    // Disconnecting the client invalidates it.
 	    mLocationClient.disconnect();
+	    stopAlarm();
 	    super.onStop();
 	}
 	 
@@ -53,17 +58,44 @@ public class SearchingTaxis extends ActionBarActivity implements
 		ActionBar actionbar = getSupportActionBar();
         actionbar.hide();
         
-        mLocationClient = new LocationClient(this, this, this);        
+        mLocationClient = new LocationClient(this, this, this);  
+        
+        Intent alarmIntent = new Intent(this, AlarmReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
 	}
 
 	private void postTaxiRequest() {
 		Intent intent = getIntent();
         String destination = intent.getStringExtra(getString(R.string.extra_destination));
         Location origin = mLocationClient.getLastLocation();
-
+    	
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.user_id_preference_key), Context.MODE_PRIVATE);
+		String userId = sharedPref.getString(getString(R.string.user_id), "");
+        
         TaxiRequestAsyncTask taxiRequestAsyncTask = new TaxiRequestAsyncTask(this);
-        taxiRequestAsyncTask.execute(new TravelRequest(origin, destination));
+        taxiRequestAsyncTask.execute(new TravelRequest(origin, destination,userId));
+        
+       //Hay que empezar a consultar si alguien acepto mi request
+        startAlarm();
 	}
+	
+	private AlarmManager manager;
+	private PendingIntent pendingIntent;
+	
+	 public void startAlarm() {
+	        manager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+	        int interval = 10000;
+
+	        manager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
+	        Toast.makeText(this, "Alarm Set", Toast.LENGTH_SHORT).show();
+	    }
+	    
+	    public void stopAlarm() {
+	        if (manager != null) {
+	            manager.cancel(pendingIntent);
+	            Toast.makeText(this, "Alarm Canceled", Toast.LENGTH_SHORT).show();
+	        }
+	    }
 	
 	public void processAvailableTaxis(AvailableTaxis availableTaxis){
 		// call next activity
