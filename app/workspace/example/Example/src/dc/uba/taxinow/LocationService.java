@@ -19,6 +19,7 @@ import android.os.IBinder;
 import android.widget.Toast;
 import dc.uba.taxinow.R;
 import dc.uba.taxinow.activity.TaxiAvailableActivity;
+import dc.uba.taxinow.utils.JsonHelper;
 
 public class LocationService extends Service{
 

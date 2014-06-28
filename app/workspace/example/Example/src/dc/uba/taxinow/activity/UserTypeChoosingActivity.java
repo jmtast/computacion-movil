@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import dc.uba.taxinow.R;
-import dc.uba.taxinow.Register;
+import dc.uba.taxinow.asynctasks.Register;
 
 public class UserTypeChoosingActivity extends ActionBarActivity {
 	

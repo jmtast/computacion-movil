@@ -23,6 +23,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import dc.uba.taxinow.model.TravelRequest;
 import android.location.Location;
 
 public class Api {

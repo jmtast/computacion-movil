@@ -37,11 +37,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 import dc.uba.taxinow.R;
-import dc.uba.taxinow.TaxiData;
 import dc.uba.taxinow.R.id;
 import dc.uba.taxinow.R.layout;
 import dc.uba.taxinow.R.menu;
 import dc.uba.taxinow.R.string;
+import dc.uba.taxinow.model.TaxiData;
 
 public class TaxiConfigActivity extends ActionBarActivity {
 
