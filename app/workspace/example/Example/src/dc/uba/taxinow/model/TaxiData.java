@@ -14,6 +14,13 @@ public class TaxiData {
 		this.patente = patente;
 	}
 	
+	public TaxiData(String fullData){
+		String[] list = fullData.split(",");
+		marca = list[0];
+		modelo = list[1];
+		patente = list[2];
+	}
+	
 	public String getMarca() {
 		return marca;
 	}
@@ -31,6 +38,10 @@ public class TaxiData {
 	}
 	public void setPatente(String patente) {
 		this.patente = patente;
+	}
+	
+	public String toString(){
+		return marca+","+modelo+","+patente;
 	}
 	
 }

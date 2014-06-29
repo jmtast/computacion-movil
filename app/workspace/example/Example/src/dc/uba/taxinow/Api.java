@@ -117,7 +117,7 @@ public class Api {
 		JSONObject jsonObject = new JSONObject();
 		try {
 			jsonObject.accumulate("id", myId);
-			jsonObject.accumulate("newPosition", location.toString());
+			jsonObject.accumulate("newPosition", String.valueOf(location.getLatitude())+","+String.valueOf(location.getLongitude()));
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -150,6 +150,11 @@ public class Api {
 			e.printStackTrace();
 		}
 		return doPostJSON("http://follower-endpoint.herokuapp.com/application/requestTaxi", params);
+	}
+
+	public JSONObject getTaxiThatAccepted(String userId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

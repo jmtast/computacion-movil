@@ -5,8 +5,10 @@ import java.util.Map;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.location.Location;
@@ -33,7 +35,9 @@ import dc.uba.taxinow.R.menu;
 import dc.uba.taxinow.R.string;
 import dc.uba.taxinow.asynctasks.TaxiRequestAsyncTask;
 import dc.uba.taxinow.model.AvailableTaxis;
+import dc.uba.taxinow.model.TaxiData;
 import dc.uba.taxinow.model.TravelRequest;
+import dc.uba.taxinow.services.LocationService;
 
 public class SearchingTaxisActivity extends ActionBarActivity implements
 	GooglePlayServicesClient.ConnectionCallbacks,
@@ -46,6 +50,12 @@ public class SearchingTaxisActivity extends ActionBarActivity implements
         super.onStart();
         // Connect the client.
         mLocationClient.connect();
+        
+        //Cuando haya un taxi que acepto, que me avise
+        myReceiver = new AcceptedRequestReciever();
+		IntentFilter intentFilter = new IntentFilter();
+		intentFilter.addAction(AlarmReceiver.ACCEPTED_TAXI_ACTION);
+		registerReceiver(myReceiver, intentFilter);
     }
 		
 	@Override
@@ -89,12 +99,16 @@ public class SearchingTaxisActivity extends ActionBarActivity implements
         startAlarm();
 	}
 	
+	public void showTaxi(TaxiData taxiData){
+		//Crear nueva actividad con el dato
+	}
+	
 	private AlarmManager manager;
 	private PendingIntent pendingIntent;
 	
 	 public void startAlarm() {
 	        manager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-	        int interval = 10000;
+	        int interval = 1000;
 
 	        manager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
 	        Toast.makeText(this, "Alarm Set", Toast.LENGTH_SHORT).show();
@@ -130,7 +144,20 @@ public class SearchingTaxisActivity extends ActionBarActivity implements
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	AcceptedRequestReciever myReceiver;
+	
+	private class AcceptedRequestReciever extends BroadcastReceiver {
 
+		@Override
+		public void onReceive(Context arg0, Intent arg1) {
+			String taxiThatAcceptedFullData = arg1.getStringExtra(AlarmReceiver.ACCEPTED_TAXI_DATA);
+			TaxiData taxiThatAccepted = new TaxiData(taxiThatAcceptedFullData);
+			showTaxi(taxiThatAccepted);
+		}
+
+	}
+	
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */

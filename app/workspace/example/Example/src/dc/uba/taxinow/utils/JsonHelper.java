@@ -9,6 +9,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import dc.uba.taxinow.model.TaxiData;
+
 public class JsonHelper {
 
 	public static List<Map<String, String>> parseTaxiRequestsList(JSONObject src){
@@ -45,5 +47,10 @@ public class JsonHelper {
 			e.printStackTrace();
 		}
 		return parseTaxiRequestsList(jsonObject);
+	}
+
+	public static TaxiData getTaxiData(JSONObject taxi) {
+		//{	
+		return null;
 	}
 }
