@@ -64,7 +64,7 @@ public class TaxiConfigActivity extends ActionBarActivity {
         actionbar.hide();
         
         none = getString(R.string.none);
-        sharedPref = getSharedPreferences(getString(R.string.taxi_config_key), Context.MODE_PRIVATE);
+        sharedPref = getSharedPreferences(getString(R.string.shared_pref_key), Context.MODE_PRIVATE);
 	}
 	
 	@Override
@@ -129,6 +129,8 @@ public class TaxiConfigActivity extends ActionBarActivity {
         String patente = editText.getText().toString();
 		editor.putString(getString(R.string.taxi_config_patente), patente);
 		
+		editor.putString(getString(R.string.taxi_config_saved), getString(R.string.taxi_config_saved));
+		
 		editor.commit();
 		
 //		postData(new TaxiData(marca, modelo, patente));
@@ -139,11 +141,13 @@ public class TaxiConfigActivity extends ActionBarActivity {
 	}
 	
 	private void launchNextActivity(){
-		// Start location service
-//		startService(new Intent(this, LocationService.class));
-		
-		Intent intent = new Intent(this, TaxiAvailableActivity.class);
-		startActivity(intent);
+		Intent callerIntent = getIntent();
+		if(TaxiAvailableActivity.FROM_TRAVEL_LIST.equals(callerIntent.getStringExtra(TaxiAvailableActivity.FROM_TRAVEL_LIST))){
+			this.finish();
+		}else{
+			Intent intent = new Intent(this, TaxiAvailableActivity.class);
+			startActivity(intent);
+		}
 	}
 	
 	private void loadTaxiConfig(){
@@ -172,13 +176,6 @@ public class TaxiConfigActivity extends ActionBarActivity {
 	
 	public void takePic(View view){
 		dispatchTakePictureIntent();
-	}
-	
-	private void dispatchTakePictureIntent_simple() {
-	    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-	    if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-	        startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
-	    }
 	}
 	
 	private File createImageFile() throws IOException {

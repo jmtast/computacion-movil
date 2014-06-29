@@ -39,6 +39,8 @@ import dc.uba.taxinow.utils.JsonHelper;
 
 public class TaxiAvailableActivity extends ActionBarActivity {
 
+	public static final String FROM_TRAVEL_LIST = "dc.uba.taxinow.FROM_TRAVEL_LIST";
+		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -68,7 +70,7 @@ public class TaxiAvailableActivity extends ActionBarActivity {
 		});
 
 		SharedPreferences sharedPref = getSharedPreferences(
-				getString(R.string.user_id_preference_key),
+				getString(R.string.shared_pref_key),
 				Context.MODE_PRIVATE);
 		String userId = sharedPref.getString(getString(R.string.user_id), "");
 
@@ -84,7 +86,6 @@ public class TaxiAvailableActivity extends ActionBarActivity {
 			jsonTravelRequest = new JSONObject(travelRequest);
 			requestId = jsonTravelRequest.getString("requestId");
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -102,7 +103,7 @@ public class TaxiAvailableActivity extends ActionBarActivity {
 		registerReceiver(myReceiver, intentFilter);
 
 		SharedPreferences sharedPref = getSharedPreferences(
-				getString(R.string.service_running_key), Context.MODE_PRIVATE);
+				getString(R.string.shared_pref_key), Context.MODE_PRIVATE);
 		boolean serviceRunning = sharedPref.getBoolean(
 				getString(R.string.service_running), false);
 
@@ -146,14 +147,27 @@ public class TaxiAvailableActivity extends ActionBarActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
+		switch (item.getItemId()) {
+	        case R.id.action_config:
+	            openConfig();
+	            return true;
+	        case R.id.action_shutdown:
+	            shutDown();
+	            return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
 		}
-		return super.onOptionsItemSelected(item);
+	}
+
+	private void openConfig() {
+		Intent intent = new Intent(this, TaxiConfigActivity.class);
+		intent.putExtra(FROM_TRAVEL_LIST, FROM_TRAVEL_LIST);
+		startActivity(intent);		
+	}
+
+	private void shutDown() {
+		stopService(new Intent(this, LocationService.class));
+		this.finish();
 	}
 
 	/**

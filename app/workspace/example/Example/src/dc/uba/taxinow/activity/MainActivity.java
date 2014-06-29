@@ -40,9 +40,7 @@ import dc.uba.taxinow.R.menu;
 import dc.uba.taxinow.R.string;
 import dc.uba.taxinow.services.LocationService;
 
-public class MainActivity extends ActionBarActivity implements
-    GooglePlayServicesClient.ConnectionCallbacks,
-    GooglePlayServicesClient.OnConnectionFailedListener{
+public class MainActivity extends ActionBarActivity {
 
     public final static String EXTRA_MESSAGE = "dc.uba.taxinow.MESSAGE";
     
@@ -53,7 +51,6 @@ public class MainActivity extends ActionBarActivity implements
     public final static String TAXI_TEXT = "Taxi";
     public final static String PASS_TEXT = "Passenger";
     
-    private LocationClient mLocationClient;
     private PendingIntent pendingIntent;
     private AlarmManager manager;
     
@@ -64,7 +61,6 @@ public class MainActivity extends ActionBarActivity implements
     protected void onStart() {
         super.onStart();
         // Connect the client.
-        mLocationClient.connect();
         ActionBar actionbar = getSupportActionBar();
         actionbar.hide();
     }
@@ -75,7 +71,6 @@ public class MainActivity extends ActionBarActivity implements
     @Override
     protected void onStop() {
         // Disconnecting the client invalidates it.
-        mLocationClient.disconnect();
         super.onStop();
     }
     
@@ -97,11 +92,9 @@ public class MainActivity extends ActionBarActivity implements
         
         /*
          * Create a new location client, using the enclosing class to
-         * handle callbackss.
+         * handle callbacks.
          */
-        mLocationClient = new LocationClient(this, this, this);
-        
-        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.user_type_preference_key), Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.shared_pref_key), Context.MODE_PRIVATE);
         
         String userType = sharedPref.getString(getString(R.string.user_type), NONE);
         
@@ -109,9 +102,15 @@ public class MainActivity extends ActionBarActivity implements
             Intent intent = new Intent(this, UserTypeChoosingActivity.class);
             startActivity(intent);
         }else if(TAXI.equals(userType)){
-            Intent intent = new Intent(this, TaxiConfigActivity.class);
-            intent.putExtra(EXTRA_MESSAGE, "taxi");
-            startActivity(intent);
+        	String taxiConfigSaved = sharedPref.getString(getString(R.string.taxi_config_saved), "");
+        	if(getString(R.string.taxi_config_saved).equals(taxiConfigSaved)){
+        		Intent intent = new Intent(this, TaxiAvailableActivity.class);
+                startActivity(intent);
+        	}else{
+        		Intent intent = new Intent(this, TaxiConfigActivity.class);
+        		intent.putExtra(EXTRA_MESSAGE, "taxi");
+        		startActivity(intent);
+        	}
         }else if(PASSENGER.equals(userType)){
             Intent intent = new Intent(this, PassengerConfigActivity.class);
             intent.putExtra(EXTRA_MESSAGE, "passenger");
@@ -138,22 +137,6 @@ public class MainActivity extends ActionBarActivity implements
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-    
-    /** Called when the user clicks the Send button */
-    public void sendMessage(View view) {
-        Intent intent = new Intent(this, PassengerConfigActivity.class);
-        EditText editText = (EditText) findViewById(R.id.edit_message);
-        String message = editText.getText().toString();
-        intent.putExtra(EXTRA_MESSAGE, message);
-        startActivity(intent);  
-    }
-    
-    /** Called when the user clicks the Button button */
-    public void updateLocation(View view) {
-    	TextView textView= (TextView) findViewById(R.id.textView1);
-        Location location = mLocationClient.getLastLocation();
-        textView.setText(location.toString());
     }
 
     /**
@@ -275,68 +258,6 @@ public class MainActivity extends ActionBarActivity implements
         }
     }
     
-    // Implementing Interfaces
-    
-    /*
-     * Called by Location Services when the request to connect the
-     * client finishes successfully. At this point, you can
-     * request the current location or start periodic updates
-     */
-    @Override
-    public void onConnected(Bundle dataBundle) {
-        // Display the connection status
-        Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
-        TextView textView= (TextView) findViewById(R.id.textView1);
-        Location location = mLocationClient.getLastLocation();
-        textView.setText(location.toString());
-    }
-    
-    /*
-     * Called by Location Services if the connection to the
-     * location client drops because of an error.
-     */
-    @Override
-    public void onDisconnected() {
-        // Display the connection status
-        Toast.makeText(this, "Disconnected. Please re-connect.",
-                Toast.LENGTH_SHORT).show();
-    }
-    
-    /*
-     * Called by Location Services if the attempt to
-     * Location Services fails.
-     */
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-        /*
-         * Google Play services can resolve some errors it detects.
-         * If the error has a resolution, try sending an Intent to
-         * start a Google Play services activity that can resolve
-         * error.
-         */
-        if (connectionResult.hasResolution()) {
-            try {
-                // Start an Activity that tries to resolve the error
-                connectionResult.startResolutionForResult(
-                        this,
-                        CONNECTION_FAILURE_RESOLUTION_REQUEST);
-                /*
-                 * Thrown if Google Play services canceled the original
-                 * PendingIntent
-                 */
-            } catch (IntentSender.SendIntentException e) {
-                // Log the error
-                e.printStackTrace();
-            }
-        } else {
-            /*
-             * If no resolution is available, display a dialog to the
-             * user with the error.
-             */
-            showErrorDialog(connectionResult.getErrorCode());
-        }
-    }
-    
     public void startAlarm(View view) {
         manager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
         int interval = 10000;
@@ -351,48 +272,4 @@ public class MainActivity extends ActionBarActivity implements
             Toast.makeText(this, "Alarm Canceled", Toast.LENGTH_SHORT).show();
         }
     }
-    
-    public void startLocationService(View view){
-    	startService(new Intent(this, LocationService.class));
-    }
-    
-    public void stopLocationService(View view){
-    	stopService(new Intent(this, LocationService.class));
-    }
-    
-    public void launchNotification(View view){    	
-    	
-    	// Instantiate a Builder object.
-    	NotificationCompat.Builder builder =
-    	        new NotificationCompat.Builder(this)
-    	        .setSmallIcon(R.drawable.taxinowicon)
-    	        .setContentTitle("My notification")
-    	        .setContentText("Hello World!")
-    	        .setAutoCancel(true);
-    	// Creates an Intent for the Activity
-//    	Intent notifyIntent =  new Intent(new ComponentName(this, ShutdownActivity.class));
-    	Intent notifyIntent = new Intent(this, ShutdownActivity.class);
-    	
-    	// Sets the Activity to start in a new, empty task
-    	notifyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-    	// Creates the PendingIntent
-    	PendingIntent pendingIntent =
-    	        PendingIntent.getActivity(
-    	        this,
-    	        0,
-    	        notifyIntent,
-    	        PendingIntent.FLAG_UPDATE_CURRENT
-    	);
-
-    	// Puts the PendingIntent into the notification builder
-    	builder.setContentIntent(pendingIntent);
-    	// Notifications are issued by sending them to the
-    	// NotificationManager system service.
-    	NotificationManager mNotificationManager =
-    	    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-    	// Builds an anonymous Notification object from the builder, and
-    	// passes it to the NotificationManager
-    	mNotificationManager.notify(123456, builder.build());
-    }
-    
 }

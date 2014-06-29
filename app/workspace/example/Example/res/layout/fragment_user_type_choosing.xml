@@ -49,18 +49,6 @@
 	    <TextView 
 	        style="@style/TextNormal"
 	        android:text="Anotate como taxista y respondé a los pedidos de los pasajeros" />
-
-	    
-	    <View
-	        android:layout_width="match_parent"
-	        android:layout_height="40dp" />
-	    
-	    <Button android:id="@+id/button_passenger2"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:text="Send Data" 
-	        android:onClick="sendData"
-	        style="@style/TaxiNowButton" />
 	   
 	   </LinearLayout>
 

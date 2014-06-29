@@ -14,44 +14,11 @@
         style="@style/AppTitle" />
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-    	android:layout_height="wrap_content" >
-        <EditText
-	        android:id="@+id/edit_message"
-	        android:layout_width="246dp"
-	        android:layout_height="wrap_content"
-	        android:hint="@string/edit_message" />
-
-	    <Button
-	        android:id="@+id/button_1"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:onClick="sendMessage"
-	        android:text="@string/button_send"
-	        style="@style/TaxiNowButton" />
-    </LinearLayout>
-
-    <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
     	android:gravity="center_horizontal" >
-        <Button
-	        android:id="@+id/button_2"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:onClick="updateLocation"
-	        android:text="Update Location"
-	        style="@style/TaxiNowButton" />
     
-	    <TextView
-	        android:id="@+id/textView1"
-	        android:layout_width="match_parent"
-	        android:layout_height="73dp"
-	        android:layout_weight="0.04"
-	        android:text="TextView"
-	        android:textColor="#CCCC00" />
     </LinearLayout>
     
     <LinearLayout
@@ -78,38 +45,4 @@
 	        style="@style/TaxiNowButton" />
     </LinearLayout>
     
-	<View android:layout_width="3dip" android:layout_height="1dip"/>
-    
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
-    	android:gravity="center_horizontal" >
-	    <Button
-		        android:id="@+id/button_5_location"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:onClick="startLocationService"
-		        android:text="start loc-srvc" 
-		        style="@style/TaxiNowButton" />
-	    	   
-		<View android:layout_width="3dip" android:layout_height="1dip"/>
-	    
-	    <Button
-	        android:id="@+id/button_6_location"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:onClick="stopLocationService"
-	        android:text="stop loc-srvc" 
-	        style="@style/TaxiNowButton" />
-    </LinearLayout>
-    
-    <Button
-	        android:id="@+id/button_7_notif"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:onClick="launchNotification"
-	        android:text="notificate!"
-	        style="@style/TaxiNowButton" />
-
 </LinearLayout>

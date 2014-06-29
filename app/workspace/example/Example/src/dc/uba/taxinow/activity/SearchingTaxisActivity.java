@@ -89,7 +89,7 @@ public class SearchingTaxisActivity extends ActionBarActivity implements
         String destination = intent.getStringExtra(getString(R.string.extra_destination));
         Location origin = mLocationClient.getLastLocation();
     	
-        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.user_id_preference_key), Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.shared_pref_key), Context.MODE_PRIVATE);
 		String userId = sharedPref.getString(getString(R.string.user_id), "");
         
         TaxiRequestAsyncTask taxiRequestAsyncTask = new TaxiRequestAsyncTask(this);
