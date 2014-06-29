@@ -1,7 +1,5 @@
 package dc.uba.taxinow.activity;
 
-import java.util.concurrent.ExecutionException;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 import dc.uba.taxinow.R;
 import dc.uba.taxinow.asynctasks.Register;
 
@@ -67,7 +64,6 @@ public class UserTypeChoosingActivity extends ActionBarActivity {
     	intent.putExtra(MainActivity.EXTRA_MESSAGE, type);
     	startActivity(intent);
 	}
-	
 
 	public void choosePassenger(View view){
 		saveUserType(MainActivity.PASSENGER);
@@ -79,16 +75,6 @@ public class UserTypeChoosingActivity extends ActionBarActivity {
     	startActivity(intent);
 	}
 	
-    public void sendData(View view) throws InterruptedException, ExecutionException {
-    	// Create a new HttpClient and Post Header
-//		RetrieveData retrieveData = new RetrieveData(this);
-//		retrieveData.execute();
-    }
-    
-    public void setData(String result){
-    	Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
-    }
-    
     private void saveUserId(String newId) {
 		SharedPreferences sharedPref = getSharedPreferences(getString(R.string.shared_pref_key), Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = sharedPref.edit();
