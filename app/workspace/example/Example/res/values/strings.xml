@@ -35,5 +35,5 @@
     <string name="shared_pref_key">dc.uba.taxinow.SHARED_PREF_KEY</string>
     <string name="title_activity_taxi_taken">TaxiTakenActivity</string>
     <string name="button_back_to_available">Finalizado</string>
-
+    <string name="delete_preferences">Elegir tipo de usuario</string>
 </resources>

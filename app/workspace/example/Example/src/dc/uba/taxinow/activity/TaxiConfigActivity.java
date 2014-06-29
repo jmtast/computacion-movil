@@ -276,5 +276,14 @@ public class TaxiConfigActivity extends ActionBarActivity {
 			return rootView;
 		}
 	}
+	
+	public void chooseUserType(View view) {
+		SharedPreferences sharedPref = getSharedPreferences(getString(R.string.shared_pref_key), Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPref.edit();
+		editor.remove(getString(R.string.user_type));
+		editor.commit();
+		
+		Toast.makeText(this, "Preferencias borradas", Toast.LENGTH_SHORT).show();
+	}
 
 }
