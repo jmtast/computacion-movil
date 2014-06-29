@@ -74,9 +74,6 @@ public class UserTypeChoosingActivity extends ActionBarActivity {
 		
 		Register register = new Register(this, PassengerConfigActivity.class, "passenger");
 		register.execute(MainActivity.PASS_TEXT);
-		
-		Intent intent = new Intent(this, PassengerConfigActivity.class);
-    	startActivity(intent);
 	}
 	
     public void sendData(View view) throws InterruptedException, ExecutionException {
