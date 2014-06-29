@@ -97,11 +97,11 @@ public class MainActivity extends ActionBarActivity implements
         
         /*
          * Create a new location client, using the enclosing class to
-         * handle callbackss.
+         * handle callbacks.
          */
         mLocationClient = new LocationClient(this, this, this);
         
-        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.user_type_preference_key), Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.shared_pref_key), Context.MODE_PRIVATE);
         
         String userType = sharedPref.getString(getString(R.string.user_type), NONE);
         
@@ -109,9 +109,15 @@ public class MainActivity extends ActionBarActivity implements
             Intent intent = new Intent(this, UserTypeChoosingActivity.class);
             startActivity(intent);
         }else if(TAXI.equals(userType)){
-            Intent intent = new Intent(this, TaxiConfigActivity.class);
-            intent.putExtra(EXTRA_MESSAGE, "taxi");
-            startActivity(intent);
+        	String taxiConfigSaved = sharedPref.getString(getString(R.string.taxi_config_saved), "");
+        	if(getString(R.string.taxi_config_saved).equals(taxiConfigSaved)){
+        		Intent intent = new Intent(this, TaxiAvailableActivity.class);
+                startActivity(intent);
+        	}else{
+        		Intent intent = new Intent(this, TaxiConfigActivity.class);
+        		intent.putExtra(EXTRA_MESSAGE, "taxi");
+        		startActivity(intent);
+        	}
         }else if(PASSENGER.equals(userType)){
             Intent intent = new Intent(this, PassengerConfigActivity.class);
             intent.putExtra(EXTRA_MESSAGE, "passenger");

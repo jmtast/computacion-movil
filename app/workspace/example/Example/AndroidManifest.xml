@@ -48,8 +48,8 @@
         </activity>
         <activity
             android:name="dc.uba.taxinow.activity.TaxiConfigActivity"
-            android:label="@string/title_activity_taxi_config" 
-            android:noHistory="true" >
+            android:label="@string/title_activity_taxi_config" >
+<!--             android:noHistory="true" > -->
         </activity>
         <activity
             android:name="dc.uba.taxinow.activity.ShutdownActivity"
@@ -68,8 +68,8 @@
         </activity>
         <activity
             android:name="dc.uba.taxinow.activity.TaxiAvailableActivity"
-            android:label="@string/title_activity_taxi_available" 
-            android:noHistory="true">
+            android:label="@string/title_activity_taxi_available" >
+<!--             android:noHistory="true"> -->
         </activity>
     </application>
 

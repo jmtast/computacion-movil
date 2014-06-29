@@ -39,6 +39,8 @@ import dc.uba.taxinow.utils.JsonHelper;
 
 public class TaxiAvailableActivity extends ActionBarActivity {
 
+	public static final String FROM_TRAVEL_LIST = "dc.uba.taxinow.FROM_TRAVEL_LIST";
+		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -68,7 +70,7 @@ public class TaxiAvailableActivity extends ActionBarActivity {
 		});
 
 		SharedPreferences sharedPref = getSharedPreferences(
-				getString(R.string.user_id_preference_key),
+				getString(R.string.shared_pref_key),
 				Context.MODE_PRIVATE);
 		String userId = sharedPref.getString(getString(R.string.user_id), "");
 
@@ -101,7 +103,7 @@ public class TaxiAvailableActivity extends ActionBarActivity {
 		registerReceiver(myReceiver, intentFilter);
 
 		SharedPreferences sharedPref = getSharedPreferences(
-				getString(R.string.service_running_key), Context.MODE_PRIVATE);
+				getString(R.string.shared_pref_key), Context.MODE_PRIVATE);
 		boolean serviceRunning = sharedPref.getBoolean(
 				getString(R.string.service_running), false);
 
@@ -159,6 +161,7 @@ public class TaxiAvailableActivity extends ActionBarActivity {
 
 	private void openConfig() {
 		Intent intent = new Intent(this, TaxiConfigActivity.class);
+		intent.putExtra(FROM_TRAVEL_LIST, FROM_TRAVEL_LIST);
 		startActivity(intent);		
 	}
 

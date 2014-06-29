@@ -92,7 +92,7 @@ public class LocationService extends Service {
 
 				// Update location on server and get my current requests
 				SharedPreferences sharedPref = getSharedPreferences(
-						getString(R.string.user_id_preference_key),
+						getString(R.string.shared_pref_key),
 						Context.MODE_PRIVATE);
 				final String userId = sharedPref.getString(
 						getString(R.string.user_id), "");
@@ -107,8 +107,10 @@ public class LocationService extends Service {
 				protected JSONObject doInBackground(String... params) {
 					JSONObject requests = api.updatePosition(userId, location);
 
-					updateRequests(requests);
-					broadcastRequests(requests);
+					if(requests != null){
+						updateRequests(requests);
+						broadcastRequests(requests);
+					}
 
 					return requests;
 				}
