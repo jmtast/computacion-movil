@@ -23,6 +23,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import dc.uba.taxinow.model.TaxiData;
+import dc.uba.taxinow.model.Travel;
 import dc.uba.taxinow.model.TravelRequest;
 import android.location.Location;
 
@@ -152,8 +154,40 @@ public class Api {
 		return doPostJSON("http://follower-endpoint.herokuapp.com/application/requestTaxi", params);
 	}
 	
-//	public JSONObject requestTaxi(TravelRequest travelRequest) {
-//		
-//	}
+	public JSONObject saveTaxiConfig(TaxiData taxiData) {
+		JSONObject params = new JSONObject();
+		try {
+			params.accumulate("id", taxiData.getId());
+			params.accumulate("brand", taxiData.getBrand());
+			params.accumulate("model", taxiData.getModel());
+			params.accumulate("plate", taxiData.getPlate());
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return doPostJSON("http://follower-endpoint.herokuapp.com/application/updateProfileTaxi", params);
+	}
+	
+	public JSONObject acceptTravelRequest(Travel travelAcceptAttempt) {
+		JSONObject params = new JSONObject();
+		try {
+			params.accumulate("requestId", travelAcceptAttempt.getRequestId());
+			params.accumulate("passengerId", travelAcceptAttempt.getPassengerId());
+			params.accumulate("taxiDriverId", travelAcceptAttempt.getTaxiDriverId());
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return doPostJSON("http://follower-endpoint.herokuapp.com/application/handShake", params);
+	}
+	
+	public JSONObject finishTravel(Travel travel) {
+		JSONObject params = new JSONObject();
+		try {
+			params.accumulate("passengerId", travel.getPassengerId());
+			params.accumulate("taxiDriverId", travel.getTaxiDriverId());
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return doPostJSON("http://follower-endpoint.herokuapp.com/application/finishTrip", params);
+	}
 
 }

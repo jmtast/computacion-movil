@@ -98,14 +98,14 @@ public class TaxiAvailableActivity extends ActionBarActivity {
 		String userId = sharedPref.getString(getString(R.string.user_id), "");
 		
 		// send to server
-		new AsyncTask<Void, Void, Void>() {
-			@Override
-			protected Void doInBackground(Void... arg0) {
-				
-				return null;
-			}
-			
-		};
+//		new AsyncTask<Void, Void, Void>() {
+//			@Override
+//			protected Void doInBackground(Void... arg0) {
+//				
+//				return null;
+//			}
+//			
+//		};
 		// launch taxi taken activity through receiver callback
 	}
 
