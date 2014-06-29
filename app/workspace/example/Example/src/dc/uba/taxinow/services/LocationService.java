@@ -35,6 +35,9 @@ public class LocationService extends Service {
 
 	public static final String NEW_REQUESTS_ACTION = "dc.uba.taxinow.NEW_REQUESTS_ACTION";
 	public static final String NEW_REQUESTS_DATA = "dc.uba.taxinow.NEW_REQUESTS_DATA";
+	
+	public static final String TRAVEL_REQUEST_TAKEN_ACTION = "dc.uba.taxinow.TRAVEL_REQUEST_TAKEN_ACTION";
+	public static final String TRAVEL_REQUEST_TAKEN_DATA = "dc.uba.taxinow.TRAVEL_REQUEST_TAKEN_DATA";
 
 	private static final Integer TRAVEL_REQUESTS_NOTIFICATION_ID = 90003456;
 

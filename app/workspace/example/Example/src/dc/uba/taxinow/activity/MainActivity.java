@@ -51,6 +51,10 @@ public class MainActivity extends ActionBarActivity {
     public final static String TAXI_TEXT = "Taxi";
     public final static String PASS_TEXT = "Passenger";
     
+    public static final String TAXI_AVAILABLE = "dc.uba.taxinow.TAXI_AVAILABLE";
+    public static final String TAXI_TAKEN = "dc.uba.taxinow.TAXI_TAKEN";
+    public static final String TAXI_NO_CONFIG = "dc.uba.taxinow.TAXI_NO_CONFIG";
+    
     private PendingIntent pendingIntent;
     private AlarmManager manager;
     
@@ -102,15 +106,21 @@ public class MainActivity extends ActionBarActivity {
             Intent intent = new Intent(this, UserTypeChoosingActivity.class);
             startActivity(intent);
         }else if(TAXI.equals(userType)){
-        	String taxiConfigSaved = sharedPref.getString(getString(R.string.taxi_config_saved), "");
-        	if(getString(R.string.taxi_config_saved).equals(taxiConfigSaved)){
+        	
+        	String taxiState = sharedPref.getString(getString(R.string.taxi_state), TAXI_NO_CONFIG);
+        	
+        	if(TAXI_AVAILABLE.equals(taxiState)){
         		Intent intent = new Intent(this, TaxiAvailableActivity.class);
+                startActivity(intent);
+        	}else if(TAXI_TAKEN.equals(taxiState)){
+        		Intent intent = new Intent(this, TaxiTakenActivity.class);
                 startActivity(intent);
         	}else{
         		Intent intent = new Intent(this, TaxiConfigActivity.class);
         		intent.putExtra(EXTRA_MESSAGE, "taxi");
         		startActivity(intent);
         	}
+        	
         }else if(PASSENGER.equals(userType)){
             Intent intent = new Intent(this, PassengerConfigActivity.class);
             intent.putExtra(EXTRA_MESSAGE, "passenger");

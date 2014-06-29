@@ -151,5 +151,9 @@ public class Api {
 		}
 		return doPostJSON("http://follower-endpoint.herokuapp.com/application/requestTaxi", params);
 	}
+	
+//	public JSONObject requestTaxi(TravelRequest travelRequest) {
+//		
+//	}
 
 }

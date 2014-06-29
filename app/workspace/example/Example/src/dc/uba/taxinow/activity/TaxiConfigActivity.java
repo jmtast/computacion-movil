@@ -47,9 +47,20 @@ public class TaxiConfigActivity extends ActionBarActivity {
 
 	private static final int REQUEST_TAKE_PHOTO = 1;
 	
+	public static final int REQUEST_NO_GOING_BACK = 111;
+	public static final String NO_GOING_BACK_EXTRA = "NO_GOING_BACK";
+	
 	private String none;
 	private SharedPreferences sharedPref;
 	private String mCurrentPhotoPath = null;
+	
+	public static TaxiConfigActivity instance = null;
+	
+	@Override
+	protected void onStart() {
+		TaxiConfigActivity.instance= this; 
+		super.onStart();
+	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -129,8 +140,6 @@ public class TaxiConfigActivity extends ActionBarActivity {
         String patente = editText.getText().toString();
 		editor.putString(getString(R.string.taxi_config_patente), patente);
 		
-		editor.putString(getString(R.string.taxi_config_saved), getString(R.string.taxi_config_saved));
-		
 		editor.commit();
 		
 //		postData(new TaxiData(marca, modelo, patente));
@@ -141,13 +150,9 @@ public class TaxiConfigActivity extends ActionBarActivity {
 	}
 	
 	private void launchNextActivity(){
-		Intent callerIntent = getIntent();
-		if(TaxiAvailableActivity.FROM_TRAVEL_LIST.equals(callerIntent.getStringExtra(TaxiAvailableActivity.FROM_TRAVEL_LIST))){
-			this.finish();
-		}else{
-			Intent intent = new Intent(this, TaxiAvailableActivity.class);
-			startActivity(intent);
-		}
+		Intent intent = new Intent(this, TaxiAvailableActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
 	}
 	
 	private void loadTaxiConfig(){
