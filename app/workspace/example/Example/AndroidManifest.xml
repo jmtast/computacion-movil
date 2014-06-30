@@ -68,7 +68,13 @@
         </activity>
         <activity
             android:name="dc.uba.taxinow.activity.TaxiAvailableActivity"
-            android:label="@string/title_activity_taxi_available" >
+            android:label="@string/title_activity_taxi_available" 
+            android:noHistory="true">
+        </activity>
+        <activity
+            android:name="dc.uba.taxinow.activity.TaxiTakenActivity"
+            android:label="@string/title_activity_taxi_taken" 
+            android:noHistory="true">
         </activity>
         <activity
             android:name="dc.uba.taxinow.activity.TaxiThatAcceptedActivity"

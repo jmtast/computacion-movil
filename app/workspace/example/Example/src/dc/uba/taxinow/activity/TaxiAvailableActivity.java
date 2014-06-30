@@ -10,12 +10,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -41,6 +44,9 @@ public class TaxiAvailableActivity extends ActionBarActivity {
 
 	public static final String FROM_TRAVEL_LIST = "dc.uba.taxinow.FROM_TRAVEL_LIST";
 		
+	private NewRequestsReceiver newRequestsReceiver;
+	private TravelRequestTakenReceiver travelRequestTakenReceiver;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -50,7 +56,8 @@ public class TaxiAvailableActivity extends ActionBarActivity {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
-
+		ActionBar actionbar = getSupportActionBar();
+        actionbar.hide();
 	}
 
 	@Override
@@ -65,13 +72,12 @@ public class TaxiAvailableActivity extends ActionBarActivity {
 				String travelRequest = textView.getText().toString();
 				Toast.makeText(getApplicationContext(),
 						"clicked: " + travelRequest, Toast.LENGTH_SHORT).show();
-				// acceptTravel(travelRequest);
+				 
+				acceptTravel(travelRequest);
 			}
 		});
 
-		SharedPreferences sharedPref = getSharedPreferences(
-				getString(R.string.shared_pref_key),
-				Context.MODE_PRIVATE);
+		SharedPreferences sharedPref = getSharedPreferences(getString(R.string.shared_pref_key),Context.MODE_PRIVATE);
 		String userId = sharedPref.getString(getString(R.string.user_id), "");
 
 		TaxiRequests taxiRequests = new TaxiRequests(this, userId);
@@ -85,38 +91,59 @@ public class TaxiAvailableActivity extends ActionBarActivity {
 		try {
 			jsonTravelRequest = new JSONObject(travelRequest);
 			requestId = jsonTravelRequest.getString("requestId");
+			requestId = jsonTravelRequest.getString("passengerId");
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 
+		SharedPreferences sharedPref = getSharedPreferences(getString(R.string.shared_pref_key),Context.MODE_PRIVATE);
+		String userId = sharedPref.getString(getString(R.string.user_id), "");
+		
 		// send to server
-		// launch "not_available" activity ?
+//		new AsyncTask<Void, Void, Void>() {
+//			@Override
+//			protected Void doInBackground(Void... arg0) {
+//				
+//				return null;
+//			}
+//			
+//		};
+		// launch taxi taken activity through receiver callback
 	}
 
-	NewRequestsReceiver myReceiver;
-
+	public void launchTaxiTakenActivity(String data){
+		stopService(new Intent(this, LocationService.class));
+		
+		Intent intent = new Intent(this, TaxiTakenActivity.class);
+		startActivity(intent);
+	}
+	
 	@Override
 	protected void onStart() {
-		myReceiver = new NewRequestsReceiver();
+		newRequestsReceiver = new NewRequestsReceiver();
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction(LocationService.NEW_REQUESTS_ACTION);
-		registerReceiver(myReceiver, intentFilter);
+		registerReceiver(newRequestsReceiver, intentFilter);
+		
+		travelRequestTakenReceiver = new TravelRequestTakenReceiver();
+		intentFilter = new IntentFilter();
+		intentFilter.addAction(LocationService.TRAVEL_REQUEST_TAKEN_ACTION);
+		registerReceiver(travelRequestTakenReceiver, intentFilter);
 
-		SharedPreferences sharedPref = getSharedPreferences(
-				getString(R.string.shared_pref_key), Context.MODE_PRIVATE);
-		boolean serviceRunning = sharedPref.getBoolean(
-				getString(R.string.service_running), false);
-
-		if (!serviceRunning) {
-			startService(new Intent(this, LocationService.class));
-		}
+		SharedPreferences sharedPref = getSharedPreferences(getString(R.string.shared_pref_key), Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPref.edit();
+		editor.putString(getString(R.string.taxi_state), MainActivity.TAXI_AVAILABLE);
+		editor.commit();
+		
+		startService(new Intent(this, LocationService.class));
 
 		super.onStart();
 	}
 
 	@Override
 	protected void onStop() {
-		unregisterReceiver(myReceiver);
+		unregisterReceiver(newRequestsReceiver);
+		unregisterReceiver(travelRequestTakenReceiver);
 		super.onStop();
 	}
 
@@ -162,6 +189,7 @@ public class TaxiAvailableActivity extends ActionBarActivity {
 	private void openConfig() {
 		Intent intent = new Intent(this, TaxiConfigActivity.class);
 		intent.putExtra(FROM_TRAVEL_LIST, FROM_TRAVEL_LIST);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);		
 	}
 
@@ -192,8 +220,16 @@ public class TaxiAvailableActivity extends ActionBarActivity {
 		@Override
 		public void onReceive(Context arg0, Intent arg1) {
 			String stringExtra = arg1.getStringExtra(LocationService.NEW_REQUESTS_DATA);
-
 			updateRequests(stringExtra);
+		}
+
+	}
+	
+	private class TravelRequestTakenReceiver extends BroadcastReceiver {
+		@Override
+		public void onReceive(Context arg0, Intent arg1) {
+			String stringExtra = arg1.getStringExtra(LocationService.TRAVEL_REQUEST_TAKEN_DATA);
+			launchTaxiTakenActivity(stringExtra);
 		}
 
 	}

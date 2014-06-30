@@ -40,6 +40,9 @@ public class TaxiThatAcceptedActivity extends Activity {
 				return null;
 			}
 		}).execute();
+		
+		Intent intent = new Intent(this, PassengerConfigActivity.class);
+    	startActivity(intent);
 	}
 	
 	public String userId(){

@@ -51,7 +51,7 @@ public class JsonHelper {
 
 	public static TaxiData getTaxiData(JSONObject taxi) {
 		try {
-			return new TaxiData(taxi.getString("brand"),taxi.getString("model"),taxi.getString("plate"));
+			return new TaxiData(taxi.getString("taxiDriverId"),taxi.getString("brand"),taxi.getString("model"),taxi.getString("plate"));
 		} catch (JSONException e) {
 			return null;
 		}

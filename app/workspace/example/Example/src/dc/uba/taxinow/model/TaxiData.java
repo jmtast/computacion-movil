@@ -2,46 +2,41 @@ package dc.uba.taxinow.model;
 
 public class TaxiData {
 
-	private String marca;
-	private String modelo;
-	private String patente;
+	private String id;
+	private String plate;
+	private String brand;
+	private String model;
 	
-	
-	public TaxiData(String marca, String modelo, String patente) {
+	public TaxiData(String id, String plate, String brand, String model) {
 		super();
-		this.marca = marca;
-		this.modelo = modelo;
-		this.patente = patente;
+		this.id = id;
+		this.plate = plate;
+		this.brand = brand;
+		this.model = model;
 	}
 	
 	public TaxiData(String fullData){
 		String[] list = fullData.split(",");
-		marca = list[0];
-		modelo = list[1];
-		patente = list[2];
+		brand = list[0];
+		model = list[1];
+		plate = list[2];
 	}
 	
-	public String getMarca() {
-		return marca;
+	public String getId() {
+		return id;
 	}
-	public void setMarca(String marca) {
-		this.marca = marca;
+	public String getPlate() {
+		return plate;
 	}
-	public String getModelo() {
-		return modelo;
+	public String getBrand() {
+		return brand;
 	}
-	public void setModelo(String modelo) {
-		this.modelo = modelo;
-	}
-	public String getPatente() {
-		return patente;
-	}
-	public void setPatente(String patente) {
-		this.patente = patente;
+	public String getModel() {
+		return model;
 	}
 	
 	public String toString(){
-		return marca+","+modelo+","+patente;
+		return brand+","+model+","+plate;
 	}
 	
 }

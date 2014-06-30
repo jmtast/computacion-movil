@@ -22,6 +22,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -36,6 +37,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+import dc.uba.taxinow.Api;
 import dc.uba.taxinow.R;
 import dc.uba.taxinow.R.id;
 import dc.uba.taxinow.R.layout;
@@ -47,9 +49,22 @@ public class TaxiConfigActivity extends ActionBarActivity {
 
 	private static final int REQUEST_TAKE_PHOTO = 1;
 	
+	public static final int REQUEST_NO_GOING_BACK = 111;
+	public static final String NO_GOING_BACK_EXTRA = "NO_GOING_BACK";
+	
 	private String none;
 	private SharedPreferences sharedPref;
 	private String mCurrentPhotoPath = null;
+	
+	private Api api = new Api();
+	
+	public static TaxiConfigActivity instance = null;
+	
+	@Override
+	protected void onStart() {
+		TaxiConfigActivity.instance= this; 
+		super.onStart();
+	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -129,25 +144,31 @@ public class TaxiConfigActivity extends ActionBarActivity {
         String patente = editText.getText().toString();
 		editor.putString(getString(R.string.taxi_config_patente), patente);
 		
-		editor.putString(getString(R.string.taxi_config_saved), getString(R.string.taxi_config_saved));
-		
 		editor.commit();
 		
-//		postData(new TaxiData(marca, modelo, patente));
+		String userId = sharedPref.getString(getString(R.string.user_id), "");
+		
+		sendToServer(new TaxiData(userId, patente, marca, modelo));
 		
 		Toast.makeText(this, "Datos guardados correctamente", Toast.LENGTH_SHORT).show();
 		
 		launchNextActivity();
 	}
 	
+	private void sendToServer(TaxiData taxiData){
+		(new AsyncTask<TaxiData, Void, Void>() {
+			@Override
+			protected Void doInBackground(TaxiData... params) {
+				api.saveTaxiConfig(params[0]);
+				return null;
+			}
+		}).execute(taxiData);
+	}
+	
 	private void launchNextActivity(){
-		Intent callerIntent = getIntent();
-		if(TaxiAvailableActivity.FROM_TRAVEL_LIST.equals(callerIntent.getStringExtra(TaxiAvailableActivity.FROM_TRAVEL_LIST))){
-			this.finish();
-		}else{
-			Intent intent = new Intent(this, TaxiAvailableActivity.class);
-			startActivity(intent);
-		}
+		Intent intent = new Intent(this, TaxiAvailableActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
 	}
 	
 	private void loadTaxiConfig(){
@@ -238,29 +259,6 @@ public class TaxiConfigActivity extends ActionBarActivity {
 	    Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
 	    mImageView.setImageBitmap(bitmap);
 	}
-	
-	public void postData(TaxiData taxiData) {
-	    // Create a new HttpClient and Post Header
-	    HttpClient httpclient = new DefaultHttpClient();
-	    HttpPost httpPost = new HttpPost(getString(R.string.save_taxi_config_url));
-
-	    try {
-	        // Add your data
-	        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
-	        nameValuePairs.add(new BasicNameValuePair("marca", taxiData.getMarca()));
-	        nameValuePairs.add(new BasicNameValuePair("modelo", taxiData.getModelo()));
-	        nameValuePairs.add(new BasicNameValuePair("patente", taxiData.getPatente()));
-	        httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-	        // Execute HTTP Post Request
-	        HttpResponse response = httpclient.execute(httpPost);
-	        
-	    } catch (ClientProtocolException e) {
-	        // TODO Auto-generated catch block
-	    } catch (IOException e) {
-	        // TODO Auto-generated catch block
-	    }
-	}
 
 	/**
 	 * A placeholder fragment containing a simple view.
@@ -277,6 +275,15 @@ public class TaxiConfigActivity extends ActionBarActivity {
 					container, false);
 			return rootView;
 		}
+	}
+	
+	public void chooseUserType(View view) {
+		SharedPreferences sharedPref = getSharedPreferences(getString(R.string.shared_pref_key), Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPref.edit();
+		editor.remove(getString(R.string.user_type));
+		editor.commit();
+		
+		Toast.makeText(this, "Preferencias borradas", Toast.LENGTH_SHORT).show();
 	}
 
 }

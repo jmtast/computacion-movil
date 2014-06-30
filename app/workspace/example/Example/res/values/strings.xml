@@ -14,6 +14,7 @@
     <string name="taxi_config_modelo">dc.uba.taxinow.TAXI_CONFIG_MODELO</string>
     <string name="taxi_config_patente">dc.uba.taxinow.TAXI_CONFIG_PATENTE</string>
     <string name="taxi_config_saved">dc.uba.taxinow.TAXI_CONFIG_SAVED</string>
+    <string name="taxi_state">dc.uba.taxinow.TAXI_STATE</string>
     <string name="save_taxi_config_url">http://follower-endpoint.herokuapp.com/application/puta/taxi-config</string>
     <string name="search_destination_uri">http://follower-endpoint.herokuapp.com/application/puta/search-destination</string>
     <string name="none">dc.uba.taxinow.NONE</string>
@@ -35,5 +36,7 @@
     <string name="service_running">dc.uba.taxinow.SERVICE_RUNNING</string>
     <string name="shared_pref_key">dc.uba.taxinow.SHARED_PREF_KEY</string>
     <string name="title_activity_taxi_that_accepted">TaxiThatAcceptedActivity</string>
-
+    <string name="title_activity_taxi_taken">TaxiTakenActivity</string>
+    <string name="button_back_to_available">Finalizado</string>
+    <string name="delete_preferences">Elegir tipo de usuario</string>
 </resources>

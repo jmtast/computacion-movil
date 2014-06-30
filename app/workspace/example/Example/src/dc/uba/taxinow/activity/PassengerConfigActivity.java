@@ -1,22 +1,20 @@
 package dc.uba.taxinow.activity;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.os.Build;
+import android.widget.Toast;
 import dc.uba.taxinow.R;
-import dc.uba.taxinow.R.id;
-import dc.uba.taxinow.R.layout;
-import dc.uba.taxinow.R.menu;
-import dc.uba.taxinow.R.string;
 
 public class PassengerConfigActivity extends ActionBarActivity {
 
@@ -80,5 +78,15 @@ public class PassengerConfigActivity extends ActionBarActivity {
         
 		startActivity(intent);
 	}
+	
+	public void chooseUserType(View view) {
+		SharedPreferences sharedPref = getSharedPreferences(getString(R.string.shared_pref_key), Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPref.edit();
+		editor.remove(getString(R.string.user_type));
+		editor.commit();
+		
+		Toast.makeText(this, "Preferencias borradas", Toast.LENGTH_SHORT).show();
+	}
+	
 
 }
