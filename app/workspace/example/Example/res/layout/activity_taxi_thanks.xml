@@ -1,0 +1,47 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="dc.uba.taxinow.activity.TaxiThanksActivity" >
+
+	    <LinearLayout 
+	        android:layout_width="fill_parent"
+    		android:layout_height="fill_parent"
+	        android:orientation="vertical">
+	    <TextView
+	        android:id="@+id/appTitle"
+	        style="@style/AppTitle" />
+	    
+	    <View
+	        android:layout_width="match_parent"
+	        android:layout_height="40dp" />
+	    
+	    <LinearLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical"
+	        android:gravity="center_horizontal">
+		    
+		    <TextView
+		        style="@style/TextBig"
+		        android:text="@string/confirmed_trip" />
+		    
+		    <View
+		        android:layout_width="match_parent"
+		        android:layout_height="40dp" />
+		    
+		    <TextView 
+		        style="@style/TextNormal"
+		        android:text="@string/punctuality_advice" />
+		   
+		</LinearLayout>
+	
+	</LinearLayout>
+
+	<TextView 
+		        style="@style/TextSmall"
+		        android:layout_gravity="bottom"
+		        android:layout_alignParentBottom="true"
+		        android:text="@string/thanks_disclaimer" />
+
+</RelativeLayout>
