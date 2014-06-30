@@ -70,5 +70,14 @@
         <item name="android:gravity">center_horizontal</item>
         <item name="android:textSize">27sp</item>
     </style>
+    
+    <!-- Texto general de la app -->
+    <!-- Tamaño chico para disclaimer, centrado horizontalmente -->
+    <style name="TextSmall">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">10sp</item>
+    </style>
 
 </resources>
