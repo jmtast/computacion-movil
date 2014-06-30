@@ -101,6 +101,16 @@ public class SearchingTaxisActivity extends ActionBarActivity implements
 	
 	public void showTaxi(TaxiData taxiData){
 		//Crear nueva actividad con el dato
+		Intent intent = new Intent(this, TaxiThatAcceptedActivity.class);
+    	intent.putExtra(MainActivity.EXTRA_MESSAGE, taxiData.toString());
+    	startActivity(intent);
+	}
+	
+	public void showTimeOut(){
+		//Crear nueva actividad con el dato
+		Intent intent = new Intent(this, PassengerConfigActivity.class);
+		Toast.makeText(this, "Ningun taxi acepto", Toast.LENGTH_SHORT).show();
+    	startActivity(intent);
 	}
 	
 	private AlarmManager manager;
@@ -108,7 +118,7 @@ public class SearchingTaxisActivity extends ActionBarActivity implements
 	
 	 public void startAlarm() {
 	        manager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-	        int interval = 1000;
+	        int interval = 2000;
 
 	        manager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
 	        Toast.makeText(this, "Alarm Set", Toast.LENGTH_SHORT).show();
@@ -152,8 +162,16 @@ public class SearchingTaxisActivity extends ActionBarActivity implements
 		@Override
 		public void onReceive(Context arg0, Intent arg1) {
 			String taxiThatAcceptedFullData = arg1.getStringExtra(AlarmReceiver.ACCEPTED_TAXI_DATA);
-			TaxiData taxiThatAccepted = new TaxiData(taxiThatAcceptedFullData);
-			showTaxi(taxiThatAccepted);
+			if (taxiThatAcceptedFullData != null){
+				stopAlarm();
+				
+				if (taxiThatAcceptedFullData.equals("TimeOut")){
+					showTimeOut();
+				}else{
+					TaxiData taxiThatAccepted = new TaxiData(taxiThatAcceptedFullData);
+					showTaxi(taxiThatAccepted);
+				}
+			}
 		}
 
 	}

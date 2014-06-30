@@ -145,7 +145,7 @@ public class Api {
 		JSONObject params = new JSONObject();
 		try {
 			params.accumulate("passengerId", travelRequest.getPassengerId());
-			params.accumulate("passengerPosition", travelRequest.getOrigin());
+			params.accumulate("passengerPosition", travelRequest.getOrigin().getLatitude()+","+travelRequest.getOrigin().getLongitude());
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -153,8 +153,23 @@ public class Api {
 	}
 
 	public JSONObject getTaxiThatAccepted(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+		JSONObject params = new JSONObject();
+		try {
+			params.accumulate("passengerId", userId);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return doPostJSON("http://follower-endpoint.herokuapp.com/application/whichCarAcceptedMe", params);
+	}
+
+	public JSONObject cancelTrip(String userId) {
+		JSONObject params = new JSONObject();
+		try {
+			params.accumulate("passengerId", userId);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return doPostJSON("http://follower-endpoint.herokuapp.com/application/cancelTrip", params);
 	}
 
 }

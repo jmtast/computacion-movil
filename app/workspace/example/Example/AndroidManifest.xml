@@ -38,6 +38,7 @@
             android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -68,6 +69,10 @@
         <activity
             android:name="dc.uba.taxinow.activity.TaxiAvailableActivity"
             android:label="@string/title_activity_taxi_available" >
+        </activity>
+        <activity
+            android:name="dc.uba.taxinow.activity.TaxiThatAcceptedActivity"
+            android:label="@string/title_activity_taxi_that_accepted" >
         </activity>
     </application>
 
