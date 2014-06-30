@@ -15,6 +15,13 @@ public class TaxiData {
 		this.model = model;
 	}
 	
+	public TaxiData(String fullData){
+		String[] list = fullData.split(",");
+		brand = list[0];
+		model = list[1];
+		plate = list[2];
+	}
+	
 	public String getId() {
 		return id;
 	}
@@ -26,6 +33,10 @@ public class TaxiData {
 	}
 	public String getModel() {
 		return model;
+	}
+	
+	public String toString(){
+		return brand+","+model+","+plate;
 	}
 	
 }

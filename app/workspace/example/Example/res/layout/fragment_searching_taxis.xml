@@ -45,6 +45,6 @@
     
     <TextView 
         style="@style/TextNormal"
-        android:text="En breve recibirás una lista de taxis disponibles para que elijas cual pedir."/>
+        android:text="Esperando a que un taxi acepte su pedido"/>
 
 </LinearLayout>

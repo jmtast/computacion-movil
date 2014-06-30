@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import dc.uba.taxinow.R;
 import dc.uba.taxinow.asynctasks.Register;
 
@@ -51,6 +52,7 @@ public class UserTypeChoosingActivity extends ActionBarActivity {
 	}
 	
 	public void chooseTaxi(View view){
+		Toast.makeText(this, "Contactando al servidor. Por favor espere...", Toast.LENGTH_SHORT).show();
 		saveUserType(MainActivity.TAXI);
 		
 		Register register = new Register(this, TaxiConfigActivity.class,"taxi");
@@ -66,13 +68,11 @@ public class UserTypeChoosingActivity extends ActionBarActivity {
 	}
 
 	public void choosePassenger(View view){
+		Toast.makeText(this, "Contactando al servidor. Por favor espere...", Toast.LENGTH_SHORT).show();
 		saveUserType(MainActivity.PASSENGER);
 		
 		Register register = new Register(this, PassengerConfigActivity.class, "passenger");
 		register.execute(MainActivity.PASS_TEXT);
-		
-		Intent intent = new Intent(this, PassengerConfigActivity.class);
-    	startActivity(intent);
 	}
 	
     private void saveUserId(String newId) {

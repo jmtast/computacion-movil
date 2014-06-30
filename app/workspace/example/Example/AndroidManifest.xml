@@ -76,6 +76,15 @@
             android:label="@string/title_activity_taxi_taken" 
             android:noHistory="true">
         </activity>
+        <activity
+            android:name="dc.uba.taxinow.activity.TaxiThatAcceptedActivity"
+            android:label="@string/title_activity_taxi_that_accepted" >
+		</activity>
+        <activity
+            android:name="dc.uba.taxinow.activity.TaxiThanksActivity"
+            android:label="@string/title_activity_taxi_thanks" 
+            android:noHistory="true">
+        </activity>
     </application>
 
 </manifest>

@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import dc.uba.taxinow.model.TravelData;
+import dc.uba.taxinow.model.TaxiData;
 
 public class JsonHelper {
 
@@ -73,5 +74,13 @@ public class JsonHelper {
 			e.printStackTrace();
 		}
 		return travelRequests;
+	}
+
+	public static TaxiData getTaxiData(JSONObject taxi) {
+		try {
+			return new TaxiData(taxi.getString("taxiDriverId"),taxi.getString("brand"),taxi.getString("model"),taxi.getString("plate"));
+		} catch (JSONException e) {
+			return null;
+		}
 	}
 }
