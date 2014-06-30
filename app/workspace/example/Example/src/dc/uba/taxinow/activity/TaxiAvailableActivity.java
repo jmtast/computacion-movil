@@ -19,6 +19,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,21 +31,35 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import dc.uba.taxinow.Api;
 import dc.uba.taxinow.R;
 import dc.uba.taxinow.R.id;
 import dc.uba.taxinow.R.layout;
 import dc.uba.taxinow.R.menu;
 import dc.uba.taxinow.R.string;
 import dc.uba.taxinow.asynctasks.TaxiRequests;
+import dc.uba.taxinow.model.Travel;
+import dc.uba.taxinow.model.TravelData;
 import dc.uba.taxinow.services.LocationService;
 import dc.uba.taxinow.utils.JsonHelper;
 
 public class TaxiAvailableActivity extends ActionBarActivity {
 
 	public static final String FROM_TRAVEL_LIST = "dc.uba.taxinow.FROM_TRAVEL_LIST";
+	
+	public static final String TAXI_ID = "TAXI_ID";
+	public static final String PASSENGER_ID = "PASSENGER_ID";
 		
 	private NewRequestsReceiver newRequestsReceiver;
 	private TravelRequestTakenReceiver travelRequestTakenReceiver;
+	
+	private static final String OK = "OK";
+	
+	private Api api = new Api();
+	
+	private String userId = null;
+	
+	private String currentRequests= null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,52 +83,102 @@ public class TaxiAvailableActivity extends ActionBarActivity {
 					int position, long id) {
 				TextView textView = (TextView) view;
 				String travelRequest = textView.getText().toString();
+				
 				Toast.makeText(getApplicationContext(),
 						"clicked: " + travelRequest, Toast.LENGTH_SHORT).show();
 				 
-				acceptTravel(travelRequest);
+				JSONObject json = findRequest(travelRequest);
+				acceptTravel(json);
 			}
 		});
 
-		SharedPreferences sharedPref = getSharedPreferences(getString(R.string.shared_pref_key),Context.MODE_PRIVATE);
-		String userId = sharedPref.getString(getString(R.string.user_id), "");
-
+		String userId = getUserId();
 		TaxiRequests taxiRequests = new TaxiRequests(this, userId);
 		taxiRequests.execute();
 
 	}
-
-	private void acceptTravel(String travelRequest) {
-		JSONObject jsonTravelRequest = null;
-		String requestId = null;
+	
+	private JSONObject findRequest(String travelRequestId){
+		String id = travelRequestId.split(";")[0];
 		try {
-			jsonTravelRequest = new JSONObject(travelRequest);
+			JSONObject jsonObject = new JSONObject(currentRequests);
+			JSONArray requests = jsonObject.getJSONArray("requests");
+			for (int i = 0; i < requests.length(); i++) {
+				JSONObject theRequest = requests.getJSONObject(i);
+				if(id.equals(theRequest.getString("passengerId"))){
+					return theRequest;
+				}
+			}
+			
+		}catch (JSONException e1) {
+			e1.printStackTrace();
+		}	
+		return null;
+	}
+
+	private void acceptTravel(JSONObject travelRequest) {
+		JSONObject jsonTravelRequest = travelRequest;
+		String requestId = null;
+		String passengerId = null;
+		try {
+//			jsonTravelRequest = new JSONObject(travelRequest);
 			requestId = jsonTravelRequest.getString("requestId");
-			requestId = jsonTravelRequest.getString("passengerId");
+			passengerId = jsonTravelRequest.getString("passengerId");
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 
-		SharedPreferences sharedPref = getSharedPreferences(getString(R.string.shared_pref_key),Context.MODE_PRIVATE);
-		String userId = sharedPref.getString(getString(R.string.user_id), "");
+		String taxiDriverId = getUserId();
+		Travel travel = new Travel(requestId, passengerId, taxiDriverId);
 		
 		// send to server
-//		new AsyncTask<Void, Void, Void>() {
-//			@Override
-//			protected Void doInBackground(Void... arg0) {
-//				
-//				return null;
-//			}
-//			
-//		};
+		(new AsyncTask<Travel, Void, Void>(){
+			@Override
+			protected Void doInBackground(Travel... params) {
+				JSONObject response = api.acceptTravelRequest(params[0]);
+				
+				if(response != null){
+					Log.i("TaxiAvailableActivity 118", response.toString());
+					
+					Intent intent = new Intent();
+					intent.setAction(LocationService.TRAVEL_REQUEST_TAKEN_ACTION);
+					intent.putExtra(LocationService.TRAVEL_REQUEST_TAKEN_DATA, response.toString());
+					sendBroadcast(intent);
+				}
+				return null;
+			}
+		}).execute(travel);
+		
 		// launch taxi taken activity through receiver callback
 	}
 
 	public void launchTaxiTakenActivity(String data){
-		stopService(new Intent(this, LocationService.class));
+		JSONObject json = null;
+		String status = null;
+		String passengerId = null;
+		String taxiDriverId = getUserId();
+		try {
+			json = new JSONObject(data);
+			status = json.getString("status");
+			passengerId = json.getString("passengerId");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 		
-		Intent intent = new Intent(this, TaxiTakenActivity.class);
-		startActivity(intent);
+		if(OK.equals(status)){
+			stopService(new Intent(this, LocationService.class));
+			
+			Intent intent = new Intent(this, TaxiTakenActivity.class);
+			intent.putExtra(TAXI_ID, taxiDriverId);
+			intent.putExtra(PASSENGER_ID, passengerId);
+			startActivity(intent);
+		}else{
+			Toast.makeText(getApplicationContext(), "El viaje ya no esta disponible", Toast.LENGTH_SHORT).show();
+			
+			String userId = getUserId();
+			TaxiRequests taxiRequests = new TaxiRequests(this, userId);
+			taxiRequests.execute();
+		}
 	}
 	
 	@Override
@@ -154,15 +219,16 @@ public class TaxiAvailableActivity extends ActionBarActivity {
 	}
 
 	public void updateRequests(String requests) {
+		currentRequests = requests;
+		
 		ListView lv = (ListView) findViewById(R.id.taxiRequestsList);
 
-		List<Map<String, String>> travelRequests = JsonHelper
-				.parseTaxiRequestsList(requests);
+		List<TravelData> travelRequests = JsonHelper.parseTaxiRequestsListAlt(requests);
 
 		// This is the array adapter, it takes the context of the activity as a
 		// first parameter, the type of list view as a second parameter and your
 		// array as a third parameter.
-		ArrayAdapter<Map<String, String>> arrayAdapter = new ArrayAdapter<Map<String, String>>(
+		ArrayAdapter<TravelData> arrayAdapter = new ArrayAdapter<TravelData>(
 				this, android.R.layout.simple_list_item_1, travelRequests);
 
 		if (lv != null) {
@@ -230,5 +296,14 @@ public class TaxiAvailableActivity extends ActionBarActivity {
 			launchTaxiTakenActivity(stringExtra);
 		}
 
+	}
+	
+	private String getUserId(){
+		if(this.userId == null){
+			SharedPreferences sharedPref = getSharedPreferences(getString(R.string.shared_pref_key),Context.MODE_PRIVATE);
+			String id = sharedPref.getString(getString(R.string.user_id), null);
+			this.userId = id;
+		}
+		return this.userId;
 	}
 }

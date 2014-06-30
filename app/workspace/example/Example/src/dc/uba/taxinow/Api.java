@@ -27,6 +27,7 @@ import dc.uba.taxinow.model.TaxiData;
 import dc.uba.taxinow.model.Travel;
 import dc.uba.taxinow.model.TravelRequest;
 import android.location.Location;
+import android.util.Log;
 
 public class Api {
 	
@@ -176,6 +177,8 @@ public class Api {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+		
+		Log.i("Api 181", params.toString());
 		return doPostJSON("http://follower-endpoint.herokuapp.com/application/handShake", params);
 	}
 	

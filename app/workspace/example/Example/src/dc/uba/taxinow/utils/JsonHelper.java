@@ -9,35 +9,37 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import dc.uba.taxinow.model.TravelData;
+
 public class JsonHelper {
 
-	public static List<Map<String, String>> parseTaxiRequestsList(JSONObject src){
+	public static List<Map<String, String>> parseTaxiRequestsList(JSONObject src) {
 		List<Map<String, String>> travelRequests = null;
 		try {
 			JSONArray requests = src.getJSONArray("requests");
-			
+
 			travelRequests = new ArrayList<Map<String, String>>();
 			for (int i = 0; i < requests.length(); i++) {
 				Map<String, String> map = new HashMap<String, String>();
-					map.put("requestId",
-							requests.getJSONObject(i).getString("requestId"));
-					
-					map.put("positionPassenger", requests.getJSONObject(i)
-							.getString("positionPassenger"));
-					
-					map.put("passengerId",
-							requests.getJSONObject(i).getString("passengerId"));
-					
-					travelRequests.add(map);
+				map.put("requestId",
+						requests.getJSONObject(i).getString("requestId"));
+
+				map.put("passengerPosition", requests.getJSONObject(i)
+						.getString("passengerPosition"));
+
+				map.put("passengerId",
+						requests.getJSONObject(i).getString("passengerId"));
+
+				travelRequests.add(map);
 			}
-			
+
 		} catch (JSONException e1) {
 			e1.printStackTrace();
 		}
 		return travelRequests;
 	}
-	
-	public static List<Map<String, String>> parseTaxiRequestsList(String src){
+
+	public static List<Map<String, String>> parseTaxiRequestsList(String src) {
 		JSONObject jsonObject = null;
 		try {
 			jsonObject = new JSONObject(src);
@@ -45,5 +47,31 @@ public class JsonHelper {
 			e.printStackTrace();
 		}
 		return parseTaxiRequestsList(jsonObject);
+	}
+
+	public static List<TravelData> parseTaxiRequestsListAlt(String src) {
+		JSONObject jsonObject = null;
+		ArrayList<TravelData> travelRequests = null;
+		try {
+			jsonObject = new JSONObject(src);
+			JSONArray requests = jsonObject.getJSONArray("requests");
+
+			travelRequests = new ArrayList<TravelData>();
+			for (int i = 0; i < requests.length(); i++) {
+
+				TravelData travelData  = new TravelData(
+						requests.getJSONObject(i).getString("taxiDriverId"), 
+						requests.getJSONObject(i).getString("requestId"),
+						requests.getJSONObject(i).getString("passengerId"),
+						requests.getJSONObject(i).getString("passengerPosition"),
+						requests.getJSONObject(i).getString("passengerAddress"));
+				
+				travelRequests.add(travelData);
+			}
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return travelRequests;
 	}
 }

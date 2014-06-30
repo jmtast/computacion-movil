@@ -30,12 +30,6 @@ public class TaxiRequests extends AsyncTask<String, Void, JSONObject> {
 	@Override
 	protected void onPostExecute(JSONObject requests) {
 		taxiAvailableActivity.updateRequests(requests.toString());
-//		try {
-//			taxiAvailableActivity.updateRequests(requests.getJSONArray("requests"));
-//		} catch (JSONException e) {
-//			 TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 	}
 
 }
