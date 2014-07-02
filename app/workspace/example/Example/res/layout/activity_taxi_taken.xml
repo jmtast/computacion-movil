@@ -1,35 +1,68 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context="${packageName}.${activityClass}" >
+	
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
-
-    <LinearLayout 
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
+	    <TextView
+	        android:id="@+id/appTitle"
+	        style="@style/AppTitle" />
 	    
-        <Button android:id="@+id/button_back_to_available"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:text="@string/button_back_to_available" 
-	        android:onClick="backToAvailable"
-	        style="@style/TaxiNowButton" />
-        
-        <View
+	    <View
 	        android:layout_width="match_parent"
 	        android:layout_height="40dp" />
-        
-	    <TextView 
-	        style="@style/TextNormal"
-	        android:text="Volver a estado disponible para poder aceptar nuevos viajes" />
 	    
+	    <LinearLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical"
+	        android:gravity="center_horizontal">
+		    
+		    <TextView
+		        style="@style/TextBig"
+		        android:text="@string/confirmed_trip" />
+		    
+		    <View
+		        android:layout_width="match_parent"
+		        android:layout_height="40dp" />
+		    
+		    <TextView 
+		        style="@style/TextNormal"
+		        android:text="@string/punctuality_advice" />
+		   
+		</LinearLayout>
+	
 	</LinearLayout>
+	
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
 
-</RelativeLayout>
+	<Button android:id="@+id/button_back_to_available"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:text="@string/button_back_to_available" 
+	    android:onClick="backToAvailable"
+	    style="@style/TaxiNowButton" />
+    
+	<View
+       android:layout_width="match_parent"
+       android:layout_height="40dp" />
+	
+	<TextView
+        style="@style/TextSmall"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:text="@string/thanks_disclaimer" />
+
+</LinearLayout>

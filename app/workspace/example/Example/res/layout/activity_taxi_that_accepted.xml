@@ -9,19 +9,65 @@
     android:layout_height="match_parent"
     tools:context="${packageName}.${activityClass}" >
     
-    <TextView 
-        style="@style/TextBig"
-        android:text="UN TAXI EN CAMINO"/>
+<!--     <TextView  -->
+<!--         style="@style/TextBig" -->
+<!--         android:text="UN TAXI EN CAMINO"/> -->
+    
+<!--     <View -->
+<!--         android:layout_width="match_parent" -->
+<!--         android:layout_height="20dp" /> -->
+
+<!--     <TextView -->
+<!--         android:id="@+id/taxiThatAccepted" -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:text="@string/hello_world" /> -->
+
+	<TextView
+        android:id="@+id/appTitle"
+        style="@style/AppTitle" />
     
     <View
         android:layout_width="match_parent"
-        android:layout_height="20dp" />
-
-    <TextView
-        android:id="@+id/taxiThatAccepted"
-        android:layout_width="wrap_content"
+        android:layout_height="40dp" />
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+	    
+	    <TextView
+	        style="@style/TextBig"
+	        android:text="@string/taxi_incoming" />
+	    
+	    <View
+	        android:layout_width="match_parent"
+	        android:layout_height="40dp" />
+	    
+	    <TextView 
+	        style="@style/TextNormal"
+	        android:text="@string/taxi_data_message" />
+	    
+	    <TextView
+	        android:id="@+id/taxi_marca" 
+	        style="@style/TextNormal"
+	        android:text="@string/taxi_marca" 
+	        android:gravity="left" />
+	    
+	    <TextView
+	        android:id="@+id/taxi_modelo" 
+	        style="@style/TextNormal"
+	        android:text="@string/taxi_modelo" 
+	        android:gravity="left" />
+	    
+	    <TextView
+	        android:id="@+id/taxi_patente" 
+	        style="@style/TextNormal"
+	        android:text="@string/taxi_patente" 
+	        android:gravity="left"/>
+	   
+	</LinearLayout>
     
     <View
         android:layout_width="match_parent"

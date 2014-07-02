@@ -26,8 +26,15 @@ public class TaxiThatAcceptedActivity extends Activity {
 		Intent intent = getIntent();
 		String taxiFullData = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
 		TaxiData taxiData = new TaxiData(taxiFullData);
-		TextView textView = (TextView) findViewById(R.id.taxiThatAccepted);
-		textView.setText(taxiData.toString());
+		
+		TextView textView = (TextView) findViewById(R.id.taxi_marca);
+		textView.setText(getString(R.string.taxi_marca) +taxiData.getBrand());
+		
+		textView = (TextView) findViewById(R.id.taxi_modelo);
+		textView.setText(getString(R.string.taxi_modelo) +taxiData.getModel());
+		
+		textView = (TextView) findViewById(R.id.taxi_patente);
+		textView.setText(getString(R.string.taxi_patente) + taxiData.getPlate());
 	}
 	
 	public void cancelTrip(View view){
