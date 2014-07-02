@@ -52,19 +52,14 @@
             android:label="@string/title_activity_taxi_config" >
         </activity>
         <activity
-            android:name="dc.uba.taxinow.activity.ShutdownActivity"
-            android:excludeFromRecents="true"
-            android:label="@string/title_activity_shutdown"
-            android:launchMode="singleTask"
-            android:taskAffinity="" >
-        </activity>
-        <activity
             android:name="dc.uba.taxinow.activity.SearchingTaxisActivity"
-            android:label="@string/title_activity_searching_taxis" >
+            android:label="@string/title_activity_searching_taxis" 
+            android:noHistory="true" >            
         </activity>
         <activity
             android:name="dc.uba.taxinow.activity.PassengerConfigActivity"
-            android:label="@string/title_activity_passenger_config" >
+            android:label="@string/title_activity_passenger_config" 
+            android:noHistory="true" >
         </activity>
         <activity
             android:name="dc.uba.taxinow.activity.TaxiAvailableActivity"
@@ -78,7 +73,8 @@
         </activity>
         <activity
             android:name="dc.uba.taxinow.activity.TaxiThatAcceptedActivity"
-            android:label="@string/title_activity_taxi_that_accepted" >
+            android:label="@string/title_activity_taxi_that_accepted" 
+            android:noHistory="true" >
 		</activity>
         <activity
             android:name="dc.uba.taxinow.activity.TaxiThanksActivity"
