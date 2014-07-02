@@ -43,4 +43,9 @@
     <string name="confirmed_trip">VIAJE CONFIRMADO!</string>
     <string name="punctuality_advice">Tratá de llegar a tiempo* así tu propina y reputación aumentan!</string>
     <string name="thanks_disclaimer">TaxiNow no se responsabiliza por ninguna infracción cometida por un taxista. Maneje responsablemente y con precaución, respetando las reglas de tránsito.</string>
+    <string name="taxi_incoming">TAXISTA EN CAMINO!</string>
+    <string name="taxi_data_message">Los datos del taxi que te pasará a buscar son:</string>
+    <string name="taxi_marca">Marca:</string>
+    <string name="taxi_modelo">Modelo:</string>
+    <string name="taxi_patente">Patente:</string>
 </resources>

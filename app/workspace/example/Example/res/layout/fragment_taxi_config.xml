@@ -31,7 +31,7 @@
             <TextView 
 		        style="@style/TextNormal"
 		        android:layout_width="wrap_content"
-		        android:text="Marca:" 
+		        android:text="@string/taxi_marca" 
 		        android:gravity="left"/>
             
             <EditText
@@ -54,7 +54,7 @@
             <TextView 
 		        style="@style/TextNormal"
 		        android:layout_width="wrap_content"
-		        android:text="Modelo:" 
+		        android:text="@string/taxi_modelo"
 		        android:gravity="left"/>
             
             <EditText
@@ -77,7 +77,7 @@
             <TextView 
 		        style="@style/TextNormal"
 		        android:layout_width="wrap_content"
-		        android:text="Patente:" 
+		        android:text="@string/taxi_patente"
 		        android:gravity="left"/>
             
             <EditText

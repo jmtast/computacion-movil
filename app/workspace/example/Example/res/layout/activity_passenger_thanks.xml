@@ -1,0 +1,48 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="dc.uba.taxinow.activity.PassengerThanksActivity" >
+
+    <TextView
+        android:id="@+id/appTitle"
+        style="@style/AppTitle" />
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+	    
+	    <TextView
+	        style="@style/TextBig"
+	        android:text="@string/taxi_incoming" />
+	    
+	    <View
+	        android:layout_width="match_parent"
+	        android:layout_height="40dp" />
+	    
+	    <TextView 
+	        style="@style/TextNormal"
+	        android:text="@string/taxi_data_message" />
+	    
+	    <TextView
+	        style="@style/TextNormal"
+	        android:text="@string/taxi_marca" />
+	    
+	    <TextView
+	        style="@style/TextNormal"
+	        android:text="@string/taxi_modelo" />
+	    
+	    <TextView
+	        style="@style/TextNormal"
+	        android:text="@string/taxi_patente" />
+	   
+	</LinearLayout>
+
+</LinearLayout>
