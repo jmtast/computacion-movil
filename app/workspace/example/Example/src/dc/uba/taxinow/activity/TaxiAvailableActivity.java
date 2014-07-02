@@ -71,8 +71,6 @@ public class TaxiAvailableActivity extends ActionBarActivity {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
-		ActionBar actionbar = getSupportActionBar();
-        actionbar.hide();
 	}
 
 	@Override
